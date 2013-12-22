@@ -1,3 +1,4 @@
+#!/usr/bin/env qtjs
 "use strict";
 
 cpgf.import("cpgf", "builtin.core");
