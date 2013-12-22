@@ -1,0 +1,7 @@
+{
+    "strict": true,
+    "maxcomplexity": 4,
+    "globalstrict": true,
+    "asi": true,
+    "globals": {"qt": false, "cpgf": false}
+}
