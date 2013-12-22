@@ -17,7 +17,5 @@ cpgf.import("cpgf", "builtin.core");
 
     var topLevel = component.create()
     var window = cpgf.cast(topLevel, qt.QQuickWindow)
-    var surfaceFormat = window.requestedFormat()
-    window.setFormat(surfaceFormat)
     window.show()
 })()
