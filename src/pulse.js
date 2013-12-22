@@ -2,8 +2,11 @@
 "use strict";
 
 cpgf.import("cpgf", "builtin.core");
+var Highlighter = require("./highlighter.js");
 
 (function () {
+    Highlighter.register()
+
     var engine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(
         engine,

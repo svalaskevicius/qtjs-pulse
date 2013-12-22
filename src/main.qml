@@ -4,7 +4,8 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.1
 
-//import PulseEditor 1.0
+import PulseEditor 1.0
+
 ApplicationWindow {
     title: qsTr("Pulse Editor")
 
@@ -60,6 +61,10 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
             wrapMode: TextEdit.NoWrap
             frameVisible: false
+        }
+        Highlighter {
+            id: highlighter
+            textarea: textarea
         }
     }
 }
