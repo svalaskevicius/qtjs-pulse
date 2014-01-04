@@ -2,8 +2,9 @@
 
 var _ = require('lodash')
 
-var TextProcessor = function() {
+var TextProcessor = function(ruleProcessor) {
     this.states = []
+    this.ruleProcessor = ruleProcessor
 }
 
 var matchState = function(text, state, startPos) {
@@ -67,9 +68,6 @@ var isPositionBeforeMatchedState = function(pos, stateMatch) {
 TextProcessor.prototype = {
     'addState' : function(state) {
         this.states.push(state)
-    },
-    'setRuleProcessor' : function(ruleProcessor) {
-        this.ruleProcessor = ruleProcessor
     },
     'processLine' : function(text, stateStack) {
         var idx = 0

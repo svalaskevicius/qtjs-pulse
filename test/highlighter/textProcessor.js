@@ -126,8 +126,7 @@ describe('Highlighter/TextProcessor', function () {
             ruleProcessor.processRules = function(){}
             var ruleProcessorSpy = sinon.spy(ruleProcessor, 'processRules')
 
-            var processor = new TextProcessor()
-            processor.setRuleProcessor(ruleProcessor)
+            var processor = new TextProcessor(ruleProcessor)
             processor.addState({
                 'id' : 'root',
                 'rules' : [
