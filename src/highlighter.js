@@ -2,20 +2,47 @@
 
 cpgf.import("cpgf", "builtin.core")
 
+var RuleProcessor = require("./highlighter/ruleProcessor.js")
+var TextProcessor = require("./highlighter/textProcessor.js")
+
+
+var myClassFormat = new qt.QTextCharFormat();
+myClassFormat.setFontWeight(qt.QFont.Bold);
+myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
+
+var formatterTarget = null
+var textProcessor = new TextProcessor(new RuleProcessor(function(id, start, end){
+    if (formatterTarget) {
+        formatterTarget.setFormat(start, end - start, myClassFormat);
+    }
+}))
+textProcessor.addState({
+    'id' : 'root',
+    'rules' : [
+        {
+            'id' : 'variable',
+            'matcher' : /\$[a-z0-9_]+/gi,
+        },
+    ],
+    'contains' : ['comment']
+})
+textProcessor.addState({
+    'id' : 'comment',
+    'start' : /\/\*/g,
+    'end' : /\*\//g,
+    'rules' : [
+       {
+           'id' : 'default',
+           'matcher' : /([^*]|\*(?!\/))+/gi,
+       },
+    ],
+})
+
+
 var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
 Highlighter.highlightBlock = function ($this, text) {
-    var myClassFormat = new qt.QTextCharFormat();
-    myClassFormat.setFontWeight(qt.QFont.Bold);
-    myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
-    var pattern = new qt.QString("\\bMy[A-Za-z]+\\b");
-
-    var expression = new qt.QRegExp(pattern);
-    var index = expression.indexIn(text);
-    while (index >= 0) {
-        var length = expression.matchedLength();
-        $this.setFormat(index, length, myClassFormat);
-        index = expression.indexIn(text, index + length);
-    }
+    formatterTarget = $this
+    textProcessor.processLine(text.toLatin1().constData(), ['root'])
 };
 
 
