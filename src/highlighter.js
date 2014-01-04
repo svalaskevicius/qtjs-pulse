@@ -4,7 +4,7 @@ cpgf.import("cpgf", "builtin.core")
 
 var RuleProcessor = require("./highlighter/ruleProcessor.js")
 var TextProcessor = require("./highlighter/textProcessor.js")
-
+var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
 
 var myClassFormat = new qt.QTextCharFormat();
 myClassFormat.setFontWeight(qt.QFont.Bold);
@@ -39,11 +39,22 @@ textProcessor.addState({
 })
 
 
+
+var stateStackToIdMap = new StateStackToIdMap()
+
+
 var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
 Highlighter.highlightBlock = function ($this, text) {
     formatterTarget = $this
-    textProcessor.processLine(text.toLatin1().constData(), ['root'])
-};
+    var stack = stateStackToIdMap.retrieveStack($this.previousBlockState())
+    if (!stack) {
+        stack = ['root']
+    }
+    stack = textProcessor.processLine(text.toLatin1().constData(), stack)
+    $this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
+}
+
+
 
 
 module.exports = {
