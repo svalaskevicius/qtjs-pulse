@@ -7,9 +7,10 @@ var TextProcessor = require("../../src/highlighter/textProcessor.js")
 
 describe('Highlighter/textProcessor', function () {
     describe('#processLine()', function () {
-        it('returns the same state when there are no rules', function () {
-            var processor = new TextProcessor()
-            processor.processLine("my text line", []).should.eql([])
+        it('throws error when there are no rules', function () {
+            (function() {
+                (new TextProcessor()).processLine("my text line", [])
+            }).should.throwError(/Processing stack is empty/)
         })
 
         it('changes state when a rule is triggered', function () {
@@ -51,7 +52,7 @@ describe('Highlighter/textProcessor', function () {
                 'start' : /\bt/g,
                 'end' : /\bl/g,
             })
-            processor.processLine("my text line", ['test_state']).should.eql([])
+            processor.processLine("my text line", ['root', 'test_state']).should.eql(['root'])
         })
 
         it('matches a new state after the first is ended', function () {

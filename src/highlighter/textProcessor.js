@@ -53,6 +53,7 @@ var getLastState = function(stack, states) {
     if (lastStateId) {
         return findState(states, lastStateId)
     }
+    throw new Error("Processing stack is empty");
 }
 
 var findContainedStates = function(state, states) {
@@ -73,9 +74,6 @@ TextProcessor.prototype = {
         do {
             var startedIdx = idx
             currentState = getLastState(stateStack, this.states)
-            if (!currentState) {
-                return []
-            }
             var newState = findNextState(
                 text,
                 findContainedStates(currentState, this.states),
