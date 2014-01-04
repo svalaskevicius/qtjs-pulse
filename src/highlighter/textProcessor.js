@@ -65,31 +65,29 @@ TextProcessor.prototype = {
         this.states.push(state)
     },
     'processLine' : function(text, stateStack) {
-        var lastState = getLastState(stateStack, this.states)
         var idx = 0
-        if (lastState) {
-            do {
-                lastState = getLastState(stateStack, this.states)
-                if (!lastState) {
-                    return []
-                }
-                var newState = findNextState(
-                    text,
-                    findContainedStates(lastState, this.states),
-                    idx
-                )
-                var endIdx = findEndOfState(text, lastState, idx)
-                if (endIdx !== false && (!newState.state || endIdx < newState.start)) {
-                    stateStack.pop()
-                    idx = endIdx
-                } else if (newState.state) {
-                    stateStack.push(newState.state.id)
-                    idx = newState.start
-                } else {
-                    idx = text.length + 1
-                }
-            } while (idx < text.length);
-        }
+        var currentState
+        do {
+            currentState = getLastState(stateStack, this.states)
+            if (!currentState) {
+                return []
+            }
+            var newState = findNextState(
+                text,
+                findContainedStates(currentState, this.states),
+                idx
+            )
+            var endIdx = findEndOfState(text, currentState, idx)
+            if (endIdx !== false && (!newState.state || endIdx < newState.start)) {
+                stateStack.pop()
+                idx = endIdx
+            } else if (newState.state) {
+                stateStack.push(newState.state.id)
+                idx = newState.start
+            } else {
+                idx = text.length + 1
+            }
+        } while (idx < text.length);
         return stateStack
     }
 }

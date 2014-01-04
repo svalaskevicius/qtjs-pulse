@@ -8,8 +8,7 @@ describe('Highlighter/textProcessor', function () {
     describe('#processLine()', function () {
         it('returns the same state when there are no rules', function () {
             var processor = new TextProcessor()
-            var state = []
-            processor.processLine("my text line", state).should.equal(state)
+            processor.processLine("my text line", []).should.eql([])
         })
 
         it('changes state when a rule is triggered', function () {
