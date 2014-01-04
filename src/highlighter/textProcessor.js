@@ -6,24 +6,24 @@ var TextProcessor = function() {
     this.states = []
 }
 
-var matchState = function(text, state) {
+var matchState = function(text, state, startPos) {
     if (!state.start) {
         return false
     }
-    state.start.lastIndex = 0
+    state.start.lastIndex = startPos
     if (state.start.test(text)) {
         return state.start.lastIndex
     }
     return false
 }
 
-var findNextState = function(text, states) {
+var findNextState = function(text, states, startPos) {
     return _.reduce(
         states,
         function (prev, state) {
-            var idx = matchState(text, state)
-            if (idx !== false && idx < prev.start) {
-                return {state: state, start: state.start.lastIndex}
+            var pos = matchState(text, state, startPos)
+            if (pos !== false && pos < prev.start) {
+                return {state: state, start: pos}
             }
             return prev
         },
@@ -69,11 +69,16 @@ TextProcessor.prototype = {
         if (lastState) {
             var endIdx = findEndOfState(text, lastState)
             if (endIdx) {
-                return []
+                stateStack.pop()
+                lastState = getLastState(stateStack, this.states)
+                if (!lastState) {
+                    return []
+                }
             }
             var newState = findNextState(
                 text,
-                findContainedStates(lastState, this.states)
+                findContainedStates(lastState, this.states),
+                endIdx
             )
             if (newState.state) {
                 stateStack.push(newState.state.id)

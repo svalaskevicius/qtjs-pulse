@@ -54,5 +54,24 @@ describe('Highlighter/textProcessor', function () {
             processor.processLine("my text line", ['test_state']).should.eql([])
         })
 
+        it('matches a new state after the first is ended', function () {
+            var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'contains' : ['test_state1', 'test_state2']
+            })
+            processor.addState({
+                'id' : 'test_state1',
+                'start' : /\bt/g,
+                'end' : /\bl/g,
+            })
+            processor.addState({
+                'id' : 'test_state2',
+                'start' : /i/g,
+                'end' : /\bl/g,
+            })
+            processor.processLine("my text line", ['root', 'test_state1']).should.eql(['root', 'test_state2'])
+        })
+
     })
 })
