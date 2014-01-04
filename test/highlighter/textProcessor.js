@@ -26,6 +26,20 @@ describe('Highlighter/textProcessor', function () {
             processor.processLine("my text line", ['root']).should.eql(['root', 'test_state'])
         })
 
+        it('doesnt match a state when its not available in the parent state', function () {
+            var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'contains' : []
+            })
+            processor.addState({
+                'id' : 'test_state',
+                'start' : /\bt/g,
+                'end' : /___/g,
+            })
+            processor.processLine("my text line", ['root']).should.eql(['root'])
+        })
+
         it('ends matched state when a rule is triggered', function () {
             var processor = new TextProcessor()
             processor.addState({
@@ -40,18 +54,5 @@ describe('Highlighter/textProcessor', function () {
             processor.processLine("my text line", ['test_state']).should.eql([])
         })
 
-        it('doesnt match a state when its not available in the parent state', function () {
-            var processor = new TextProcessor()
-            processor.addState({
-                'id' : 'root',
-                'contains' : []
-            })
-            processor.addState({
-                'id' : 'test_state',
-                'start' : /\bt/g,
-                'end' : /___/g,
-            })
-            processor.processLine("my text line", ['root']).should.eql(['root'])
-        })
     })
 })
