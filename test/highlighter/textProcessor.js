@@ -98,5 +98,25 @@ describe('Highlighter/textProcessor', function () {
             })
             processor.processLine("my text line", ['root']).should.eql(['root', 'test_state1', 'test_state2', 'test_state3'])
         })
+
+        it('does not match the end until a substate finishes', function () {
+            var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'contains' : ['test_state1', 'test_state2']
+            })
+            processor.addState({
+                'id' : 'test_state1',
+                'start' : /___/g,
+                'end' : /y/g,
+                'contains' : ['test_state2']
+            })
+            processor.addState({
+                'id' : 'test_state2',
+                'start' : /m/g,
+                'end' : /___/g,
+            })
+            processor.processLine("my text line", ['root', 'test_state1']).should.eql(['root', 'test_state1', 'test_state2'])
+        })
     })
 })

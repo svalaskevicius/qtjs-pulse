@@ -31,11 +31,11 @@ var findNextState = function(text, states, startPos) {
     )
 }
 
-var findEndOfState = function(text, state) {
+var findEndOfState = function(text, state, startPos) {
     if (!state.end) {
         return false
     }
-    state.end.lastIndex = 0
+    state.end.lastIndex = startPos
     if (state.end.test(text)) {
         return state.end.lastIndex
     }
@@ -66,27 +66,29 @@ TextProcessor.prototype = {
     },
     'processLine' : function(text, stateStack) {
         var lastState = getLastState(stateStack, this.states)
+        var idx = 0
         if (lastState) {
-            var endIdx = findEndOfState(text, lastState)
-            if (endIdx) {
-                stateStack.pop()
+            do {
                 lastState = getLastState(stateStack, this.states)
                 if (!lastState) {
                     return []
                 }
-            }
-            do {
-                lastState = getLastState(stateStack, this.states)
                 var newState = findNextState(
                     text,
                     findContainedStates(lastState, this.states),
-                    endIdx
+                    idx
                 )
-                if (newState.state) {
+                var endIdx = findEndOfState(text, lastState, idx)
+                if (endIdx !== false && (!newState.state || endIdx < newState.start)) {
+                    stateStack.pop()
+                    idx = endIdx
+                } else if (newState.state) {
                     stateStack.push(newState.state.id)
-                    endIdx = newState.start
+                    idx = newState.start
+                } else {
+                    idx = text.length + 1
                 }
-            } while (newState.state);
+            } while (idx < text.length);
         }
         return stateStack
     }
