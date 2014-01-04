@@ -22,13 +22,13 @@ var matchRuleInRange = function(text, matcher, range, callback) {
 }
 
 RuleProcessor.prototype = {
-    'processRules' : function(text, rules, start, end) {
+    'processRules' : function(text, rules, start, end, stack) {
         var ranges = [[start, end]]
         var callback = this.callback
         _.forEach(rules, function(rule){
             for (var r = ranges.length-1; r >= 0; r--) {
                 matchRuleInRange(text, rule.matcher, ranges[r], function(start, end){
-                    callback(rule.id, start, end)
+                    callback(rule.id, start, end, stack)
                     ranges.push([end, ranges[r][1]])
                     ranges[r][1] = start
                 })

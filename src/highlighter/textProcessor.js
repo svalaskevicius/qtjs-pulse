@@ -91,7 +91,7 @@ TextProcessor.prototype = {
                 idx = text.length + 1
             }
             if (this.ruleProcessor) {
-                this.ruleProcessor.processRules(text, currentState.rules, startedIdx, idx)
+                this.ruleProcessor.processRules(text, currentState.rules, startedIdx, idx, stateStack)
             }
         } while (idx < text.length);
         return stateStack

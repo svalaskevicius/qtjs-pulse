@@ -148,7 +148,8 @@ describe('Highlighter/TextProcessor', function () {
                     }
                 ],
                 0,
-                13
+                13,
+                ['root']
             ])
         })
 
