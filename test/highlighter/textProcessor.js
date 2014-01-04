@@ -15,21 +15,43 @@ describe('Highlighter/textProcessor', function () {
         it('changes state when a rule is triggered', function () {
             var processor = new TextProcessor()
             processor.addState({
+                'id' : 'root',
+                'contains' : ['test_state']
+            })
+            processor.addState({
                 'id' : 'test_state',
                 'start' : /\bt/g,
                 'end' : /not found\b/g,
             })
-            processor.processLine("my text line", []).should.eql(['test_state'])
+            processor.processLine("my text line", ['root']).should.eql(['root', 'test_state'])
         })
 
         it('ends matched state when a rule is triggered', function () {
             var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'states' : []
+            })
             processor.addState({
                 'id' : 'test_state',
                 'start' : /\bt/g,
                 'end' : /\bl/g,
             })
             processor.processLine("my text line", ['test_state']).should.eql([])
+        })
+
+        it('doesnt match a state when its not available in the parent state', function () {
+            var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'contains' : []
+            })
+            processor.addState({
+                'id' : 'test_state',
+                'start' : /\bt/g,
+                'end' : /___/g,
+            })
+            processor.processLine("my text line", ['root']).should.eql(['root'])
         })
     })
 })

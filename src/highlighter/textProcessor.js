@@ -7,6 +7,9 @@ var TextProcessor = function() {
 }
 
 var matchState = function(text, state) {
+    if (!state.start) {
+        return false
+    }
     state.start.lastIndex = 0
     if (state.start.test(text)) {
         return state.start.lastIndex
@@ -29,6 +32,9 @@ var findNextState = function(text, states) {
 }
 
 var findEndOfState = function(text, state) {
+    if (!state.end) {
+        return false
+    }
     state.end.lastIndex = 0
     if (state.end.test(text)) {
         return state.end.lastIndex
@@ -42,25 +48,36 @@ var findState = function(states, stateId) {
     })
 }
 
+var getLastState = function(stack, states) {
+    var lastStateId = _.last(stack)
+    if (lastStateId) {
+        return findState(states, lastStateId)
+    }
+}
+
+var findContainedStates = function(state, states) {
+    return _.map(state.contains, function(id){return findState(states, id)})
+}
+
+
 TextProcessor.prototype = {
     'addState' : function(state) {
         this.states.push(state)
     },
     'processLine' : function(text, stateStack) {
-        var lastStateId = _.last(stateStack)
-        var endIdx = undefined
-        if (lastStateId) {
-            var lastState = findState(this.states, lastStateId)
-            if (lastState) {
-                endIdx = findEndOfState(text, lastState)
+        var lastState = getLastState(stateStack, this.states)
+        if (lastState) {
+            var endIdx = findEndOfState(text, lastState)
+            if (endIdx) {
+                return []
             }
-        }
-        if (endIdx) {
-            return []
-        }
-        var newState = findNextState(text, this.states)
-        if (newState.state) {
-            stateStack.push(newState.state.id)
+            var newState = findNextState(
+                text,
+                findContainedStates(lastState, this.states)
+            )
+            if (newState.state) {
+                stateStack.push(newState.state.id)
+            }
         }
         return stateStack
     }
