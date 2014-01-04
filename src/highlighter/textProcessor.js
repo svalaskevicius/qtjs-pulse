@@ -60,6 +60,9 @@ var findContainedStates = function(state, states) {
     return _.map(state.contains, function(id){return findState(states, id)})
 }
 
+var isPositionBeforeMatchedState = function(pos, stateMatch) {
+    return pos !== false && (!stateMatch.state || pos < stateMatch.start);
+}
 
 TextProcessor.prototype = {
     'addState' : function(state) {
@@ -74,18 +77,18 @@ TextProcessor.prototype = {
         do {
             var startedIdx = idx
             currentState = getLastState(stateStack, this.states)
-            var newState = findNextState(
+            var newStateMatch = findNextState(
                 text,
                 findContainedStates(currentState, this.states),
                 idx
             )
             var endIdx = findEndOfState(text, currentState, idx)
-            if (endIdx !== false && (!newState.state || endIdx < newState.start)) {
+            if (isPositionBeforeMatchedState(endIdx, newStateMatch)) {
                 stateStack.pop()
                 idx = endIdx
-            } else if (newState.state) {
-                stateStack.push(newState.state.id)
-                idx = newState.start
+            } else if (newStateMatch.state) {
+                stateStack.push(newStateMatch.state.id)
+                idx = newStateMatch.start
             } else {
                 idx = text.length + 1
             }
