@@ -121,7 +121,9 @@ describe('Highlighter/textProcessor', function () {
 
 
         it('invokes state rule matcher', function () {
-            var ruleProcessor = sinon.spy()
+            var ruleProcessor = new Object
+            ruleProcessor.processRules = function(){}
+            var ruleProcessorSpy = sinon.spy(ruleProcessor, 'processRules')
 
             var processor = new TextProcessor()
             processor.setRuleProcessor(ruleProcessor)
@@ -136,9 +138,9 @@ describe('Highlighter/textProcessor', function () {
             })
             processor.processLine("my text line", ['root'])
 
-            ruleProcessor.calledOnce.should.equal(true)
-            ruleProcessor.calledOnce.should.equal(true)
-            ruleProcessor.getCall(0).args.should.eql([
+            ruleProcessorSpy.calledOnce.should.equal(true)
+            ruleProcessorSpy.calledOnce.should.equal(true)
+            ruleProcessorSpy.getCall(0).args.should.eql([
                 "my text line",
                 [
                     {
