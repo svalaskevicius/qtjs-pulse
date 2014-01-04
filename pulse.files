@@ -3,3 +3,5 @@ src/main.qml
 src/highlighter.js
 test/highlighter/textProcessor.js
 src/highlighter/textProcessor.js
+test/highlighter/ruleProcessor.js
+src/highlighter/ruleProcessor.js

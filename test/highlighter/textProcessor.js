@@ -5,7 +5,7 @@ var should = require('should'),
 
 var TextProcessor = require("../../src/highlighter/textProcessor.js")
 
-describe('Highlighter/textProcessor', function () {
+describe('Highlighter/TextProcessor', function () {
     describe('#processLine()', function () {
         it('throws error when there are no rules', function () {
             (function() {
@@ -139,7 +139,6 @@ describe('Highlighter/textProcessor', function () {
             })
             processor.processLine("my text line", ['root'])
 
-            ruleProcessorSpy.calledOnce.should.equal(true)
             ruleProcessorSpy.calledOnce.should.equal(true)
             ruleProcessorSpy.getCall(0).args.should.eql([
                 "my text line",
