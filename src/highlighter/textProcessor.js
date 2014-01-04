@@ -64,10 +64,14 @@ TextProcessor.prototype = {
     'addState' : function(state) {
         this.states.push(state)
     },
+    'setRuleProcessor' : function(ruleProcessor) {
+        this.ruleProcessor = ruleProcessor
+    },
     'processLine' : function(text, stateStack) {
         var idx = 0
         var currentState
         do {
+            var startedIdx = idx
             currentState = getLastState(stateStack, this.states)
             if (!currentState) {
                 return []
@@ -86,6 +90,9 @@ TextProcessor.prototype = {
                 idx = newState.start
             } else {
                 idx = text.length + 1
+            }
+            if (this.ruleProcessor) {
+                this.ruleProcessor(text, currentState.rules, startedIdx, idx)
             }
         } while (idx < text.length);
         return stateStack

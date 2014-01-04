@@ -1,6 +1,7 @@
 "use strict";
 
-var should = require('should');
+var should = require('should'),
+    sinon = require('sinon')
 
 var TextProcessor = require("../../src/highlighter/textProcessor.js")
 
@@ -117,5 +118,38 @@ describe('Highlighter/textProcessor', function () {
             })
             processor.processLine("my text line", ['root', 'test_state1']).should.eql(['root', 'test_state1', 'test_state2'])
         })
+
+
+        it('invokes state rule matcher', function () {
+            var ruleProcessor = sinon.spy()
+
+            var processor = new TextProcessor()
+            processor.setRuleProcessor(ruleProcessor)
+            processor.addState({
+                'id' : 'root',
+                'rules' : [
+                    {
+                        'id' : 'variable',
+                        'matcher' : /\$[a-z0-9_]/gi
+                    }
+                ]
+            })
+            processor.processLine("my text line", ['root'])
+
+            ruleProcessor.calledOnce.should.equal(true)
+            ruleProcessor.calledOnce.should.equal(true)
+            ruleProcessor.getCall(0).args.should.eql([
+                "my text line",
+                [
+                    {
+                        'id' : 'variable',
+                        'matcher' : /\$[a-z0-9_]/gi
+                    }
+                ],
+                0,
+                13
+            ])
+        })
+
     })
 })
