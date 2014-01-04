@@ -2,27 +2,21 @@
 
 cpgf.import("cpgf", "builtin.core")
 
-var Pulse = (function(Pulse) {
-    Pulse.Highlighter = (function() {
-        var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
-        Highlighter.highlightBlock = function ($this, text) {
-            var myClassFormat = new qt.QTextCharFormat();
-            myClassFormat.setFontWeight(qt.QFont.Bold);
-            myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
-            var pattern = new qt.QString("\\bMy[A-Za-z]+\\b");
+var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
+Highlighter.highlightBlock = function ($this, text) {
+    var myClassFormat = new qt.QTextCharFormat();
+    myClassFormat.setFontWeight(qt.QFont.Bold);
+    myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
+    var pattern = new qt.QString("\\bMy[A-Za-z]+\\b");
 
-            var expression = new qt.QRegExp(pattern);
-            var index = expression.indexIn(text);
-            while (index >= 0) {
-                var length = expression.matchedLength();
-                $this.setFormat(index, length, myClassFormat);
-                index = expression.indexIn(text, index + length);
-            }
-        };
-        return Highlighter;
-    })()
-    return Pulse
-})(Pulse || {})
+    var expression = new qt.QRegExp(pattern);
+    var index = expression.indexIn(text);
+    while (index >= 0) {
+        var length = expression.matchedLength();
+        $this.setFormat(index, length, myClassFormat);
+        index = expression.indexIn(text, index + length);
+    }
+};
 
 
 module.exports = {
@@ -44,7 +38,7 @@ module.exports = {
                 );
 
                 if (textDocument) {
-                    $this.highlighter = new Pulse.Highlighter(textDocument.textDocument());
+                    $this.highlighter = new Highlighter(textDocument.textDocument());
                 }
             }
         })
