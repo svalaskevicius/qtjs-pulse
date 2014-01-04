@@ -28,11 +28,36 @@ var findNextState = function(text, states) {
     )
 }
 
+var findEndOfState = function(text, state) {
+    state.end.lastIndex = 0
+    if (state.end.test(text)) {
+        return state.end.lastIndex
+    }
+    return false
+}
+
+var findState = function(states, stateId) {
+    return _.find(states, function(el){
+        return el.id === stateId
+    })
+}
+
 TextProcessor.prototype = {
     'addState' : function(state) {
         this.states.push(state)
     },
     'processLine' : function(text, stateStack) {
+        var lastStateId = _.last(stateStack)
+        var endIdx = undefined
+        if (lastStateId) {
+            var lastState = findState(this.states, lastStateId)
+            if (lastState) {
+                endIdx = findEndOfState(text, lastState)
+            }
+        }
+        if (endIdx) {
+            return []
+        }
         var newState = findNextState(text, this.states)
         if (newState.state) {
             stateStack.push(newState.state.id)
