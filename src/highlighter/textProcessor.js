@@ -75,14 +75,18 @@ TextProcessor.prototype = {
                     return []
                 }
             }
-            var newState = findNextState(
-                text,
-                findContainedStates(lastState, this.states),
-                endIdx
-            )
-            if (newState.state) {
-                stateStack.push(newState.state.id)
-            }
+            do {
+                lastState = getLastState(stateStack, this.states)
+                var newState = findNextState(
+                    text,
+                    findContainedStates(lastState, this.states),
+                    endIdx
+                )
+                if (newState.state) {
+                    stateStack.push(newState.state.id)
+                    endIdx = newState.start
+                }
+            } while (newState.state);
         }
         return stateStack
     }

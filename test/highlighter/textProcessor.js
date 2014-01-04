@@ -73,5 +73,30 @@ describe('Highlighter/textProcessor', function () {
             processor.processLine("my text line", ['root', 'test_state1']).should.eql(['root', 'test_state2'])
         })
 
+        it('matches a chain of states', function () {
+            var processor = new TextProcessor()
+            processor.addState({
+                'id' : 'root',
+                'contains' : ['test_state1']
+            })
+            processor.addState({
+                'id' : 'test_state1',
+                'start' : /y/g,
+                'end' : /____/g,
+                'contains' : ['test_state2']
+            })
+            processor.addState({
+                'id' : 'test_state2',
+                'start' : /t/g,
+                'end' : /____/g,
+                'contains' : ['test_state3']
+            })
+            processor.addState({
+                'id' : 'test_state3',
+                'start' : /l/g,
+                'end' : /____/g,
+            })
+            processor.processLine("my text line", ['root']).should.eql(['root', 'test_state1', 'test_state2', 'test_state3'])
+        })
     })
 })
