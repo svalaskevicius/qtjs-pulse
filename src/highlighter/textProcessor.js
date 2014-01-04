@@ -5,8 +5,8 @@ var TextProcessor = function() {
 }
 
 TextProcessor.prototype = {
-    'processLine' : function(text) {
-        return text
+    'processLine' : function(text, state) {
+        return state
     }
 }
 
