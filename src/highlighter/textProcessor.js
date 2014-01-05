@@ -90,11 +90,14 @@ TextProcessor.prototype = {
             } else {
                 idx = text.length + 1
             }
-            if (this.ruleProcessor) {
-                this.ruleProcessor.processRules(text, currentState.rules, startedIdx, idx, stateStack)
-            }
+            this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, stateStack)
         } while (idx < text.length);
         return stateStack
+    },
+    'invokeRuleProcessor' : function(text, rules, startedIdx, idx, stateStack) {
+        if (this.ruleProcessor) {
+            this.ruleProcessor.processRules(text, rules, startedIdx, idx, stateStack)
+        }
     }
 }
 

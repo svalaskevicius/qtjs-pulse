@@ -1,7 +1,7 @@
 "use strict";
 
 var StateStackToIdMap = function() {
-    this.itemsByStack = new Object
+    this.itemsByStack = {}
     this.itemsById = []
 }
 StateStackToIdMap.prototype = {

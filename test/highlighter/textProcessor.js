@@ -122,7 +122,7 @@ describe('Highlighter/TextProcessor', function () {
 
 
         it('invokes state rule matcher', function () {
-            var ruleProcessor = new Object
+            var ruleProcessor = {}
             ruleProcessor.processRules = function(){}
             var ruleProcessorSpy = sinon.spy(ruleProcessor, 'processRules')
 
