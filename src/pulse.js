@@ -10,7 +10,7 @@ var Highlighter = require("./highlighter.js");
     var engine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(
         engine,
-        qt.makeIncludePathAbsolute(new qt.QString("main.qml"))
+        qt.makeIncludePathAbsolute(new qt.QString("ui/main.qml"))
     )
     if (!component.isReady()) {
         throw component.errorString().toLatin1().constData()
