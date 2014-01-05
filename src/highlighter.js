@@ -11,13 +11,13 @@ myClassFormat.setFontWeight(qt.QFont.Bold);
 myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
 
 var formatterTarget = null
-var textProcessor = new TextProcessor(new RuleProcessor(function(id, start, length){
+var textProcessor = new TextProcessor(new RuleProcessor(function(id, start, length, stack){
     if (formatterTarget) {
         formatterTarget.setFormat(start, length, myClassFormat);
     }
 }))
 textProcessor.addState({
-    'id' : 'root',
+    'id' : 'default',
     'rules' : [
         {
             'id' : 'variable',
@@ -48,7 +48,7 @@ Highlighter.highlightBlock = function ($this, text) {
     formatterTarget = $this
     var stack = stateStackToIdMap.retrieveStack($this.previousBlockState())
     if (!stack) {
-        stack = ['root']
+        stack = ['default']
     }
     stack = textProcessor.processLine(text.toLatin1().constData(), stack)
     $this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
