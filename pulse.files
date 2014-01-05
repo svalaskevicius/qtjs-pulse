@@ -7,3 +7,5 @@ test/highlighter/ruleProcessor.js
 src/highlighter/ruleProcessor.js
 test/highlighter/stateToIdMap.js
 src/highlighter/stateToIdMap.js
+src/highlighter/ruleMatcher.js
+test/highlighter/ruleMatcher.js

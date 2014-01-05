@@ -2,15 +2,15 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var RuleProcessor = require("../../src/highlighter/ruleProcessor.js")
+var RuleMatcher = require("../../src/highlighter/ruleMatcher.js")
 
-describe('Highlighter/RuleProcessor', function () {
+describe('Highlighter/RuleMatcher', function () {
     describe('#processRules()', function () {
         it('invokes callback for matched rule', function () {
             var callback = sinon.spy()
 
-            var processor = new RuleProcessor(callback)
-            processor.processRules("my text line", [{
+            var matcher = new RuleMatcher(callback)
+            matcher.processRules("my text line", [{
                                                         id: 't-word',
                                                         matcher: /\bt[a-z0-9_]*\b/gi
                                                     }], 0, 12, ['passed stack'])
@@ -23,8 +23,8 @@ describe('Highlighter/RuleProcessor', function () {
         it('prioritises rules by their order', function () {
             var callback = sinon.spy()
 
-            var processor = new RuleProcessor(callback)
-            processor.processRules("my text t_line", [{
+            var matcher = new RuleMatcher(callback)
+            matcher.processRules("my text t_line", [{
                                                           id: 't-word-4',
                                                           matcher: /\bt[a-z0-9_]{3}\b/gi
                                                       }, {

@@ -2,7 +2,7 @@
 
 var _ = require("lodash")
 
-var RuleProcessor = function(callback) {
+var RuleMatcher = function(callback) {
     this.callback = callback
 }
 
@@ -21,7 +21,7 @@ var matchRuleInRange = function(text, matcher, range, callback, args) {
     }
 }
 
-RuleProcessor.prototype = {
+RuleMatcher.prototype = {
     'processRules' : function(text, rules, start, end, stack) {
         var ranges = [[start, end]]
         var callback = this.callback
@@ -38,5 +38,5 @@ RuleProcessor.prototype = {
     }
 }
 
-module.exports = RuleProcessor
+module.exports = RuleMatcher
 
