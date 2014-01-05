@@ -3,9 +3,9 @@ src/main.qml
 src/highlighter.js
 test/highlighter/textProcessor.js
 src/highlighter/textProcessor.js
-test/highlighter/ruleProcessor.js
-src/highlighter/ruleProcessor.js
 test/highlighter/stateToIdMap.js
 src/highlighter/stateToIdMap.js
 src/highlighter/ruleMatcher.js
 test/highlighter/ruleMatcher.js
+test/highlighter/textFormatter.js
+src/highlighter/textFormatter.js

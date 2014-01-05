@@ -5,27 +5,17 @@ cpgf.import("cpgf", "builtin.core")
 var RuleMatcher = require("./highlighter/ruleMatcher.js")
 var TextProcessor = require("./highlighter/textProcessor.js")
 var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
+var TextFormatter = require("./highlighter/textFormatter.js")
 
 var myClassFormat = new qt.QTextCharFormat();
 myClassFormat.setFontWeight(qt.QFont.Bold);
 myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
 
-var TextFormatter = function(){
-}
-TextFormatter.prototype = {
-    'setTarget' : function(target) {
-        this.target = target
-    },
-    'getFormatter' : function() {
-        var self = this;
-        return function(id, start, length, stack) {
-            if (self.target) {
-                self.target.setFormat(start, length, myClassFormat);
-            }
-        }
-    }
-}
 var textFormatter = new TextFormatter()
+
+textFormatter.addFormat('variable', myClassFormat)
+textFormatter.addFormat('default', myClassFormat)
+
 var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter()))
 textProcessor.addState({
     'id' : 'default',
