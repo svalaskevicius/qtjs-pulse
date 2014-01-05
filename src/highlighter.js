@@ -11,9 +11,9 @@ myClassFormat.setFontWeight(qt.QFont.Bold);
 myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
 
 var formatterTarget = null
-var textProcessor = new TextProcessor(new RuleProcessor(function(id, start, end){
+var textProcessor = new TextProcessor(new RuleProcessor(function(id, start, length){
     if (formatterTarget) {
-        formatterTarget.setFormat(start, end - start, myClassFormat);
+        formatterTarget.setFormat(start, length, myClassFormat);
     }
 }))
 textProcessor.addState({

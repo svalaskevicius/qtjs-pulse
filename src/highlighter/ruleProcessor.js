@@ -28,7 +28,7 @@ RuleProcessor.prototype = {
         _.forEach(rules, function(rule){
             for (var r = ranges.length-1; r >= 0; r--) {
                 matchRuleInRange(text, rule.matcher, ranges[r], function(start, end){
-                    callback(rule.id, start, end, stack)
+                    callback(rule.id, start, end-start, stack)
                     ranges.push([end, ranges[r][1]])
                     ranges[r][1] = start
                 })

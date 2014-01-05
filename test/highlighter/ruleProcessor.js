@@ -16,7 +16,7 @@ describe('Highlighter/RuleProcessor', function () {
                                                     }], 0, 12, ['passed stack'])
 
             callback.getCall(0).args.should.eql(
-                        ["t-word", 3, 7, ['passed stack']])
+                        ["t-word", 3, 4, ['passed stack']])
             callback.calledOnce.should.equal(true)
         })
 
@@ -34,9 +34,9 @@ describe('Highlighter/RuleProcessor', function () {
                                    ['passed stack'])
 
             callback.getCall(0).args.should.eql(
-                        ["t-word-4", 3, 7, ['passed stack']])
+                        ["t-word-4", 3, 4, ['passed stack']])
             callback.getCall(1).args.should.eql(
-                        ["t-word", 8, 14, ['passed stack']])
+                        ["t-word", 8, 6, ['passed stack']])
             callback.callCount.should.equal(2)
         })
     })
