@@ -11,3 +11,5 @@ src/highlighter/textFormatter.js
 src/ui/main.qml
 src/ui/editor.qml
 src/qtapi.js
+src/editorFile.js
+test/editorFile.js

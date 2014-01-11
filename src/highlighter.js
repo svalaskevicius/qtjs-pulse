@@ -57,33 +57,35 @@ Highlighter.highlightBlock = function ($this, text) {
 
 
 
+var buildClass = function() {
+    var builder = new qt.DynamicMetaObjectBuilder()
+    builder.setClassName("PulseEditorSyntaxHighlighter")
+    builder.setInit(function ($this) {
+        $this.connect($this, '2textareaChanged()', '1textareaChanged()')
+    })
+
+    builder.addProperty("textarea", "QObject*")
+
+    builder.addSlot('textareaChanged()', function ($this) {
+        var textArea = qt.objectFromVariant($this.property("textarea"));
+        if (textArea) {
+            var textDocument = cpgf.cast(
+                qt.objectFromVariant(textArea.property("textDocument")),
+                qt.QQuickTextDocument
+            );
+
+            if (textDocument) {
+                $this.highlighter = new Highlighter(textDocument.textDocument());
+            }
+        }
+    })
+    return qt.dynamicMetaObjects().finalizeBuild(builder)
+}
 
 module.exports = {
     register : function () {
-        var builder = new qt.DynamicMetaObjectBuilder()
-        builder.setClassName("PulseEditorSyntaxHighlighter")
-        builder.setInit(function ($this) {
-            $this.connect($this, '2textareaChanged()', '1textareaChanged()')
-        })
-
-        builder.addProperty("textarea", "QObject*")
-
-        builder.addSlot('textareaChanged()', function ($this) {
-            var textArea = qt.objectFromVariant($this.property("textarea"));
-            if (textArea) {
-                var textDocument = cpgf.cast(
-                    qt.objectFromVariant(textArea.property("textDocument")),
-                    qt.QQuickTextDocument
-                );
-
-                if (textDocument) {
-                    $this.highlighter = new Highlighter(textDocument.textDocument());
-                }
-            }
-        })
-
-        qt.finalizeAndRegisterMetaObjectBuilderToQml(
-            builder,
+        qt.qmlRegisterDynamicType(
+            buildClass(),
             "PulseEditor",
             1, 0,
             "Highlighter"
