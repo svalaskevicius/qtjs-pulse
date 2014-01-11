@@ -16,12 +16,13 @@ ApplicationWindow {
         }
     }
 
-    property list<Item> editors
+    property var editors : []
+    signal openEditor(string path)
 
-    Component.onCompleted: {
+    onOpenEditor: {
         var component = Qt.createComponent("editor.qml")
         if (component.status === Component.Ready) {
-            var editor = component.createObject(appWindow)
+            var editor = component.createObject(appWindow, {path: path})
             if (editor === null) {
                 throw new Error("cannot create editor object")
             }
@@ -29,5 +30,8 @@ ApplicationWindow {
         } else {
             throw new Error("cannot create editor")
         }
+    }
+
+    Component.onCompleted: {
     }
 }
