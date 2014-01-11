@@ -10,3 +10,4 @@ test/highlighter/textFormatter.js
 src/highlighter/textFormatter.js
 src/ui/main.qml
 src/ui/editor.qml
+src/qtapi.js

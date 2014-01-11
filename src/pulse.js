@@ -3,6 +3,8 @@
 
 cpgf.import("cpgf", "builtin.core");
 var Highlighter = require("./highlighter.js");
+var QtApi = require("./qtapi.js");
+
 
 (function () {
     Highlighter.register()
@@ -20,5 +22,10 @@ var Highlighter = require("./highlighter.js");
 
     var topLevel = component.create()
     var window = cpgf.cast(topLevel, qt.QQuickWindow)
+
+    process.argv.slice(2).forEach(function(val, index, array) {
+        QtApi.invokeSignal(topLevel, 'openEditor(QString)', [val])
+    });
+
     window.show()
 })()
