@@ -11,7 +11,6 @@ var loadFile = function(editorFile, path) {
         if (err) {
             throw new Error("Cannot read file: "+err)
         }
-        console.log(data)
         editorFile.setProperty('contents', qtapi.toVariant(data))
     })
 }
