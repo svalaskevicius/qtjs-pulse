@@ -51,6 +51,7 @@ Item {
         anchors.bottom: parent.bottom
         wrapMode: TextEdit.NoWrap
         frameVisible: false
+        text: file.contents
     }
     Highlighter {
         id: highlighter
@@ -58,10 +59,5 @@ Item {
     }
     EditorFile {
         id: file
-    }
-
-
-    Component.onCompleted: {
-        textarea.text = path
     }
 }
