@@ -7,28 +7,39 @@ var Highlighter = require("./highlighter.js"),
     EditorFile = require("./editorFile.js"),
     QtApi = require("./qtapi.js");
 
+var installConstantGc = function () {
+    var cleanerId = setInterval(function(){
+        qt.invokeV8Gc()
+    }, 0)
+    process.on('exit', function(){
+        clearInterval(cleanerId)
+    })
+};
 
 (function () {
     Highlighter.register()
     EditorFile.register()
 
-    var engine = new qt.QQmlEngine()
+    global.qmlEngine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(
-        engine,
+        global.qmlEngine,
         qt.makeIncludePathAbsolute(new qt.QString("ui/main.qml"))
     )
     if (!component.isReady()) {
         throw component.errorString().toLatin1().constData()
     }
 
-    qt.QCoreApplication.instance().connect(engine, '2quit()', '1quit()')
+    qt.QCoreApplication.instance().connect(global.qmlEngine, '2quit()', '1quit()')
 
-    var topLevel = component.create()
-    var window = cpgf.cast(topLevel, qt.QQuickWindow)
+    global.mainComponent = component.create()
 
     process.argv.slice(2).forEach(function(val, index, array) {
-        QtApi.invokeSignal(topLevel, 'openEditor(QString)', [val])
+        if (val === '--debug-gc') {
+            installConstantGc()
+        } else {
+            QtApi.invokeSignal(global.mainComponent, 'openEditor(QString)', [val])
+        }
     });
 
-    window.show()
+    cpgf.cast(global.mainComponent, qt.QQuickWindow).show()
 })()
