@@ -51,6 +51,7 @@ Item {
         wrapMode: TextEdit.NoWrap
         frameVisible: false
         text: file.contents
+        flickableItem.boundsBehavior: Flickable.DragOverBounds
     }
     Highlighter {
         id: highlighter
