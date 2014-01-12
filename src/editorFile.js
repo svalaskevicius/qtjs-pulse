@@ -1,5 +1,8 @@
 "use strict";
 
+var fs = require('fs'),
+    qtapi = require('../src/qtapi')
+
 cpgf.import("cpgf", "builtin.core")
 
 var build = function () {
@@ -8,16 +11,24 @@ var build = function () {
     builder.addProperty("contents", "QString")
     builder.addProperty("path", "QString")
 
-    builder.addSlot('textareaChanged()', function ($this) {
-//            var textArea = qt.objectFromVariant($this.property("textarea"));
+    builder.addSlot('pathChanged()', function ($this) {
+        var path = $this.property("path").toString().toLatin1().constData()
+        fs.readFile(path, function(err, data) {
+            if (err) {
+                throw new Error("Cannot read file: "+err)
+            }
+            $this.setProperty('contents', qtapi.toVariant(data))
+        })
+    })
+    builder.setInit(function ($this) {
+        $this.connect($this, '2pathChanged()', '1pathChanged()')
     })
     return qt.dynamicMetaObjects().finalizeBuild(builder)
 };
 
 module.exports = {
-    build : build(),
+    build : build,
     register : function () {
-
         qt.qmlRegisterDynamicType(
             build(),
             "PulseEditor",
@@ -25,5 +36,4 @@ module.exports = {
             "EditorFile"
         )
     }
-
 }

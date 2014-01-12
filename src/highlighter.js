@@ -12,7 +12,6 @@ myClassFormat.setFontWeight(qt.QFont.Bold);
 myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
 
 var textFormatter = new TextFormatter()
-
 textFormatter.addFormat('variable', myClassFormat)
 textFormatter.addFormat('default', myClassFormat)
 

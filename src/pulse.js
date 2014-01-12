@@ -2,12 +2,15 @@
 "use strict";
 
 cpgf.import("cpgf", "builtin.core");
-var Highlighter = require("./highlighter.js");
-var QtApi = require("./qtapi.js");
+
+var Highlighter = require("./highlighter.js"),
+    EditorFile = require("./editorFile.js"),
+    QtApi = require("./qtapi.js");
 
 
 (function () {
     Highlighter.register()
+    EditorFile.register()
 
     var engine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(

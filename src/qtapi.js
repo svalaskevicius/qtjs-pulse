@@ -2,6 +2,27 @@
 
 var _ = require("lodash")
 
+var toString = function(obj)
+{
+    if (obj instanceof qt.QVariant) {
+        obj = obj.toString()
+    }
+
+    if (obj instanceof qt.QString) {
+        return obj.toLatin1().constData()
+    }
+
+    return obj.toString()
+}
+
+var toVariant = function(obj)
+{
+    if (typeof obj === 'string') {
+        obj = new qt.QString(obj)
+    }
+    return new qt.QVariant(obj)
+}
+
 var convertInvokeArgument = function(arg)
 {
     //    int, string, qobject, qvariant, double
@@ -43,5 +64,7 @@ module.exports = {
             getMetaMethod(qobject, signalCall),
             _.map(args, convertInvokeArgument)
         )
-    }
+    },
+    toString : toString,
+    toVariant : toVariant,
 }

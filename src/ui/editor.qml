@@ -8,7 +8,7 @@ import PulseEditor 1.0
 Item {
     id: editor
     anchors.fill: parent
-    property string path: ""
+    property alias path: file.path
     Rectangle {
         id: lineColumn
         property int rowHeight: textarea.font.pixelSize + 3
@@ -55,6 +55,9 @@ Item {
     Highlighter {
         id: highlighter
         textarea: textarea
+    }
+    EditorFile {
+        id: file
     }
 
 
