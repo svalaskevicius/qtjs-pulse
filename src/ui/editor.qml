@@ -46,7 +46,7 @@ Item {
         id: textarea
         objectName: "editor"
         anchors.left: lineColumn.right
-        anchors.right: parent.right
+        width: parent.width - lineColumn.width
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         wrapMode: TextEdit.NoWrap
