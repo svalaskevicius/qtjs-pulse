@@ -44,7 +44,6 @@ Item {
     }
     TextArea {
         id: textarea
-        objectName: "editor"
         anchors.left: lineColumn.right
         width: parent.width - lineColumn.width
         anchors.top: parent.top
