@@ -6,6 +6,7 @@ var RuleMatcher = require("./highlighter/ruleMatcher.js")
 var TextProcessor = require("./highlighter/textProcessor.js")
 var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
 var TextFormatter = require("./highlighter/textFormatter.js")
+var qtapi = require("./qtapi.js")
 
 var myClassFormat = new qt.QTextCharFormat();
 myClassFormat.setFontWeight(qt.QFont.Bold);
@@ -54,16 +55,16 @@ Highlighter.highlightBlock = function ($this, text) {
     $this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
 }
 
-
-
 var buildClass = function() {
     var builder = new qt.DynamicMetaObjectBuilder()
     builder.setClassName("PulseEditorSyntaxHighlighter")
     builder.setInit(function ($this) {
         $this.connect($this, '2textareaChanged()', '1textareaChanged()')
+        qtapi.preserveQObject($this)
     })
 
     builder.addProperty("textarea", "QObject*")
+
 
     builder.addSlot('textareaChanged()', function ($this) {
         var textArea = qt.objectFromVariant($this.property("textarea"));
@@ -74,7 +75,8 @@ var buildClass = function() {
             );
 
             if (textDocument) {
-                $this.highlighter = new Highlighter(textDocument.textDocument());
+                var highlighter = new Highlighter(textDocument.textDocument());
+                qtapi.preserveQObject(highlighter)
             }
         }
     })
