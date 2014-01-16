@@ -23,47 +23,29 @@ var toVariant = function(obj)
     return new qt.QVariant(obj)
 }
 
-var convertInvokeArgument = function(arg)
-{
-    //    int, string, qobject, qvariant, double
-    if (typeof arg === 'string') {
-        arg = new qt.QString(arg)
-    }
-    if (arg instanceof qt.QString) {
-        return new qt.QStringArgument("QString", arg)
-    }
-    throw new Error("unexpected argument type: "+(typeof arg))
-}
-
-var invokeMethod = function(qobject, metaMethod, args)
-{
-    switch (args.length) {
-        case 0:
-            metaMethod.invoke(qobject)
-            break
-        case 1:
-            metaMethod.invoke(qobject, args[0])
-            break
-        default:
-            throw new Error("unexpected arguments length")
-    }
-}
-
-var getMetaMethod = function(qobject, signalCall)
-{
-    var metaObject = qobject.metaObject()
-    var idx = metaObject.indexOfSignal(signalCall)
-    return metaObject.method(idx)
-}
 
 module.exports = {
-    invokeSignal : function(qobject, signalCall, args)
+    invokeSignal : function(qobject, signature, args)
     {
-        invokeMethod(
-            qobject,
-            getMetaMethod(qobject, signalCall),
-            _.map(args, convertInvokeArgument)
-        )
+        try {
+            console.log("invoking "+signature)
+            var va = _.map(args, toVariant);
+            switch (va.length) {
+                case 0: return qt.emitSignal(qobject, signature)
+                case 1: return qt.emitSignal(qobject, signature, va[0])
+                case 2: return qt.emitSignal(qobject, signature, va[0], va[1])
+                case 3: return qt.emitSignal(qobject, signature, va[0], va[1], va[2])
+                case 4: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3])
+                case 5: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4])
+                case 6: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6])
+                case 7: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7])
+                case 8: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8])
+                case 9: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8], va[9])
+            }
+            console.log("done "+signature)
+        } catch (e) {
+            console.error(e);
+        }
     },
     toString : toString,
     toVariant : toVariant,
