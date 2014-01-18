@@ -80,7 +80,7 @@ var buildClass = function() {
             }
         }
     })
-    return qt.dynamicMetaObjects().finalizeBuild(builder)
+    return qt.dynamicQObjectManager().finalizeBuild(builder)
 }
 
 module.exports = {

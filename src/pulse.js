@@ -5,7 +5,8 @@ cpgf.import("cpgf", "builtin.core");
 
 var Highlighter = require("./highlighter.js"),
     EditorFile = require("./editorFile.js"),
-    QtApi = require("./qtapi.js");
+    QtApi = require("./qtapi.js"),
+    path = require("path");
 
 var installConstantGc = function () {
     var cleanerId = setInterval(function(){
@@ -23,7 +24,7 @@ var installConstantGc = function () {
     global.qmlEngine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(
         global.qmlEngine,
-        qt.makeIncludePathAbsolute(new qt.QString("ui/main.qml"))
+        new qt.QString(path.resolve("ui/main.qml"))
     )
     if (!component.isReady()) {
         throw component.errorString().toLatin1().constData()

@@ -37,7 +37,7 @@ var build = function () {
     builder.setInit(function ($this) {
         $this.connect($this, '2pathChanged()', '1pathChanged()')
     })
-    return qt.dynamicMetaObjects().finalizeBuild(builder)
+    return qt.dynamicQObjectManager().finalizeBuild(builder)
 };
 
 module.exports = {

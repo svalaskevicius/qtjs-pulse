@@ -6,7 +6,7 @@ var fs = require('fs'),
 
 var EditorFile = require("../src/editorFile.js")
 
-var newInstance = function(){return qt.dynamicMetaObjects().construct(EditorFile.build())}
+var newInstance = function(){return qt.dynamicQObjectManager().construct(EditorFile.build())}
 
 describe('EditorFile', function () {
     var stubRead, stubExists
