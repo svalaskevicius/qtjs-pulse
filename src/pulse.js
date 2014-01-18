@@ -24,7 +24,7 @@ var installConstantGc = function () {
     global.qmlEngine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(
         global.qmlEngine,
-        new qt.QString(path.resolve("ui/main.qml"))
+        new qt.QString(path.resolve(__dirname, "ui/main.qml"))
     )
     if (!component.isReady()) {
         throw component.errorString().toLatin1().constData()
