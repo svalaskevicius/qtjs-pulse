@@ -13,3 +13,4 @@ src/ui/editor.qml
 src/qtapi.js
 src/editorFile.js
 test/editorFile.js
+src/eventFilter.js
