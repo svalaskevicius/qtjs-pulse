@@ -5,20 +5,20 @@ cpgf.import("cpgf", "builtin.core");
 
 var Highlighter = require("./highlighter.js"),
     EditorFile = require("./editorFile.js"),
-    QtApi = require("./qtapi.js"),
+    qtapi = require("./qtapi.js"),
     path = require("path"),
     eventFilter = require("./eventFilter.js");
 
-var installConstantGc = function () {
+var installPeriodicGc = function () {
     var cleanerId = setInterval(function(){
         qt.invokeV8Gc()
-    }, 0)
+    }, 1000)
     process.on('exit', function(){
         clearInterval(cleanerId)
     })
 };
 
-(function () {
+;(function () {
     Highlighter.register()
     EditorFile.register()
 
@@ -33,7 +33,7 @@ var installConstantGc = function () {
 
     qt.QCoreApplication.instance().connect(global.qmlEngine, '2quit()', '1quit()')
 
-    global.mainComponent = component.create()
+    var mainComponent = component.create()
 
     eventFilter.addFilter(function(obj, event){
         if (qt.QEvent.KeyPress === event.type()) {
@@ -43,11 +43,11 @@ var installConstantGc = function () {
 
     process.argv.slice(2).forEach(function(val, index, array) {
         if (val === '--debug-gc') {
-            installConstantGc()
+            installPeriodicGc()
         } else {
-            QtApi.invokeSignal(global.mainComponent, 'openEditor(QString)', [val])
+            qtapi.invokeSignal(mainComponent, 'openEditor(QString)', [val])
         }
     });
 
-    cpgf.cast(global.mainComponent, qt.QQuickWindow).show()
+    cpgf.cast(mainComponent, qt.QQuickWindow).show()
 })()
