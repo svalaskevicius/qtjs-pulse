@@ -9,9 +9,12 @@ cpgf.import("cpgf", "builtin.core")
 var loadFile = function(editorFile, path) {
     fs.readFile(path, 'UTF-8', function(err, data) {
         if (err) {
-            throw new Error("Cannot read file: "+err)
+            editorFile.setProperty('error', qtapi.toVariant("Cannot read file: "+err))
+            editorFile.setProperty('contents', qtapi.toVariant(""))
+        } else {
+            editorFile.setProperty('error', qtapi.toVariant(""))
+            editorFile.setProperty('contents', qtapi.toVariant(data))
         }
-        editorFile.setProperty('contents', qtapi.toVariant(data))
     })
 }
 
@@ -30,6 +33,7 @@ var build = function () {
     builder.setClassName("PulseEditorFile")
     builder.addProperty("contents", "QString")
     builder.addProperty("path", "QString")
+    builder.addProperty("error", "QString")
 
     builder.addSlot('pathChanged()', function ($this) {
         checkAndLoadFile($this, qtapi.toString($this.property("path")))

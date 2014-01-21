@@ -25,6 +25,7 @@ describe('EditorFile', function () {
 
         var obj = newInstance()
         obj.setProperty('path', qtapi.toVariant("filepath123"))
+        qtapi.toString(obj.property('error')).should.equal('')
         qtapi.toString(obj.property('contents')).should.equal('file contents')
     })
 
@@ -34,16 +35,17 @@ describe('EditorFile', function () {
         var obj = newInstance()
         obj.setProperty('contents', qtapi.toVariant("garbage data"))
         obj.setProperty('path', qtapi.toVariant("filepath123"))
+        qtapi.toString(obj.property('error')).should.equal('')
         qtapi.toString(obj.property('contents')).should.equal('')
     })
 
     it('throws error on read error', function () {
         stubExists.withArgs('filepath123', sinon.match.any).callsArgWith(1, true)
-        stubRead.withArgs('filepath123', 'UTF-8', sinon.match.any).callsArgWith(2, new Error('test error'), undefined)
+        stubRead.withArgs('filepath123', 'UTF-8', sinon.match.any).callsArgWith(2, new Error('test error'), "")
 
-        var obj = newInstance();
-        (function(){
-            obj.setProperty('path', qtapi.toVariant("filepath123"));
-        }).should.throwError('Cannot read file: Error: test error')
+        var obj = newInstance()
+        obj.setProperty('path', qtapi.toVariant("filepath123"))
+        qtapi.toString(obj.property('error')).should.equal('Cannot read file: Error: test error')
+        qtapi.toString(obj.property('contents')).should.equal('')
     })
 })

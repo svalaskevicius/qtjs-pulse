@@ -17,6 +17,9 @@ var toString = function(obj)
 
 var toVariant = function(obj)
 {
+    if (typeof obj === 'undefined') {
+        return new qt.QVariant()
+    }
     if (typeof obj === 'string') {
         obj = new qt.QString(obj)
     }
