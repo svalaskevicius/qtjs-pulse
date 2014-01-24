@@ -127,26 +127,22 @@ describe('Highlighter/TextProcessor', function () {
             var ruleMatcherSpy = sinon.spy(ruleMatcher, 'processRules')
 
             var processor = new TextProcessor(ruleMatcher)
-            processor.addState({
-                'id' : 'root',
-                'rules' : [
+            var passedRules = [
                     {
                         'id' : 'variable',
                         'matcher' : /\$[a-z0-9_]/gi
                     }
-                ]
+                ];
+            processor.addState({
+                'id' : 'root',
+                'rules' : passedRules
             })
             processor.processLine("my text line", ['root'])
 
             ruleMatcherSpy.calledOnce.should.equal(true)
             ruleMatcherSpy.getCall(0).args.should.eql([
                 "my text line",
-                [
-                    {
-                        'id' : 'variable',
-                        'matcher' : /\$[a-z0-9_]/gi
-                    }
-                ],
+                passedRules,
                 0,
                 13,
                 ['root']
