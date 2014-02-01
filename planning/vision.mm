@@ -1,16 +1,16 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#fecf7c" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391266022856" STYLE="fork">
+<node BACKGROUND_COLOR="#fecf7c" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391268740588" STYLE="fork">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font size="8" color="#304050">&#160;&#160;Pulse&#160;&#160;&#160;</font>
+      <font size="8" color="#407090">&#160;Pulse&#160;&#160;</font>
     </p>
     <p style="text-align: right">
-      <font size="2">the extendible editor</font>
+      <font size="2">an extendible editor</font>
     </p>
   </body>
 </html>
@@ -37,7 +37,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node COLOR="#70ab75" CREATED="1391262651353" FOLDED="true" ID="ID_1670586234" MODIFIED="1391266422772" STYLE="fork" TEXT="Multiwindow UI">
+<node COLOR="#70ab75" CREATED="1391262651353" FOLDED="true" ID="ID_1670586234" MODIFIED="1391268935248" STYLE="fork" TEXT="Multiwindow UI">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 <node COLOR="#843d3d" CREATED="1391262666121" ID="ID_982395333" MODIFIED="1391266193843" STYLE="fork" TEXT="Tabbed view">
@@ -54,7 +54,7 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1391262683649" FOLDED="true" ID="ID_186232959" MODIFIED="1391266044441" POSITION="right" STYLE="fork" TEXT="ORG mode">
+<node COLOR="#5b627c" CREATED="1391262683649" FOLDED="true" ID="ID_186232959" MODIFIED="1391268939296" POSITION="right" STYLE="fork" TEXT="ORG mode">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
 <node COLOR="#70ab75" CREATED="1391262690385" ID="ID_18266979" MODIFIED="1391265375024" STYLE="fork" TEXT="Todo list">
@@ -86,7 +86,7 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1391263010590" ID="ID_958248261" MODIFIED="1391265954025" POSITION="right" STYLE="fork" TEXT="TDD support">
+<node COLOR="#5b627c" CREATED="1391263010590" FOLDED="true" ID="ID_958248261" MODIFIED="1391268942409" POSITION="right" STYLE="fork" TEXT="TDD support">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
 <node COLOR="#70ab75" CREATED="1391263024982" ID="ID_1439842889" MODIFIED="1391265375038" STYLE="fork" TEXT="Command launcher">
@@ -110,7 +110,7 @@
 <node COLOR="#5b627c" CREATED="1391262611026" ID="ID_1558419198" MODIFIED="1391265954035" POSITION="left" STYLE="fork" TEXT="Quick search">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
-<node COLOR="#70ab75" CREATED="1391262630457" FOLDED="true" ID="ID_596819894" MODIFIED="1391266415055" STYLE="fork" TEXT="PHP file info DB">
+<node COLOR="#70ab75" CREATED="1391262630457" FOLDED="true" ID="ID_596819894" MODIFIED="1391268931981" STYLE="fork" TEXT="PHP file info DB">
 <edge STYLE="bezier" WIDTH="thin"/>
 <linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="82;0;" ID="Arrow_ID_1839910351" SOURCE="ID_1309265838" STARTARROW="None" STARTINCLINATION="62;48;"/>
 <linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="138;21;" ID="Arrow_ID_403536130" SOURCE="ID_1950412173" STARTARROW="None" STARTINCLINATION="116;33;"/>
@@ -129,7 +129,7 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1391263074534" FOLDED="true" ID="ID_1950412173" MODIFIED="1391265954039" POSITION="left" STYLE="fork" TEXT="Refactoring mode">
+<node COLOR="#5b627c" CREATED="1391263074534" FOLDED="true" ID="ID_1950412173" MODIFIED="1391268933700" POSITION="left" STYLE="fork" TEXT="Refactoring mode">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <arrowlink COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="138;21;" ID="Arrow_ID_403536130" STARTARROW="None" STARTINCLINATION="116;33;"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
