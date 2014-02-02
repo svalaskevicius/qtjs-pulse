@@ -21,20 +21,16 @@ ApplicationWindow {
     signal openEditor(string path)
     signal saveCurrentEditor()
 
+    property var editorComponent : null
     onOpenEditor: {
-        var component = Qt.createComponent("editor.qml")
-        if (component.status === Component.Ready) {
-            var editor = component.createObject(appWindow, {path: path})
-            if (editor === null) {
-                throw new Error("cannot create editor object")
-            }
-            editor.activated.connect(function() {
-                activeEditor = editor
-            })
-            appWindow.editors.push(editor)
-        } else {
-            throw new Error("cannot create editor")
+        var editor = editorComponent.createObject(appWindow, {path: path, text: "ajshdvsfvsdhgfvsdfjhb vsf jshbdfjksdbf\nn"})
+        if (editor === null) {
+            throw new Error("cannot create editor object")
         }
+        editor.activated.connect(function() {
+            activeEditor = editor
+        })
+        appWindow.editors.push(editor)
     }
 
     onSaveCurrentEditor: {
@@ -44,5 +40,9 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+        editorComponent = Qt.createComponent("editor.qml")
+        if (editorComponent.status !== Component.Ready) {
+            throw new Error("cannot create editor component")
+        }
     }
 }
