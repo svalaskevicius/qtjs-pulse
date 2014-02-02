@@ -21,15 +21,14 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 <icon BUILTIN="full-3"/>
 </node>
-<node COLOR="#70ab75" CREATED="1391262928287" ID="ID_209631229" MODIFIED="1391302993258" STYLE="fork" TEXT="Save file as">
+<node COLOR="#70ab75" CREATED="1391262928287" ID="ID_209631229" MODIFIED="1391371211617" STYLE="fork" TEXT="Save file as">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-7"/>
 </node>
-<node COLOR="#70ab75" CREATED="1391262651353" ID="ID_1670586234" MODIFIED="1391302902440" STYLE="fork" TEXT="Multiwindow UI">
+<node COLOR="#70ab75" CREATED="1391262651353" ID="ID_1670586234" MODIFIED="1391371354447" STYLE="fork" TEXT="Multiwindow UI">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-4"/>
+<icon BUILTIN="full-2"/>
 <node COLOR="#843d3d" CREATED="1391262666121" ID="ID_982395333" MODIFIED="1391302899406" STYLE="fork" TEXT="Tabbed view">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
@@ -38,10 +37,19 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
 </node>
+<node COLOR="#843d3d" CREATED="1391371280845" ID="ID_193414290" MODIFIED="1391371284208" TEXT="Close view">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#70ab75" CREATED="1391266203776" ID="ID_1235105366" MODIFIED="1391302450470" TEXT="VIM-like keybindings">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391371301916" ID="ID_57301625" MODIFIED="1391371327215" TEXT="Configure monospace font">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-1"/>
 </node>
 </node>
 <node COLOR="#5b627c" CREATED="1391262683649" ID="ID_186232959" MODIFIED="1391302450473" POSITION="right" STYLE="fork" TEXT="ORG mode">
@@ -95,10 +103,10 @@
 <node COLOR="#5b627c" CREATED="1391262576182" HGAP="48" ID="ID_706543480" MODIFIED="1391302450505" POSITION="left" STYLE="fork" TEXT="Syntax highlighting" VSHIFT="-14">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
-<node COLOR="#70ab75" CREATED="1391262597394" ID="ID_1905292232" MODIFIED="1391302866929" STYLE="fork" TEXT="PHP">
+<node COLOR="#70ab75" CREATED="1391262597394" ID="ID_1905292232" MODIFIED="1391371220938" STYLE="fork" TEXT="PHP">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-2"/>
+<icon BUILTIN="full-1"/>
 </node>
 <node COLOR="#70ab75" CREATED="1391262855111" ID="ID_1309265838" MODIFIED="1391302567052" STYLE="fork" TEXT="Semantic highlighting">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -109,13 +117,13 @@
 <node COLOR="#5b627c" CREATED="1391262611026" HGAP="37" ID="ID_1558419198" MODIFIED="1391302809035" POSITION="left" STYLE="fork" TEXT="Quick search" VSHIFT="-3">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
-<node COLOR="#70ab75" CREATED="1391262630457" ID="ID_596819894" MODIFIED="1391302913986" STYLE="fork" TEXT="PHP file info DB">
+<node COLOR="#70ab75" CREATED="1391262630457" ID="ID_596819894" MODIFIED="1391371233273" STYLE="fork" TEXT="PHP file info DB">
 <edge STYLE="bezier" WIDTH="thin"/>
 <linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="13;-19;" ID="Arrow_ID_445999172" SOURCE="ID_1309265838" STARTARROW="None" STARTINCLINATION="-33;15;"/>
 <linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="31;14;" ID="Arrow_ID_231215812" SOURCE="ID_715367007" STARTARROW="None" STARTINCLINATION="16;-10;"/>
 <linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="-86;17;" ID="Arrow_ID_616255692" SOURCE="ID_1950412173" STARTARROW="None" STARTINCLINATION="-2;-17;"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-5"/>
+<icon BUILTIN="full-2"/>
 <node COLOR="#843d3d" CREATED="1391266335580" ID="ID_1386979849" MODIFIED="1391302450515" TEXT="Parse PHP">
 <edge WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
@@ -125,10 +133,10 @@
 <font NAME="Ubuntu Light" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#70ab75" CREATED="1391262640339" ID="ID_460440990" MODIFIED="1391302931275" STYLE="fork" TEXT="UI for filtering">
+<node COLOR="#70ab75" CREATED="1391262640339" ID="ID_460440990" MODIFIED="1391371239593" STYLE="fork" TEXT="UI for filtering">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-6"/>
+<icon BUILTIN="full-3"/>
 </node>
 </node>
 <node COLOR="#5b627c" CREATED="1391283727699" ID="ID_408300749" MODIFIED="1391302450521" POSITION="left" TEXT="Code completion">
