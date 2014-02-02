@@ -17,7 +17,9 @@ ApplicationWindow {
     }
 
     property var editors : []
+    property var activeEditor : null
     signal openEditor(string path)
+    signal saveCurrentEditor()
 
     onOpenEditor: {
         var component = Qt.createComponent("editor.qml")
@@ -26,9 +28,18 @@ ApplicationWindow {
             if (editor === null) {
                 throw new Error("cannot create editor object")
             }
+            editor.activated.connect(function() {
+                activeEditor = editor
+            })
             appWindow.editors.push(editor)
         } else {
             throw new Error("cannot create editor")
+        }
+    }
+
+    onSaveCurrentEditor: {
+        if (activeEditor) {
+            activeEditor.save()
         }
     }
 

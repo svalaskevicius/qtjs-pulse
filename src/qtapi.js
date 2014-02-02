@@ -9,7 +9,7 @@ var toString = function(obj)
     }
 
     if (obj instanceof qt.QString) {
-        return obj.toLatin1().constData()
+        return obj.toUtf8().constData()
     }
 
     return obj.toString()

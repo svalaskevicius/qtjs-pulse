@@ -7,8 +7,13 @@ import PulseEditor 1.0
 
 Item {
     id: editor
+
+    signal activated()
+    signal save()
+
     anchors.fill: parent
     property alias path: file.path
+
     Rectangle {
         id: lineColumn
         property int rowHeight: textarea.font.pixelSize + 3
@@ -42,6 +47,7 @@ Item {
             }
         }
     }
+
     TextArea {
         id: textarea
         anchors.left: lineColumn.right
@@ -52,12 +58,24 @@ Item {
         frameVisible: false
         text: file.contents
         flickableItem.boundsBehavior: Flickable.DragOverBounds
+        onActiveFocusChanged: {
+            if (activeFocus) {
+                editor.activated()
+            }
+        }
     }
+
     Highlighter {
         id: highlighter
         textarea: textarea
     }
+
     EditorFile {
         id: file
+    }
+
+    onSave: {
+        file.contents = textarea.text
+        file.save()
     }
 }

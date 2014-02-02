@@ -37,7 +37,13 @@ var installPeriodicGc = function () {
 
     eventFilter.addFilter(function(obj, event){
         if (qt.QEvent.KeyPress === event.type()) {
-            console.log("key pressed")
+            var asQKeyEvent = cpgf.cast(event, qt.QKeyEvent)
+            if (asQKeyEvent) {
+                if (asQKeyEvent.modifiers().testFlag(qt.KeyboardModifier.ControlModifier) && asQKeyEvent.key() == qt.Key_S) {
+                    qtapi.emit(mainComponent, 'saveCurrentEditor()')
+                    return true;
+                }
+            }
         }
     });
 
