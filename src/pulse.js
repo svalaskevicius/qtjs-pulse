@@ -45,7 +45,7 @@ var installPeriodicGc = function () {
         if (val === '--debug-gc') {
             installPeriodicGc()
         } else {
-            qtapi.invokeSignal(mainComponent, 'openEditor(QString)', [val])
+            qtapi.emit(mainComponent, 'openEditor(QString)', [val])
         }
     });
 
