@@ -18,7 +18,7 @@ Item {
         id: lineColumn
         property int rowHeight: textarea.font.pixelSize + 3
         color: "#f2f2f2"
-        width: 50
+        width: 40
         height: parent.height
         clip: true
         Rectangle {
@@ -31,18 +31,17 @@ Item {
             y: -textarea.flickableItem.contentY + 4
             width: parent.width
             Repeater {
-                model: Math.max(textarea.lineCount + 2,
-                                (lineColumn.height / lineColumn.rowHeight))
+                model: textarea.lineCount
                 delegate: Text {
                     id: text
-                    color: "#666"
+                    color: "#555"
                     font: textarea.font
                     width: lineColumn.width
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     height: lineColumn.rowHeight
                     renderType: Text.NativeRendering
-                    text: index
+                    text: index+1
                 }
             }
         }
