@@ -1,8 +1,9 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#edebc5" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391302618006" TEXT="Pulse">
+<node BACKGROUND_COLOR="#edebc5" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391374556666" TEXT="Pulse">
 <edge WIDTH="2"/>
 <font NAME="Ubuntu Light" SIZE="30"/>
+<icon BUILTIN="launch"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#5b627c" CREATED="1391266250349" ID="ID_1399482847" MODIFIED="1391302450450" POSITION="right" TEXT="Plugin system">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
@@ -113,6 +114,11 @@
 <arrowlink COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="13;-19;" ID="Arrow_ID_445999172" STARTARROW="None" STARTINCLINATION="-33;15;"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
+<node COLOR="#70ab75" CREATED="1391374309800" ID="ID_1529487784" MODIFIED="1391374446154" TEXT="Fix block highlighting repainting&#xa;e.g. starting a block comment doesn&apos;t&#xa;repaint next lines">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="broken-line"/>
+</node>
 </node>
 <node COLOR="#5b627c" CREATED="1391262611026" HGAP="37" ID="ID_1558419198" MODIFIED="1391302809035" POSITION="left" STYLE="fork" TEXT="Quick search" VSHIFT="-3">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
@@ -185,6 +191,34 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 <node COLOR="#70ab75" CREATED="1391263186157" ID="ID_1542364766" MODIFIED="1391302450546" STYLE="fork" TEXT="Rename variable">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#5b627c" CREATED="1391374264628" ID="ID_754696032" MODIFIED="1391374268295" POSITION="right" TEXT="Usability">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391374270009" ID="ID_665917625" MODIFIED="1391374291932" TEXT="Shortcut for (un-)comment line(s)">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#5b627c" CREATED="1391374557646" ID="ID_446520869" MODIFIED="1391374592985" POSITION="left" TEXT="Charts">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+</node>
+<node COLOR="#5b627c" CREATED="1391374610207" ID="ID_40623929" MODIFIED="1391374613385" POSITION="right" TEXT="Documentation">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391374614854" ID="ID_1179073214" MODIFIED="1391374622429" TEXT="How to debug ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391374624541" ID="ID_587407073" MODIFIED="1391374630289" TEXT="How to profile">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391374630605" ID="ID_1056426282" MODIFIED="1391374638025" TEXT="How to implement plugins">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
