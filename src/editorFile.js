@@ -28,18 +28,32 @@ var checkAndLoadFile = function(editorFile, path) {
     })
 }
 
+var saveFile = function(editorFile) {
+    fs.writeFile(qtapi.toString(editorFile.property("path")), qtapi.toString(editorFile.property("contents")), function(err) {
+        if (err) {
+            editorFile.setProperty('error', qtapi.toVariant("Cannot write file: "+err))
+        } else {
+            qtapi.emit(editorFile, 'saved()')
+        }
+    })
+}
+
 var build = function () {
     var builder = new qt.DynamicMetaObjectBuilder()
     builder.setClassName("PulseEditorFile")
     builder.addProperty("contents", "QString")
     builder.addProperty("path", "QString")
     builder.addProperty("error", "QString")
+    builder.addSignal("saved()", new qt.QStringList())
 
     builder.addSlot('pathChanged()', function ($this) {
         checkAndLoadFile($this, qtapi.toString($this.property("path")))
     })
     builder.setInit(function ($this) {
         $this.connect($this, '2pathChanged()', '1pathChanged()')
+    })
+    builder.addSlot('save()', function ($this) {
+        saveFile($this)
     })
     return qt.dynamicQObjectManager().finalizeBuild(builder)
 };
