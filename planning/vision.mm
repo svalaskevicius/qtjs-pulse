@@ -1,175 +1,184 @@
-<map version="freeplane 1.2.0">
-<!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="Pulse" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" ID="ID_981277698" CREATED="1390952474693" MODIFIED="1391285330772">
-<hook NAME="accessories/plugins/AutomaticLayout.properties" VALUE="ALL"/>
-<hook NAME="MapStyle" zoom="1.331">
-    <properties show_icon_for_attributes="true"/>
-
-<map_styles>
-<stylenode LOCALIZED_TEXT="styles.root_node">
-<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right">
-<stylenode LOCALIZED_TEXT="default" MAX_WIDTH="600" COLOR="#000000" STYLE="as_parent">
-<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
-<stylenode LOCALIZED_TEXT="defaultstyle.note"/>
-<stylenode LOCALIZED_TEXT="defaultstyle.floating">
-<edge STYLE="hide_edge"/>
-<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
-</stylenode>
-</stylenode>
-<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right">
-<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
-<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="styles.important">
-<icon BUILTIN="yes"/>
-</stylenode>
-</stylenode>
-<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right">
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#424f6b" BACKGROUND_COLOR="#ece4d3" STYLE="bubble">
-<font NAME="Ubuntu Light" SIZE="20"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#515f96" STYLE="fork">
+<map version="1.0.1">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node BACKGROUND_COLOR="#edebc5" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391302618006" TEXT="Pulse">
+<edge WIDTH="2"/>
+<font NAME="Ubuntu Light" SIZE="30"/>
+<hook NAME="accessories/plugins/AutomaticLayout.properties"/>
+<node COLOR="#5b627c" CREATED="1391266250349" ID="ID_1399482847" MODIFIED="1391302450450" POSITION="right" TEXT="Plugin system">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+</node>
+<node COLOR="#5b627c" CREATED="1391262313474" ID="ID_18708044" MODIFIED="1391302450452" POSITION="right" STYLE="fork" TEXT="File editing">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391262348303" ID="ID_1806130921" MODIFIED="1391302860205" STYLE="fork" TEXT="Save file">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<edge STYLE="sharp_bezier" WIDTH="1"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#55b774" STYLE="fork">
+<icon BUILTIN="full-1"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262922119" ID="ID_1087746071" MODIFIED="1391302883803" STYLE="fork" TEXT="New file">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-3"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262928287" ID="ID_209631229" MODIFIED="1391302993258" STYLE="fork" TEXT="Save file as">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-7"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262651353" ID="ID_1670586234" MODIFIED="1391302902440" STYLE="fork" TEXT="Multiwindow UI">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-4"/>
+<node COLOR="#843d3d" CREATED="1391262666121" ID="ID_982395333" MODIFIED="1391302899406" STYLE="fork" TEXT="Tabbed view">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+<node COLOR="#843d3d" CREATED="1391262672697" ID="ID_1285239714" MODIFIED="1391302450467" STYLE="fork" TEXT="Split view">
 <edge STYLE="bezier" WIDTH="thin"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#ba4d4d">
-<font NAME="Ubuntu Light" SIZE="12"/>
-</stylenode>
-<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#5b5b5b">
-<font NAME="Ubuntu Light" SIZE="10"/>
-</stylenode>
-</stylenode>
-</stylenode>
-</map_styles>
-</hook>
-<edge WIDTH="thin"/>
-<hook NAME="AutomaticEdgeColor" COUNTER="0"/>
-<node TEXT="Plugin system" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_1399482847" CREATED="1391266250349" MODIFIED="1391285327931">
-<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
 </node>
-<node TEXT="File editing" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_18708044" CREATED="1391262313474" MODIFIED="1391285327936" STYLE="fork">
-<edge WIDTH="thin"/>
-<node TEXT="Save file" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1806130921" CREATED="1391262348303" MODIFIED="1391285327938" STYLE="fork">
-<edge WIDTH="thin"/>
 </node>
-<node TEXT="New file" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1087746071" CREATED="1391262922119" MODIFIED="1391285327939" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Save file as" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_209631229" CREATED="1391262928287" MODIFIED="1391285327940" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Multiwindow UI" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1670586234" CREATED="1391262651353" MODIFIED="1391285327941" STYLE="fork">
-<edge WIDTH="thin"/>
-<node TEXT="Tabbed view" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_982395333" CREATED="1391262666121" MODIFIED="1391285327942" STYLE="fork">
+<node COLOR="#70ab75" CREATED="1391266203776" ID="ID_1235105366" MODIFIED="1391302450470" TEXT="VIM-like keybindings">
 <edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="Split view" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1285239714" CREATED="1391262672697" MODIFIED="1391285327943" STYLE="fork">
+</node>
+<node COLOR="#5b627c" CREATED="1391262683649" ID="ID_186232959" MODIFIED="1391302450473" POSITION="right" STYLE="fork" TEXT="ORG mode">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391262690385" ID="ID_18266979" MODIFIED="1391302450475" STYLE="fork" TEXT="Todo list">
 <edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262759129" ID="ID_615671935" MODIFIED="1391302450478" STYLE="fork" TEXT="Day planning">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262791272" ID="ID_1683561502" MODIFIED="1391302450480" STYLE="fork" TEXT="History">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262806528" ID="ID_1075456449" MODIFIED="1391302450483" STYLE="fork" TEXT="Additional info (e.g. time spent)">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262821960" ID="ID_1875510409" MODIFIED="1391302450485" STYLE="fork" TEXT="Find stinking tasks that never get done">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262833704" ID="ID_1585344229" MODIFIED="1391302450488" STYLE="fork" TEXT="Kanban view">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262896687" ID="ID_1427737763" MODIFIED="1391302450490" STYLE="fork" TEXT="Integrate with Jira">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
-<node TEXT="VIM-like keybindings" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1235105366" CREATED="1391266203776" MODIFIED="1391285327943">
+<node COLOR="#5b627c" CREATED="1391263010590" ID="ID_958248261" MODIFIED="1391302450493" POSITION="right" STYLE="fork" TEXT="TDD support">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391263024982" ID="ID_1439842889" MODIFIED="1391302450496" STYLE="fork" TEXT="Command launcher">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391285711878" ID="ID_130048023" MODIFIED="1391302450499" TEXT="UI for specs / terminal emulation">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391285782253" ID="ID_70671748" MODIFIED="1391302450502" TEXT="On file changed handlers">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#5b627c" CREATED="1391262576182" HGAP="48" ID="ID_706543480" MODIFIED="1391302450505" POSITION="left" STYLE="fork" TEXT="Syntax highlighting" VSHIFT="-14">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391262597394" ID="ID_1905292232" MODIFIED="1391302866929" STYLE="fork" TEXT="PHP">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-2"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391262855111" ID="ID_1309265838" MODIFIED="1391302567052" STYLE="fork" TEXT="Semantic highlighting">
+<edge STYLE="bezier" WIDTH="thin"/>
+<arrowlink COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="13;-19;" ID="Arrow_ID_445999172" STARTARROW="None" STARTINCLINATION="-33;15;"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#5b627c" CREATED="1391262611026" HGAP="37" ID="ID_1558419198" MODIFIED="1391302809035" POSITION="left" STYLE="fork" TEXT="Quick search" VSHIFT="-3">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391262630457" ID="ID_596819894" MODIFIED="1391302913986" STYLE="fork" TEXT="PHP file info DB">
+<edge STYLE="bezier" WIDTH="thin"/>
+<linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="13;-19;" ID="Arrow_ID_445999172" SOURCE="ID_1309265838" STARTARROW="None" STARTINCLINATION="-33;15;"/>
+<linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="31;14;" ID="Arrow_ID_231215812" SOURCE="ID_715367007" STARTARROW="None" STARTINCLINATION="16;-10;"/>
+<linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="-86;17;" ID="Arrow_ID_616255692" SOURCE="ID_1950412173" STARTARROW="None" STARTINCLINATION="-2;-17;"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-5"/>
+<node COLOR="#843d3d" CREATED="1391266335580" ID="ID_1386979849" MODIFIED="1391302450515" TEXT="Parse PHP">
 <edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
 </node>
-</node>
-<node TEXT="ORG mode" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_186232959" CREATED="1391262683649" MODIFIED="1391285327944" STYLE="fork">
+<node COLOR="#843d3d" CREATED="1391266374460" ID="ID_231910203" MODIFIED="1391302450516" TEXT="(Json) DB integration">
 <edge WIDTH="thin"/>
-<node TEXT="Todo list" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_18266979" CREATED="1391262690385" MODIFIED="1391285327945" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Day planning" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_615671935" CREATED="1391262759129" MODIFIED="1391285327946" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="History" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1683561502" CREATED="1391262791272" MODIFIED="1391285327948" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Additional info (e.g. time spent)" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1075456449" CREATED="1391262806528" MODIFIED="1391285327948" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Find stinking tasks that never get done" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1875510409" CREATED="1391262821960" MODIFIED="1391285327949" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Kanban view" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1585344229" CREATED="1391262833704" MODIFIED="1391285327950" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Integrate with Jira" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1427737763" CREATED="1391262896687" MODIFIED="1391285327951" STYLE="fork">
-<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
 </node>
 </node>
-<node TEXT="TDD support" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_958248261" CREATED="1391263010590" MODIFIED="1391285327951" STYLE="fork">
-<edge WIDTH="thin"/>
-<node TEXT="Command launcher" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1439842889" CREATED="1391263024982" MODIFIED="1391285327952" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="UI for specs / terminal emulation" ID="ID_130048023" CREATED="1391285711878" MODIFIED="1391285781596"/>
-<node TEXT="On file changed handlers" ID="ID_70671748" CREATED="1391285782253" MODIFIED="1391285793792"/>
-</node>
-<node TEXT="Syntax highlighting" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_706543480" CREATED="1391262576182" MODIFIED="1391285327953" STYLE="fork" HGAP="48" VSHIFT="-14">
-<edge WIDTH="thin"/>
-<node TEXT="PHP" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1905292232" CREATED="1391262597394" MODIFIED="1391285327954" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Semantic highlighting" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1309265838" CREATED="1391262855111" MODIFIED="1391285575750" STYLE="fork">
-<arrowlink SHAPE="CUBIC_CURVE" COLOR="#b0b0b0" WIDTH="2" TRANSPARENCY="255" FONT_SIZE="12" FONT_FAMILY="Ubuntu Light" DESTINATION="ID_596819894" STARTINCLINATION="-25;18;" ENDINCLINATION="14;-24;" STARTARROW="NONE" ENDARROW="DEFAULT"/>
-<edge WIDTH="thin"/>
+<node COLOR="#70ab75" CREATED="1391262640339" ID="ID_460440990" MODIFIED="1391302931275" STYLE="fork" TEXT="UI for filtering">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="full-6"/>
 </node>
 </node>
-<node TEXT="Quick search" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_1558419198" CREATED="1391262611026" MODIFIED="1391285620238" STYLE="fork" HGAP="44" VSHIFT="-20">
-<edge WIDTH="thin"/>
-<node TEXT="PHP file info DB" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_596819894" CREATED="1391262630457" MODIFIED="1391285327956" STYLE="fork">
-<linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="82;0;" ID="Arrow_ID_1839910351" SOURCE="ID_1309265838" STARTARROW="None" STARTINCLINATION="62;48;"/>
-<linktarget COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="138;21;" ID="Arrow_ID_403536130" SOURCE="ID_1950412173" STARTARROW="None" STARTINCLINATION="116;33;"/>
-<edge WIDTH="thin"/>
-<node TEXT="Parse PHP" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1386979849" CREATED="1391266335580" MODIFIED="1391285327957">
-<edge WIDTH="thin"/>
+<node COLOR="#5b627c" CREATED="1391283727699" ID="ID_408300749" MODIFIED="1391302450521" POSITION="left" TEXT="Code completion">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391284760197" ID="ID_715367007" MODIFIED="1391302562646" TEXT="Filter suggestibles by scope">
+<edge STYLE="bezier" WIDTH="thin"/>
+<arrowlink DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="31;14;" ID="Arrow_ID_231215812" STARTARROW="None" STARTINCLINATION="16;-10;"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="(Json) DB integration" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_231910203" CREATED="1391266374460" MODIFIED="1391285368842">
-<edge WIDTH="thin"/>
+<node COLOR="#70ab75" CREATED="1391284710614" ID="ID_17523034" MODIFIED="1391302450527" TEXT="Find out the current scope">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391300799532" ID="ID_677365363" MODIFIED="1391302450529" TEXT="Custom framework support">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391284741069" ID="ID_288750474" MODIFIED="1391302450532" TEXT="UI for code completion">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
-<node TEXT="UI for filtering" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_460440990" CREATED="1391262640339" MODIFIED="1391285327959" STYLE="fork">
-<edge WIDTH="thin"/>
+<node COLOR="#5b627c" CREATED="1391263074534" ID="ID_1950412173" MODIFIED="1391302450534" POSITION="left" STYLE="fork" TEXT="Refactoring mode">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<arrowlink COLOR="#b0b0b0" DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="-86;17;" ID="Arrow_ID_616255692" STARTARROW="None" STARTINCLINATION="-2;-17;"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391263154573" ID="ID_338603600" MODIFIED="1391302450536" STYLE="fork" TEXT="Extract constant">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
+<node COLOR="#70ab75" CREATED="1391263145061" ID="ID_410034762" MODIFIED="1391302450538" STYLE="fork" TEXT="Extract method">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="Code completion" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_408300749" CREATED="1391283727699" MODIFIED="1391285327960">
-<edge WIDTH="thin"/>
-<node TEXT="Filter suggestibles by scope" ID="ID_715367007" CREATED="1391284760197" MODIFIED="1391285579126">
-<arrowlink SHAPE="CUBIC_CURVE" COLOR="#000000" WIDTH="2" TRANSPARENCY="80" FONT_SIZE="12" FONT_FAMILY="Ubuntu Light" DESTINATION="ID_596819894" STARTINCLINATION="-5;-9;" ENDINCLINATION="48;12;" STARTARROW="NONE" ENDARROW="DEFAULT"/>
+<node COLOR="#70ab75" CREATED="1391263134901" ID="ID_1436676118" MODIFIED="1391302450540" STYLE="fork" TEXT="Extract variable">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="Find out the current scope" ID="ID_17523034" CREATED="1391284710614" MODIFIED="1391285327961"/>
-<node TEXT="UI for code completion" ID="ID_288750474" CREATED="1391284741069" MODIFIED="1391285327963"/>
+<node COLOR="#70ab75" CREATED="1391263192636" ID="ID_360216419" MODIFIED="1391302450542" STYLE="fork" TEXT="Rename class">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="Refactoring mode" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_1950412173" CREATED="1391263074534" MODIFIED="1391285553999" STYLE="fork">
-<arrowlink SHAPE="CUBIC_CURVE" COLOR="#b0b0b0" WIDTH="2" TRANSPARENCY="255" FONT_SIZE="12" FONT_FAMILY="Ubuntu Light" DESTINATION="ID_596819894" STARTINCLINATION="-2;-17;" ENDINCLINATION="-86;17;" STARTARROW="NONE" ENDARROW="DEFAULT"/>
-<edge WIDTH="thin"/>
-<node TEXT="Extract constant" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_338603600" CREATED="1391263154573" MODIFIED="1391285327965" STYLE="fork">
-<edge WIDTH="thin"/>
+<node COLOR="#70ab75" CREATED="1391263162949" ID="ID_1866748885" MODIFIED="1391302450544" STYLE="fork" TEXT="Rename method">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
-<node TEXT="Extract method" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_410034762" CREATED="1391263145061" MODIFIED="1391285327967" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Extract variable" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1436676118" CREATED="1391263134901" MODIFIED="1391285327968" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Rename class" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_360216419" CREATED="1391263192636" MODIFIED="1391285327969" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Rename method" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1866748885" CREATED="1391263162949" MODIFIED="1391285327970" STYLE="fork">
-<edge WIDTH="thin"/>
-</node>
-<node TEXT="Rename variable" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1542364766" CREATED="1391263186157" MODIFIED="1391285327971" STYLE="fork">
-<edge WIDTH="thin"/>
+<node COLOR="#70ab75" CREATED="1391263186157" ID="ID_1542364766" MODIFIED="1391302450546" STYLE="fork" TEXT="Rename variable">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 </node>
 </node>
