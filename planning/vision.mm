@@ -1,9 +1,8 @@
 <map version="1.0.1">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node BACKGROUND_COLOR="#edebc5" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391374556666" TEXT="Pulse">
+<node BACKGROUND_COLOR="#edebc5" COLOR="#454e66" CREATED="1390952474693" ID="ID_981277698" MODIFIED="1391374923186" TEXT="Pulse">
 <edge WIDTH="2"/>
 <font NAME="Ubuntu Light" SIZE="30"/>
-<icon BUILTIN="launch"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#5b627c" CREATED="1391266250349" ID="ID_1399482847" MODIFIED="1391302450450" POSITION="right" TEXT="Plugin system">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
@@ -81,6 +80,10 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
 <node COLOR="#70ab75" CREATED="1391262896687" ID="ID_1427737763" MODIFIED="1391302450490" STYLE="fork" TEXT="Integrate with Jira">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391628794333" ID="ID_17560756" MODIFIED="1391628809160" TEXT="Integrate with Google Calendar">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
