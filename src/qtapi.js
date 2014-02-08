@@ -21,7 +21,7 @@ var toVariant = function(obj)
         return new qt.QVariant()
     }
     if (typeof obj === 'string') {
-        obj = new qt.QString(obj)
+        obj = qt.QString.fromUtf8(obj)
     }
     return new qt.QVariant(obj)
 }
