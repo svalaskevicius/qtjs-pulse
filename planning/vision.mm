@@ -103,6 +103,10 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 </node>
+<node COLOR="#70ab75" CREATED="1391812372147" ID="ID_1370482576" MODIFIED="1391812386764" TEXT="Transformation Priority Premise score calculator">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#5b627c" CREATED="1391262576182" HGAP="48" ID="ID_706543480" MODIFIED="1391302450505" POSITION="left" STYLE="fork" TEXT="Syntax highlighting" VSHIFT="-14">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
@@ -209,6 +213,14 @@
 <node COLOR="#5b627c" CREATED="1391374557646" ID="ID_446520869" MODIFIED="1391374592985" POSITION="left" TEXT="Charts">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
+<node COLOR="#70ab75" CREATED="1391812480248" ID="ID_710239473" MODIFIED="1391812520762" TEXT="Cyclomatic complexity / time|commit|tests">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391812408951" ID="ID_257029789" MODIFIED="1391812460269" TEXT="Transformation Priority Premise score / time|commits|tests">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#5b627c" CREATED="1391374610207" ID="ID_40623929" MODIFIED="1391374613385" POSITION="right" TEXT="Documentation">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
