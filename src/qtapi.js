@@ -33,7 +33,6 @@ var emit = function(qobject, signature, args)
         args = []
     }
     try {
-        console.log("emitting "+signature)
         var va = _.map(args, toVariant);
         switch (va.length) {
             case 0: return qt.emitSignal(qobject, signature)
@@ -47,7 +46,6 @@ var emit = function(qobject, signature, args)
             case 8: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8])
             case 9: return qt.emitSignal(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8], va[9])
         }
-        console.log("done "+signature)
     } catch (e) {
         console.error(e);
     }
@@ -59,7 +57,6 @@ var invoke = function(qobject, signature, args)
         args = []
     }
     try {
-        console.log("invoking "+signature)
         var va = _.map(args, toVariant);
         switch (va.length) {
             case 0: return qt.invoke(qobject, signature)
@@ -73,7 +70,6 @@ var invoke = function(qobject, signature, args)
             case 8: return qt.invoke(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8])
             case 9: return qt.invoke(qobject, signature, va[0], va[1], va[2], va[3], va[4], va[6], va[7], va[8], va[9])
         }
-        console.log("done "+signature)
     } catch (e) {
         console.error(e);
     }
