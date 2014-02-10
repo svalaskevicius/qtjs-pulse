@@ -52,7 +52,7 @@
 <icon BUILTIN="full-1"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1391262683649" ID="ID_186232959" MODIFIED="1391302450473" POSITION="right" STYLE="fork" TEXT="ORG mode">
+<node COLOR="#5b627c" CREATED="1391262683649" ID="ID_186232959" MODIFIED="1392071280202" POSITION="right" STYLE="fork" TEXT="ORG mode">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
 <node COLOR="#70ab75" CREATED="1391262690385" ID="ID_18266979" MODIFIED="1391302450475" STYLE="fork" TEXT="Todo list">
@@ -141,7 +141,11 @@
 <edge WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
 </node>
-<node COLOR="#843d3d" CREATED="1391266374460" ID="ID_231910203" MODIFIED="1391302450516" TEXT="(Json) DB integration">
+<node COLOR="#843d3d" CREATED="1391266374460" ID="ID_231910203" MODIFIED="1392071654716" TEXT="(Json) DB integration for project">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+<node COLOR="#843d3d" CREATED="1392071635118" ID="ID_92690834" MODIFIED="1392071640842" TEXT="Lucene integration">
 <edge WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="14"/>
 </node>
@@ -152,9 +156,31 @@
 <icon BUILTIN="full-3"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1391283727699" ID="ID_408300749" MODIFIED="1391302450521" POSITION="left" TEXT="Code completion">
+<node COLOR="#5b627c" CREATED="1392071369055" ID="ID_1247313044" MODIFIED="1392071710144" POSITION="left" TEXT="Project support">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
+<icon BUILTIN="full-1"/>
+<node COLOR="#70ab75" CREATED="1392071378216" ID="ID_999701170" MODIFIED="1392071390068" TEXT="Load sources directory">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<node COLOR="#843d3d" CREATED="1392071463599" ID="ID_1879463907" MODIFIED="1392071654716" TEXT="Create .pulse/ project directory">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#70ab75" CREATED="1392071391056" ID="ID_146877171" MODIFIED="1392071410059" TEXT="Configuration manager">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<node COLOR="#843d3d" CREATED="1392071420073" ID="ID_172108201" MODIFIED="1392071444620" TEXT="As json in .pulse/">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+</node>
+</node>
+<node COLOR="#5b627c" CREATED="1391283727699" ID="ID_408300749" MODIFIED="1392071744127" POSITION="left" TEXT="Code completion">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<icon BUILTIN="full-3"/>
 <node COLOR="#70ab75" CREATED="1391284760197" ID="ID_715367007" MODIFIED="1391302562646" TEXT="Filter suggestibles by scope">
 <edge STYLE="bezier" WIDTH="thin"/>
 <arrowlink DESTINATION="ID_596819894" ENDARROW="Default" ENDINCLINATION="31;14;" ID="Arrow_ID_231215812" STARTARROW="None" STARTINCLINATION="16;-10;"/>
