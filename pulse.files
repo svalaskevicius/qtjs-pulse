@@ -14,3 +14,6 @@ src/qtapi.js
 src/editorFile.js
 test/editorFile.js
 src/eventFilter.js
+src/highlighter/languages/php.json
+test/highlighter/languageLoader.js
+src/highlighter/languageLoader.js

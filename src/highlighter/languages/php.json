@@ -1,0 +1,25 @@
+[
+    {
+        "id": "default",
+        "rules": [
+            {
+                "id": "variable",
+                "matcher": "$[a-z0-9_]+"
+            }
+        ],
+        "contains": [
+            "comment"
+        ]
+    },
+    {
+        "id": "comment",
+        "start": "/*",
+        "end": "*/",
+        "rules": [
+            {
+                "id": "default",
+                "matcher": "([^*]|*(?!/))+"
+            }
+        ]
+    }
+]
