@@ -26,19 +26,29 @@ describe('Highlighter/LanguageLoader', function () {
             target.states.should.eql(lang)
         })
 
-        it('loads converts string matcher to regexp', function () {
+        var it_converts_string_to_regexp = function(name) {
             var target = new TextProcessor()
             var loader = new LanguageLoader(target)
-            loader.load('testLang', [
-                            {
-                                "id": "default",
-                                "matcher": "regexp[0-9]/*",
-                                "matcher-flags": "gi"
-                            }
-                        ])
-            target.states[0].matcher.should.eql(new RegExp("regexp[0-9]/*", "gi"))
-            target.states[0].should.not.have.ownProperty('matcher-flags')
+            var def = {
+                "id": "default"
+            }
+            def[name] = "regexp[0-9]/*"
+            def[name+"-flags"] = "gi"
+            loader.load('testLang', [def])
+            target.states[0][name].should.eql(new RegExp("regexp[0-9]/*", "gi"))
+            target.states[0].should.not.have.ownProperty(name+'-flags')
+        }
+
+        it('loads converts string matcher to regexp', function () {
+            it_converts_string_to_regexp("matcher")
         })
+        it('loads converts string start to regexp', function () {
+            it_converts_string_to_regexp("start")
+        })
+        it('loads converts string end to regexp', function () {
+            it_converts_string_to_regexp("end")
+        })
+
     })
 })
 

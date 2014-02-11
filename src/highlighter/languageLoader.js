@@ -24,6 +24,8 @@ LanguageLoader.prototype = {
         var targetProcessor = this.target
         states.forEach(function(state){
             state = prepareRegexp(state, "matcher")
+            state = prepareRegexp(state, "start")
+            state = prepareRegexp(state, "end")
             targetProcessor.addState(state)
         })
     }
