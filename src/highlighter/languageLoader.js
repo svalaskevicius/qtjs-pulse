@@ -14,18 +14,31 @@ function prepareRegexp(state, name)
             delete state[flagsName]
         }
 
+        if (flags.indexOf("g") < 0) {
+            flags += "g"
+        }
+
         state[name] = new RegExp(state[name], flags)
     }
     return state
+}
+
+function prepareStateRulesMatchers(state)
+{
+    if (state.rules instanceof Array) {
+        for (var i = state.rules.length-1; i >= 0; i--) {
+            prepareRegexp(state.rules[i], "matcher")
+        }
+    }
 }
 
 LanguageLoader.prototype = {
     'load' : function(name, states) {
         var targetProcessor = this.target
         states.forEach(function(state){
-            state = prepareRegexp(state, "matcher")
-            state = prepareRegexp(state, "start")
-            state = prepareRegexp(state, "end")
+            prepareStateRulesMatchers(state)
+            prepareRegexp(state, "start")
+            prepareRegexp(state, "end")
             targetProcessor.addState(state)
         })
     }
