@@ -2,10 +2,7 @@
     {
         "id": "default",
         "rules": [
-            {
-                "id": "variable",
-                "matcher": "$[a-z0-9_]+"
-            }
+            { "id": "variable", "matcher": "\\$[a-z0-9_]+", "matcher-flags":"i" }
         ],
         "contains": [
             "comment"
@@ -13,12 +10,12 @@
     },
     {
         "id": "comment",
-        "start": "/*",
-        "end": "*/",
+        "start": "/\\*",
+        "end": "\\*/",
         "rules": [
             {
                 "id": "default",
-                "matcher": "([^*]|*(?!/))+"
+                "matcher": "([^*]|\\*(?!/))+"
             }
         ]
     }

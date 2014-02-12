@@ -6,6 +6,7 @@ var RuleMatcher = require("./highlighter/ruleMatcher.js")
 var TextProcessor = require("./highlighter/textProcessor.js")
 var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
 var TextFormatter = require("./highlighter/textFormatter.js")
+var LanguageLoader = require("./highlighter/languageLoader.js")
 var qtapi = require("./qtapi.js")
 
 var myClassFormat = new qt.QTextCharFormat();
@@ -17,28 +18,9 @@ textFormatter.addFormat('variable', myClassFormat)
 textFormatter.addFormat('default', myClassFormat)
 
 var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter()))
-textProcessor.addState({
-    'id' : 'default',
-    'rules' : [
-        {
-            'id' : 'variable',
-            'matcher' : /\$[a-z0-9_]+/gi,
-        },
-    ],
-    'contains' : ['comment']
-})
-textProcessor.addState({
-    'id' : 'comment',
-    'start' : /\/\*/g,
-    'end' : /\*\//g,
-    'rules' : [
-       {
-           'id' : 'default',
-           'matcher' : /([^*]|\*(?!\/))+/gi,
-       },
-    ],
-})
 
+var loader = new LanguageLoader(textProcessor)
+loader.load('php', require('./highlighter/languages/php.json'))
 
 
 var stateStackToIdMap = new StateStackToIdMap()
