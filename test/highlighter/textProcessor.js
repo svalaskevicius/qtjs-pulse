@@ -149,5 +149,46 @@ describe('Highlighter/TextProcessor', function () {
             ])
         })
 
+        it('passes subcontext start to rule processor', function () {
+            var ruleMatcher = {}
+            ruleMatcher.processRules = function(){}
+            var ruleMatcherSpy = sinon.spy(ruleMatcher, 'processRules')
+
+            var processor = new TextProcessor(ruleMatcher)
+            processor.addState({
+                'id' : 'root',
+                'contains' : ['test_state']
+            })
+            processor.addState({
+                'id' : 'test_state',
+                'start' : /t/g,
+                'end' : /t/g,
+            })
+            processor.processLine("my text line", ['root'])
+
+            ruleMatcherSpy.getCall(0).args.should.eql([
+                "my text line",
+                undefined,
+                0,
+                3,
+                ['root']
+            ])
+            ruleMatcherSpy.getCall(1).args.should.eql([
+                "my text line",
+                undefined,
+                3,
+                7,
+                ['root', 'test_state']
+            ])
+            ruleMatcherSpy.getCall(2).args.should.eql([
+                "my text line",
+                undefined,
+                7,
+                13,
+                ['root']
+            ])
+            ruleMatcherSpy.callCount.should.equal(3)
+        })
+
     })
 })

@@ -12,10 +12,11 @@ var matchState = function(text, state, startPos) {
         return false
     }
     state.start.lastIndex = startPos
-    if (state.start.test(text)) {
-        return state.start.lastIndex
+    var match = state.start.exec(text)
+    if (match !== null) {
+        return {start: state.start.lastIndex, length: match[0].length}
     }
-    return false
+    return null
 }
 
 var findNextState = function(text, states, startPos) {
@@ -23,8 +24,8 @@ var findNextState = function(text, states, startPos) {
         states,
         function (prev, state) {
             var pos = matchState(text, state, startPos)
-            if (pos !== false && pos < prev.start) {
-                return {state: state, start: pos}
+            if (pos !== null && pos.start < prev.start) {
+                return {state: state, start: pos.start, length: pos.length}
             }
             return prev
         },
@@ -74,23 +75,24 @@ TextProcessor.prototype = {
         var currentState
         do {
             var startedIdx = idx
+            var savedStateStack = _.clone(stateStack)
             currentState = getLastState(stateStack, this.states)
             var newStateMatch = findNextState(
                 text,
                 findContainedStates(currentState, this.states),
                 idx
             )
-            var endIdx = findEndOfState(text, currentState, idx)
+            var endIdx = findEndOfState(text, currentState, idx+1)
             if (isPositionBeforeMatchedState(endIdx, newStateMatch)) {
                 stateStack.pop()
                 idx = endIdx
             } else if (newStateMatch.state) {
                 stateStack.push(newStateMatch.state.id)
-                idx = newStateMatch.start
+                idx = newStateMatch.start - newStateMatch.length
             } else {
                 idx = text.length + 1
             }
-            this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, stateStack)
+            this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, savedStateStack)
         } while (idx < text.length);
         return stateStack
     },
