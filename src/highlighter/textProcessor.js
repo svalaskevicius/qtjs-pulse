@@ -70,30 +70,39 @@ TextProcessor.prototype = {
     'addState' : function(state) {
         this.states.push(state)
     },
-    'processLine' : function(text, stateStack) {
-        var idx = 0
-        var currentState
-        do {
-            var startedIdx = idx
-            var savedStateStack = _.clone(stateStack)
-            currentState = getLastState(stateStack, this.states)
-            var newStateMatch = findNextState(
+    'processState' : function(text, stateStack, idx) {
+        var startedIdx = idx,
+            savedStateStack = _.clone(stateStack),
+            currentState = getLastState(stateStack, this.states),
+            newStateMatch = findNextState(
                 text,
                 findContainedStates(currentState, this.states),
                 idx
-            )
-            var endIdx = findEndOfState(text, currentState, idx+1)
-            if (isPositionBeforeMatchedState(endIdx, newStateMatch)) {
-                stateStack.pop()
-                idx = endIdx
-            } else if (newStateMatch.state) {
-                stateStack.push(newStateMatch.state.id)
-                idx = newStateMatch.start - newStateMatch.length
-            } else {
-                idx = text.length + 1
-            }
-            this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, savedStateStack)
-        } while (idx < text.length);
+            ),
+            endIdx = findEndOfState(text, currentState, idx+1)
+
+        if (isPositionBeforeMatchedState(endIdx, newStateMatch)) {
+            stateStack.pop()
+            idx = endIdx
+        } else if (newStateMatch.state) {
+            stateStack.push(newStateMatch.state.id)
+            idx = newStateMatch.start - newStateMatch.length
+        } else {
+            idx = text.length + 1
+        }
+
+        this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, savedStateStack)
+
+        return idx
+    },
+    'processLine' : function(text, stateStack) {
+        var idx = 0,
+            len = text.length
+
+        do {
+            idx = this.processState(text, stateStack, idx)
+        } while (idx < len);
+
         return stateStack
     },
     'invokeRuleProcessor' : function(text, rules, startedIdx, idx, stateStack) {
