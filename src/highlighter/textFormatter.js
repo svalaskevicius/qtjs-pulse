@@ -44,8 +44,7 @@ TextFormatter.prototype = {
             }
             var format = self.findExistingFormat(id, stack)
             if (format) {
-                self.target.setFormat(start, length, format);
-                return
+                self.target.setFormat(start, length, format)
             }
         }
     }
