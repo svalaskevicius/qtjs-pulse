@@ -46,8 +46,8 @@ describe('Highlighter/RuleMatcher', function () {
                                                     }], 0, 12, ['passed stack'])
 
             // callback.getCall(0) is for t-word, not interesting in this spec
-            callback.getCall(1).args.should.eql(["default", 7, 5, ['passed stack']])
-            callback.getCall(2).args.should.eql(["default", 0, 3, ['passed stack']])
+            callback.getCall(1).args.should.eql(["", 7, 5, ['passed stack']])
+            callback.getCall(2).args.should.eql(["", 0, 3, ['passed stack']])
         })
 
         it('does not apply empty default rule', function () {
@@ -60,7 +60,7 @@ describe('Highlighter/RuleMatcher', function () {
                                                     }], 0, 12, ['passed stack'])
 
             // callback.getCall(0) is for line, not interesting in this spec
-            callback.getCall(1).args.should.eql(["default", 0, 8, ['passed stack']])
+            callback.getCall(1).args.should.eql(["", 0, 8, ['passed stack']])
         })
     })
 })

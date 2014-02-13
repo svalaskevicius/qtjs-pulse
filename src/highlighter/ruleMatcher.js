@@ -28,7 +28,7 @@ var applyDefaultCallbackToRanges = function(ranges, callback, stack)
         var rEnd = ranges[r][1]
         var rLength = rEnd-rStart
         if (rLength) {
-            callback("default", rStart, rLength, stack)
+            callback("", rStart, rLength, stack)
         }
     }
 }
