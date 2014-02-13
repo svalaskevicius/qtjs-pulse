@@ -98,6 +98,9 @@ TextProcessor.prototype = {
     },
     'invokeRuleProcessor' : function(text, rules, startedIdx, idx, stateStack) {
         if (this.ruleProcessor) {
+            if (rules === undefined) {
+                rules = []
+            }
             this.ruleProcessor.processRules(text, rules, startedIdx, idx, stateStack)
         }
     }

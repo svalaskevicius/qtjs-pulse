@@ -168,21 +168,21 @@ describe('Highlighter/TextProcessor', function () {
 
             ruleMatcherSpy.getCall(0).args.should.eql([
                 "my text line",
-                undefined,
+                [],
                 0,
                 3,
                 ['root']
             ])
             ruleMatcherSpy.getCall(1).args.should.eql([
                 "my text line",
-                undefined,
+                [],
                 3,
                 7,
                 ['root', 'test_state']
             ])
             ruleMatcherSpy.getCall(2).args.should.eql([
                 "my text line",
-                undefined,
+                [],
                 7,
                 13,
                 ['root']
