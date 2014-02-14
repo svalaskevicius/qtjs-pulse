@@ -1,0 +1,16 @@
+{
+  "name": "pulse",
+  "version": "0.0.1",
+  "description": "A flexible editor",
+  "keywords": [],
+  "author": "Sarunas Valaskevicius <rakatan@gmail.com>",
+  "repository": { "type": "git", "url": "git://github.com/svalaskevicius/pulse.git" },
+  "dependencies": {
+      "rgbcolor": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "main": "pulse"
+}
