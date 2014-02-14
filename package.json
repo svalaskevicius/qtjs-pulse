@@ -6,11 +6,13 @@
   "author": "Sarunas Valaskevicius <rakatan@gmail.com>",
   "repository": { "type": "git", "url": "git://github.com/svalaskevicius/pulse.git" },
   "dependencies": {
-      "rgbcolor": "*"
+      "rgbcolor": "*",
+      "lodash": "*"
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "sinon": "*"
   },
   "main": "pulse"
 }
