@@ -17,7 +17,7 @@ var StyleLoader = function(textFormatter) {
 }
 
 StyleLoader.prototype = {
-    'loadStyles': function(styles){
+    'load': function(styles){
         var textFormatter = this.textFormatter
         _.forEach(styles, function(style, id){
             var format = new qt.QTextCharFormat();

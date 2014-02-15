@@ -8,7 +8,7 @@ describe('Highlighter/StyleLoader', function () {
 
     it("accepts empty style info", function(){
         var loader = new StyleLoader();
-        loader.loadStyles([]);
+        loader.load([]);
     })
 
     var loadStyles = function(styles) {
@@ -16,7 +16,7 @@ describe('Highlighter/StyleLoader', function () {
         formatter.addFormat = function(){}
         var formatterSpy = sinon.spy(formatter, 'addFormat')
         var loader = new StyleLoader(formatter);
-        loader.loadStyles(styles);
+        loader.load(styles);
 
         return formatterSpy
     }

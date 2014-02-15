@@ -7,20 +7,21 @@ var TextProcessor = require("./highlighter/textProcessor.js")
 var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
 var TextFormatter = require("./highlighter/textFormatter.js")
 var LanguageLoader = require("./highlighter/languageLoader.js")
+var StyleLoader = require("./highlighter/styleLoader.js")
 var qtapi = require("./qtapi.js")
 
-var myClassFormat = new qt.QTextCharFormat();
-myClassFormat.setFontWeight(qt.QFont.Bold);
-myClassFormat.setForeground(new qt.QBrush(new qt.QColor(qt.darkMagenta)));
-
 var textFormatter = new TextFormatter()
-textFormatter.addFormat('variable', myClassFormat)
-textFormatter.addFormat('comment', myClassFormat)
-
 var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter()))
 
-var loader = new LanguageLoader(textProcessor)
-loader.load('php', require('./highlighter/languages/php.json'))
+;(function(){
+    var loader = new LanguageLoader(textProcessor)
+    loader.load('php', require('./highlighter/languages/php.json'))
+})()
+
+;(function(){
+    var loader = new StyleLoader(textFormatter)
+    loader.load(require('./highlighter/styles/pulse.json'))
+})()
 
 
 var stateStackToIdMap = new StateStackToIdMap()
