@@ -7,7 +7,8 @@
   "repository": { "type": "git", "url": "git://github.com/svalaskevicius/pulse.git" },
   "dependencies": {
       "rgbcolor": "*",
-      "lodash": "*"
+      "lodash": "*",
+      "rgbcolor": "*"
   },
   "devDependencies": {
     "mocha": "*",

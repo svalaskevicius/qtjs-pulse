@@ -17,3 +17,5 @@ src/eventFilter.js
 src/highlighter/languages/php.json
 test/highlighter/languageLoader.js
 src/highlighter/languageLoader.js
+test/highlighter/styleLoader.js
+src/highlighter/styleLoader.js

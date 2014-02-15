@@ -4,7 +4,7 @@
   "dependencies": {
     "rgbcolor": {
       "version": "0.0.3",
-      "from": "rgbcolor@*",
+      "from": "https://registry.npmjs.org/rgbcolor/-/rgbcolor-0.0.3.tgz",
       "resolved": "https://registry.npmjs.org/rgbcolor/-/rgbcolor-0.0.3.tgz"
     },
     "lodash": {
