@@ -17,10 +17,10 @@ Item {
 
     Rectangle {
         id: lineColumn
-        property int rowHeight: textarea.font.pixelSize + 3
+        property int rowHeight: textarea.font.pixelSize + 1
         property int lineBase: Math.floor(textarea.flickableItem.contentY / rowHeight) + 1
-        property int lineAmount: lineColumn.height / lineColumn.rowHeight
-        color: "#f2f2f2"
+        property int lineAmount: lineColumn.height / lineColumn.rowHeight + 1
+        color: "#151515"
         width: 40
         height: parent.height
         clip: true
@@ -28,7 +28,7 @@ Item {
             height: parent.height
             anchors.right: parent.right
             width: 1
-            color: "#ddd"
+            color: "#303030"
         }
         Column {
             y: -(textarea.flickableItem.contentY % lineColumn.rowHeight) + 4
@@ -37,7 +37,7 @@ Item {
                 model: Math.min(textarea.lineCount, lineColumn.lineAmount)
                 delegate: Text {
                     id: text
-                    color: "#555"
+                    color: "#505050"
                     font: textarea.font
                     width: lineColumn.width
                     horizontalAlignment: Text.AlignHCenter
@@ -67,13 +67,16 @@ Item {
         }
 
         style: TextAreaStyle {
-            textColor: "#56a"
-            selectionColor: "#246"
-            selectedTextColor: "#864"
-            backgroundColor: "#eee"
+            textColor: "#f4bf75"
+            selectionColor: "#b0b0b0"
+            selectedTextColor: "#151515"
+            backgroundColor: "#151515"
             font.family: "Ubuntu Mono"
             font.pointSize: 12
+            transientScrollBars: true
         }
+
+        focus: true
     }
 
     Highlighter {
