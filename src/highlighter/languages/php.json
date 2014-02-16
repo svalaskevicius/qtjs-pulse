@@ -8,7 +8,7 @@
         "start": "<\\?php\\b",
         "end": "\\?>",
         "rules": {
-            "sl_comment": { "matcher": "//.*$" },
+            "sl_comment": { "matcher": "(//|#).*$" },
             "number": { "matcher": "\\b[0-9]*\\.?[0-9]+\b" },
             "keyword": { "matcher": "<\\?php|\\?>|\\b(class|function|protected|private|public|abstract|extends|interface|implements|abstract|and|array|as|break|case|catch|clone|const|continue|declare|default|do|else|elseif|enddeclare|endfor|endforeach|endif|endswitch|endwhile|extends|final|for|foreach|function|global|goto|if|instanceof|namespace|new|or|static|switch|throw|try|use|var|while|xor|true|false|null|self|define|__CLASS__|__DIR__|__FILE__|__LINE__|__FUNCTION__|__METHOD__|__NAMESPACE__)\\b"},
             "construct": { "matcher": "\\b(die|echo|empty|exit|eval|include|include_once|isset|list|require|require_once|return|print|unset|use|namespace)\\b"},
