@@ -57,5 +57,54 @@ describe('Highlighter/StyleLoader', function () {
             })
         }).should.throwError("invalid color '_!'")
     })
+
+    it("sets format weight", function(){
+        var formatterSpy = loadStyles({
+            'comment': {
+                'weight': 99
+            }
+        });
+
+        var styleCreated = formatterSpy.getCall(0).args[1]
+        styleCreated.fontWeight().should.equal(99)
+    })
+
+    it("sets format style: italic", function(){
+        var formatterSpy = loadStyles({
+            'comment': {
+                'italic': true
+            }
+        });
+
+        var styleCreated = formatterSpy.getCall(0).args[1]
+        styleCreated.fontItalic().should.equal(true)
+    })
+
+    it("sets format style: background color", function(){
+        var formatterSpy = loadStyles({
+            'comment': {
+                'background-color': '0feed0'
+            }
+        });
+
+        var styleCreated = formatterSpy.getCall(0).args[1]
+        var color = styleCreated.background().color()
+        color.red().should.equal(0x0f)
+        color.green().should.equal(0xee)
+        color.blue().should.equal(0xd0)
+    })
+
+    it("sets format style: bold", function(){
+        var formatterSpy = loadStyles({
+            'comment': {
+                'bold': true
+            }
+        });
+
+        var styleCreated = formatterSpy.getCall(0).args[1]
+        styleCreated.fontWeight().should.equal(qt.QFont.Bold)
+    })
+
 })
+
 
