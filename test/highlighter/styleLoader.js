@@ -21,6 +21,13 @@ describe('Highlighter/StyleLoader', function () {
         return formatterSpy
     }
 
+    var expectBrushColorEqualRGB = function(brush, r, g, b) {
+        var color = brush.color()
+        color.red().should.equal(r)
+        color.green().should.equal(g)
+        color.blue().should.equal(b)
+    }
+
     it("accepts a style definition", function(){
         var formatterSpy = loadStyles({
             'comment': {
@@ -42,10 +49,7 @@ describe('Highlighter/StyleLoader', function () {
         });
 
         var styleCreated = formatterSpy.getCall(0).args[1]
-        var color = styleCreated.foreground().color()
-        color.red().should.equal(0x0b)
-        color.green().should.equal(0xee)
-        color.blue().should.equal(0xf0)
+        expectBrushColorEqualRGB(styleCreated.foreground(), 0x0b, 0xee, 0xf0)
     })
 
     it("throws on invalid color", function(){
@@ -88,10 +92,7 @@ describe('Highlighter/StyleLoader', function () {
         });
 
         var styleCreated = formatterSpy.getCall(0).args[1]
-        var color = styleCreated.background().color()
-        color.red().should.equal(0x0f)
-        color.green().should.equal(0xee)
-        color.blue().should.equal(0xd0)
+        expectBrushColorEqualRGB(styleCreated.background(), 0x0f, 0xee, 0xd0)
     })
 
     it("sets format style: bold", function(){
@@ -103,6 +104,26 @@ describe('Highlighter/StyleLoader', function () {
 
         var styleCreated = formatterSpy.getCall(0).args[1]
         styleCreated.fontWeight().should.equal(qt.QFont.Bold)
+    })
+
+    it("loads nested styles", function(){
+        var formatterSpy = loadStyles({
+            'comment': {
+                'color': '0beef0',
+                'background-color': '0feed0',
+                'styles': {
+                    'variable': {
+                        'color': 'f0dad3'
+                     }
+                }
+            }
+        });
+
+        formatterSpy.callCount.should.equal(2)
+        formatterSpy.getCall(1).args[0].should.equal("comment/variable")
+        var styleCreated = formatterSpy.getCall(1).args[1]
+        expectBrushColorEqualRGB(styleCreated.foreground(), 0xf0, 0xda, 0xd3)
+        expectBrushColorEqualRGB(styleCreated.background(), 0x0f, 0xee, 0xd0)
     })
 
 })

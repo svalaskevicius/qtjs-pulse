@@ -4,9 +4,11 @@
     },
     "comment": {
         "color": "555",
-        "background-color": "999"
-    },
-    "comment/variable": {
-        "color": "f55"
+        "background-color": "999",
+        "styles": {
+            "variable": {
+                "color": "f55"
+            }
+        }
     }
 }
