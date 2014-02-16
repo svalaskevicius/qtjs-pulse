@@ -20,3 +20,4 @@ src/highlighter/languageLoader.js
 test/highlighter/styleLoader.js
 src/highlighter/styleLoader.js
 src/highlighter/styles/pulse.json
+Makefile
