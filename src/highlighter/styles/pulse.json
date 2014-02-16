@@ -3,7 +3,8 @@
         "color": "558811"
     },
     "comment": {
-        "color": "555"
+        "color": "555",
+        "background-color": "999"
     },
     "comment/variable": {
         "color": "f55"
