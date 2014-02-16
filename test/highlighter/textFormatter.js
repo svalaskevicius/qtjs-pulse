@@ -32,9 +32,9 @@ describe('Highlighter/TextFormatter', function () {
     it('prefers a rule in the most inner scope', function () {
         var format1 = {}, format2 = {}
         formatter.addFormat('rule-id', format1)
-        formatter.addFormat('default/rule-id', format2)
+        formatter.addFormat('inner/rule-id', format2)
 
-        callback("rule-id", 5, 3, ["default"])
+        callback("rule-id", 5, 3, ["inner"])
 
         qtApiSpy.getCall(0).args.should.eql([5, 3, {}])
         qtApiSpy.getCall(0).args[2].should.equal(format2)
@@ -49,6 +49,18 @@ describe('Highlighter/TextFormatter', function () {
 
         qtApiSpy.getCall(0).args.should.eql([5, 3, {}])
         qtApiSpy.getCall(0).args[2].should.equal(format)
+        qtApiSpy.calledOnce.should.equal(true)
+    })
+
+    it('ignores leading "default" state', function () {
+        var format1 = {}, format2 = {}
+        formatter.addFormat('rule-id', format1)
+        formatter.addFormat('substate/rule-id', format2)
+
+        callback("rule-id", 5, 3, ["default", "substate"])
+
+        qtApiSpy.getCall(0).args.should.eql([5, 3, {}])
+        qtApiSpy.getCall(0).args[2].should.equal(format2)
         qtApiSpy.calledOnce.should.equal(true)
     })
 

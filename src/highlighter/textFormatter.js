@@ -7,7 +7,11 @@ var TextFormatter = function() {
 }
 
 var prepareFormatId = function(stack, len, id) {
-    var formatId = _.take(stack, len).join('/')
+    var formatId = _.chain(stack)
+                        .take(len)
+                        .filter(function(val){return val !== "default"})
+                    .value()
+                    .join('/')
     if (formatId) {
         formatId += '/'
     }

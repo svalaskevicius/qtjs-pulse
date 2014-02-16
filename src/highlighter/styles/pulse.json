@@ -4,5 +4,8 @@
     },
     "comment": {
         "color": "555"
+    },
+    "comment/variable": {
+        "color": "f55"
     }
 }

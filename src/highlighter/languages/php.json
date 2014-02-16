@@ -9,6 +9,9 @@
     },
     "comment": {
         "start": "/\\*",
-        "end": "\\*/"
+        "end": "\\*/",
+        "rules": {
+            "variable": { "matcher": "\\$[a-z0-9_]+", "matcher-flags":"i" }
+        }
     }
 }
