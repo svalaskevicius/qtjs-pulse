@@ -1,5 +1,7 @@
 "use strict";
 
+var _ = require("lodash")
+
 var LanguageLoader = function(targetProcessor) {
     this.target = targetProcessor
 }
@@ -25,20 +27,23 @@ function prepareRegexp(state, name)
 
 function prepareStateRulesMatchers(state)
 {
-    if (state.rules instanceof Array) {
-        for (var i = state.rules.length-1; i >= 0; i--) {
-            prepareRegexp(state.rules[i], "matcher")
-        }
+    if (state.rules) {
+        state.rules = _.map(state.rules, function(rule, id){
+            rule.id = id
+            prepareRegexp(rule, "matcher")
+            return rule
+        })
     }
 }
 
 LanguageLoader.prototype = {
     'load' : function(name, states) {
         var targetProcessor = this.target
-        states.forEach(function(state){
+        _.forEach(states, function(state, id){
             prepareStateRulesMatchers(state)
             prepareRegexp(state, "start")
             prepareRegexp(state, "end")
+            state.id = id
             targetProcessor.addState(state)
         })
     }

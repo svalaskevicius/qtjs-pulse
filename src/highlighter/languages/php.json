@@ -1,16 +1,14 @@
-[
-    {
-        "id": "default",
-        "rules": [
-            { "id": "variable", "matcher": "\\$[a-z0-9_]+", "matcher-flags":"i" }
-        ],
+{
+    "default": {
+        "rules": {
+            "variable": { "matcher": "\\$[a-z0-9_]+", "matcher-flags":"i" }
+        },
         "contains": [
             "comment"
         ]
     },
-    {
-        "id": "comment",
+    "comment": {
         "start": "/\\*",
         "end": "\\*/"
     }
-]
+}

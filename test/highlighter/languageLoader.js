@@ -11,27 +11,30 @@ describe('Highlighter/LanguageLoader', function () {
             var target = new TextProcessor()
             var loader = new LanguageLoader(target)
             var lang =
-                    [
-                        {
-                            "id": "default",
+                    {
+                        "default": {
                             "contains": [
                                 "comment"
                             ]
                         },
-                        {
-                            "id": "comment",
-                        }
-                    ]
+                        "comment": {}
+                    }
             loader.load('testLang', lang)
-            target.states.should.eql(lang)
+            target.states.should.eql([
+                 {
+                     "contains": [
+                         "comment"
+                     ],
+                     "id": "default"
+                 },
+                 { "id": "comment"}
+            ])
         })
 
         var it_converts_string_to_regexp = function(name, flags) {
             var target = new TextProcessor()
             var loader = new LanguageLoader(target)
-            var def = {
-                "id": "default"
-            }
+            var def = {}
             def[name] = "regexp[0-9]/*"
             if (typeof flags != "undefined") {
                 def[name+"-flags"] = flags
@@ -45,10 +48,10 @@ describe('Highlighter/LanguageLoader', function () {
             var target = new TextProcessor()
             var loader = new LanguageLoader(target)
             var def = {
-                "rules": [{ "id": "test" }]
+                "rules": { "test": {} }
             }
-            def["rules"][0]["matcher"] = "regexp[0-9]/*"
-            def["rules"][0]["matcher-flags"] = "gi"
+            def["rules"]["test"]["matcher"] = "regexp[0-9]/*"
+            def["rules"]["test"]["matcher-flags"] = "gi"
             loader.load('testLang', [def])
             target.states[0]["rules"][0]["matcher"].should.eql(new RegExp("regexp[0-9]/*", "gi"))
             target.states[0]["rules"][0].should.not.have.ownProperty('matcher-flags')
