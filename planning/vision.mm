@@ -11,7 +11,12 @@
 <node COLOR="#5b627c" CREATED="1391262313474" ID="ID_18708044" MODIFIED="1391302450452" POSITION="right" STYLE="fork" TEXT="File editing">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
-<node COLOR="#70ab75" CREATED="1391262348303" ID="ID_1806130921" MODIFIED="1391302860205" STYLE="fork" TEXT="Save file">
+<node COLOR="#70ab75" CREATED="1391262348303" ID="ID_1806130921" MODIFIED="1392512444327" STYLE="fork" TEXT="Save file">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<icon BUILTIN="button_ok"/>
+</node>
+<node COLOR="#70ab75" CREATED="1391371301916" ID="ID_57301625" MODIFIED="1392512428909" TEXT="Configure monospace font">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 <icon BUILTIN="full-1"/>
@@ -45,11 +50,6 @@
 <node COLOR="#70ab75" CREATED="1391266203776" ID="ID_1235105366" MODIFIED="1391302450470" TEXT="VIM-like keybindings">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-</node>
-<node COLOR="#70ab75" CREATED="1391371301916" ID="ID_57301625" MODIFIED="1391371327215" TEXT="Configure monospace font">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-1"/>
 </node>
 </node>
 <node COLOR="#5b627c" CREATED="1391262683649" ID="ID_186232959" MODIFIED="1392071280202" POSITION="right" STYLE="fork" TEXT="ORG mode">
@@ -127,6 +127,27 @@
 <icon BUILTIN="broken-line"/>
 </node>
 </node>
+<node COLOR="#5b627c" CREATED="1392071369055" ID="ID_1247313044" MODIFIED="1392512418425" POSITION="left" TEXT="Project support">
+<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="18"/>
+<icon BUILTIN="full-1"/>
+<node COLOR="#70ab75" CREATED="1392071378216" ID="ID_999701170" MODIFIED="1392071390068" TEXT="Load sources directory">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<node COLOR="#843d3d" CREATED="1392071463599" ID="ID_1879463907" MODIFIED="1392071654716" TEXT="Create .pulse/ project directory">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#70ab75" CREATED="1392071391056" ID="ID_146877171" MODIFIED="1392071410059" TEXT="Configuration manager">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="16"/>
+<node COLOR="#843d3d" CREATED="1392071420073" ID="ID_172108201" MODIFIED="1392071444620" TEXT="As json in .pulse/">
+<edge WIDTH="thin"/>
+<font NAME="Ubuntu Light" SIZE="14"/>
+</node>
+</node>
+</node>
 <node COLOR="#5b627c" CREATED="1391262611026" HGAP="37" ID="ID_1558419198" MODIFIED="1391302809035" POSITION="left" STYLE="fork" TEXT="Quick search" VSHIFT="-3">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
@@ -154,27 +175,6 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
 <icon BUILTIN="full-3"/>
-</node>
-</node>
-<node COLOR="#5b627c" CREATED="1392071369055" ID="ID_1247313044" MODIFIED="1392071710144" POSITION="left" TEXT="Project support">
-<edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="18"/>
-<icon BUILTIN="full-1"/>
-<node COLOR="#70ab75" CREATED="1392071378216" ID="ID_999701170" MODIFIED="1392071390068" TEXT="Load sources directory">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="16"/>
-<node COLOR="#843d3d" CREATED="1392071463599" ID="ID_1879463907" MODIFIED="1392071654716" TEXT="Create .pulse/ project directory">
-<edge WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#70ab75" CREATED="1392071391056" ID="ID_146877171" MODIFIED="1392071410059" TEXT="Configuration manager">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="16"/>
-<node COLOR="#843d3d" CREATED="1392071420073" ID="ID_172108201" MODIFIED="1392071444620" TEXT="As json in .pulse/">
-<edge WIDTH="thin"/>
-<font NAME="Ubuntu Light" SIZE="14"/>
-</node>
 </node>
 </node>
 <node COLOR="#5b627c" CREATED="1391283727699" ID="ID_408300749" MODIFIED="1392071744127" POSITION="left" TEXT="Code completion">
