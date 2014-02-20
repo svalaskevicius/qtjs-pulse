@@ -46,16 +46,16 @@ function rangeIntersectsAtEnd(x, y) {
 }
 
 var splitRange = function(ranges, splitBy) {
-    for (var r = ranges.length-1; r >= 0; r--) {
-        if (rangeIncludesRange(ranges[r], splitBy)) {
-            ranges.push([splitBy[1], ranges[r][1]])
-            ranges[r][1] = splitBy[0]
-        } else if (rangeIntersectsAtStart(ranges[r], splitBy)) {
-            ranges[r][1] = splitBy[0]
-        } else if (rangeIntersectsAtEnd(ranges[r], splitBy)) {
-            ranges[r][0] = splitBy[1]
+    ranges.forEach(function(range){
+        if (rangeIncludesRange(range, splitBy)) {
+            ranges.push([splitBy[1], range[1]])
+            range[1] = splitBy[0]
+        } else if (rangeIntersectsAtStart(range, splitBy)) {
+            range[1] = splitBy[0]
+        } else if (rangeIntersectsAtEnd(range, splitBy)) {
+            range[0] = splitBy[1]
         }
-    }
+    })
 }
 
 RuleMatcher.prototype = {
