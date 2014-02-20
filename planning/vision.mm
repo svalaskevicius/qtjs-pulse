@@ -16,10 +16,10 @@
 <font NAME="Ubuntu Light" SIZE="16"/>
 <icon BUILTIN="button_ok"/>
 </node>
-<node COLOR="#70ab75" CREATED="1391371301916" ID="ID_57301625" MODIFIED="1392512428909" TEXT="Configure monospace font">
+<node COLOR="#70ab75" CREATED="1391371301916" ID="ID_57301625" MODIFIED="1392585728472" TEXT="Configure monospace font">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-1"/>
+<icon BUILTIN="button_ok"/>
 </node>
 <node COLOR="#70ab75" CREATED="1391262922119" ID="ID_1087746071" MODIFIED="1391302883803" STYLE="fork" TEXT="New file">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -111,10 +111,10 @@
 <node COLOR="#5b627c" CREATED="1391262576182" HGAP="48" ID="ID_706543480" MODIFIED="1391302450505" POSITION="left" STYLE="fork" TEXT="Syntax highlighting" VSHIFT="-14">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
-<node COLOR="#70ab75" CREATED="1391262597394" ID="ID_1905292232" MODIFIED="1391371220938" STYLE="fork" TEXT="PHP">
+<node COLOR="#70ab75" CREATED="1391262597394" ID="ID_1905292232" MODIFIED="1392585768085" STYLE="fork" TEXT="PHP">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="16"/>
-<icon BUILTIN="full-1"/>
+<icon BUILTIN="button_ok"/>
 </node>
 <node COLOR="#70ab75" CREATED="1391262855111" ID="ID_1309265838" MODIFIED="1391302567052" STYLE="fork" TEXT="Semantic highlighting">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -127,7 +127,7 @@
 <icon BUILTIN="broken-line"/>
 </node>
 </node>
-<node COLOR="#5b627c" CREATED="1392071369055" ID="ID_1247313044" MODIFIED="1392512418425" POSITION="left" TEXT="Project support">
+<node COLOR="#5b627c" CREATED="1392071369055" ID="ID_1247313044" MODIFIED="1392585797371" POSITION="left" TEXT="Project support">
 <edge COLOR="#e49b5e" STYLE="sharp_bezier" WIDTH="thin"/>
 <font NAME="Ubuntu Light" SIZE="18"/>
 <icon BUILTIN="full-1"/>
