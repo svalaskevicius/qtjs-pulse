@@ -75,18 +75,10 @@ var invoke = function(qobject, signature, args)
     }
 }
 
-var preserveQObject = function(obj)
-{
-    qt.connect(obj, 'destroyed(QObject *)', function(_obj) {
-        obj = undefined
-    })
-}
-
 
 module.exports = {
     emit : emit,
     invoke : invoke,
     toString : toString,
     toVariant : toVariant,
-    preserveQObject : preserveQObject,
 }

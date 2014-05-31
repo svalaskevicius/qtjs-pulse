@@ -43,7 +43,7 @@ var buildClass = function() {
     builder.setClassName("PulseEditorSyntaxHighlighter")
     builder.setInit(function () {
         this.connect(this, '2textareaChanged()', '1textareaChanged()')
-        qtapi.preserveQObject(this)
+        keepQtObjectUntilItsFreed(this)
     })
 
     builder.addProperty("textarea", "QObject*")
@@ -59,7 +59,7 @@ var buildClass = function() {
 
             if (textDocument) {
                 var highlighter = new Highlighter(textDocument.textDocument());
-                qtapi.preserveQObject(highlighter)
+                keepQtObjectUntilItsFreed(highlighter)
             }
         }
     })
