@@ -7,14 +7,14 @@ var qtapi = require("./qtapi.js")
 var filterChain = []
 
 var EventFilter = cpgf.cloneClass(qt.QObjectWrapper);
-EventFilter.eventFilter = function($this, obj, event) {
+EventFilter.eventFilter = function(obj, event) {
     var length = filterChain.length
     for (var i = 0; i < length; i++) {
         if (filterChain[i](obj, event)) {
             return true
         }
     }
-    return $this.super_eventFilter(obj, event)
+    return this.super_eventFilter(obj, event)
 }
 
 var evFilter = new EventFilter()

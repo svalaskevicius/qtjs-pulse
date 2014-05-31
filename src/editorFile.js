@@ -46,14 +46,14 @@ var build = function () {
     builder.addProperty("error", "QString")
     builder.addSignal("saved()", new qt.QStringList())
 
-    builder.addSlot('pathChanged()', function ($this) {
-        checkAndLoadFile($this, qtapi.toString($this.property("path")))
+    builder.addSlot('pathChanged()', function () {
+        checkAndLoadFile(this, qtapi.toString(this.property("path")))
     })
-    builder.setInit(function ($this) {
-        $this.connect($this, '2pathChanged()', '1pathChanged()')
+    builder.setInit(function () {
+        this.connect(this, '2pathChanged()', '1pathChanged()')
     })
-    builder.addSlot('save()', function ($this) {
-        saveFile($this)
+    builder.addSlot('save()', function () {
+        saveFile(this)
     })
     return qt.dynamicQObjectManager().finalizeBuild(builder)
 };

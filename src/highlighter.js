@@ -28,29 +28,29 @@ var stateStackToIdMap = new StateStackToIdMap()
 
 
 var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
-Highlighter.highlightBlock = function ($this, text) {
-    textFormatter.target = $this
-    var stack = stateStackToIdMap.retrieveStack($this.previousBlockState())
+Highlighter.highlightBlock = function (text) {
+    textFormatter.target = this
+    var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
     if (!stack) {
         stack = ['default']
     }
     stack = textProcessor.processLine(text.toLatin1().constData(), stack)
-    $this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
+    this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
 }
 
 var buildClass = function() {
     var builder = new qt.DynamicMetaObjectBuilder()
     builder.setClassName("PulseEditorSyntaxHighlighter")
-    builder.setInit(function ($this) {
-        $this.connect($this, '2textareaChanged()', '1textareaChanged()')
-        qtapi.preserveQObject($this)
+    builder.setInit(function () {
+        this.connect(this, '2textareaChanged()', '1textareaChanged()')
+        qtapi.preserveQObject(this)
     })
 
     builder.addProperty("textarea", "QObject*")
 
 
-    builder.addSlot('textareaChanged()', function ($this) {
-        var textArea = qt.objectFromVariant($this.property("textarea"));
+    builder.addSlot('textareaChanged()', function () {
+        var textArea = qt.objectFromVariant(this.property("textarea"));
         if (textArea) {
             var textDocument = cpgf.cast(
                 qt.objectFromVariant(textArea.property("textDocument")),
