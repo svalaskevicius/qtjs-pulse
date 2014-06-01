@@ -2,10 +2,6 @@
 
 var _ = require("lodash")
 
-var TextFormatter = function() {
-    this.formats = {}
-}
-
 var prepareFormatId = function(stack, len, id) {
     var formatId = _.chain(stack)
                         .take(len)
@@ -19,14 +15,20 @@ var prepareFormatId = function(stack, len, id) {
     return formatId
 }
 
-TextFormatter.prototype = {
-    'setTarget' : function(target) {
+class TextFormatter {
+    constructor() {
+        this.formats = {}
+    }
+
+    setTarget(target) {
         this.target = target
-    },
-    'addFormat' : function(ruleId, format) {
+    }
+
+    addFormat(ruleId, format) {
         this.formats[ruleId] = format
-    },
-    'findExistingFormat' : function(id, stack) {
+    }
+
+    findExistingFormat(id, stack) {
         var len = stack.length;
         if (!id && stack.length) {
             id = stack[--len]
@@ -39,8 +41,9 @@ TextFormatter.prototype = {
             len--
         }
         return null
-    },
-    'getFormatter' : function() {
+    }
+
+    getFormatter() {
         var self = this;
         return function(id, start, length, stack) {
             if (!self.target) {

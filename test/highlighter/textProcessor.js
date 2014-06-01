@@ -3,7 +3,7 @@
 var should = require('should'),
     sinon = require('sinon')
 
-var TextProcessor = require("../../src/highlighter/textProcessor.js")
+var TextProcessor = require("../../dist/highlighter/textProcessor.js")
 
 describe('Highlighter/TextProcessor', function () {
     describe('#processLine()', function () {

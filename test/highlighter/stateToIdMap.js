@@ -2,7 +2,7 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var StateToIdMap = require("../../src/highlighter/stateToIdMap.js")
+var StateToIdMap = require("../../dist/highlighter/stateToIdMap.js")
 
 describe('Highlighter/StateToIdMap', function () {
     describe('#retrieveId/retrieveStack()', function () {

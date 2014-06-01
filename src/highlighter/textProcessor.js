@@ -2,11 +2,6 @@
 
 var _ = require('lodash')
 
-var TextProcessor = function(ruleProcessor) {
-    this.states = []
-    this.ruleProcessor = ruleProcessor
-}
-
 var matchState = function(text, state, startPos) {
     if (!state.start) {
         return false
@@ -66,11 +61,18 @@ var isPositionBeforeMatchedState = function(pos, stateMatch) {
     return pos !== false && (!stateMatch.state || pos < stateMatch.start);
 }
 
-TextProcessor.prototype = {
-    'addState' : function(state) {
+
+class TextProcessor {
+    constructor(ruleProcessor) {
+        this.states = []
+        this.ruleProcessor = ruleProcessor
+    }
+
+    addState(state) {
         this.states.push(state)
-    },
-    'processState' : function(text, stateStack, idx) {
+    }
+
+    processState(text, stateStack, idx) {
         var startedIdx = idx,
             savedStateStack = _.clone(stateStack),
             currentState = getLastState(stateStack, this.states),
@@ -94,8 +96,9 @@ TextProcessor.prototype = {
         this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, savedStateStack)
 
         return idx
-    },
-    'processLine' : function(text, stateStack) {
+    }
+
+    processLine(text, stateStack) {
         var idx = 0,
             len = text.length
 
@@ -104,8 +107,9 @@ TextProcessor.prototype = {
         } while (idx < len);
 
         return stateStack
-    },
-    'invokeRuleProcessor' : function(text, rules, startedIdx, idx, stateStack) {
+    }
+
+    invokeRuleProcessor(text, rules, startedIdx, idx, stateStack) {
         if (this.ruleProcessor) {
             if (rules === undefined) {
                 rules = []

@@ -2,7 +2,7 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var TextFormatter = require("../../src/highlighter/textFormatter.js")
+var TextFormatter = require("../../dist/highlighter/textFormatter.js")
 
 describe('Highlighter/TextFormatter', function () {
 

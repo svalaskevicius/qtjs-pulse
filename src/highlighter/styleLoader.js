@@ -33,21 +33,23 @@ function createCharFormat(style) {
     return format
 }
 
-var StyleLoader = function(textFormatter) {
-    this.textFormatter = textFormatter
-    this.styleIdStack = []
-    this.styleStack = []
-}
+class StyleLoader {
 
-StyleLoader.prototype = {
-    'createSubstyle': function(style) {
+    constructor(textFormatter) {
+        this.textFormatter = textFormatter
+        this.styleIdStack = []
+        this.styleStack = []
+    }
+
+    createSubstyle(style) {
         if (this.styleStack.length) {
             return _.merge(_.last(this.styleStack), style)
         } else {
             return style
         }
-    },
-    'loadStyle': function(style, id) {
+    }
+
+    loadStyle(style, id) {
         var computedStyle = this.createSubstyle(style)
 
         this.styleIdStack.push(id)
@@ -64,8 +66,9 @@ StyleLoader.prototype = {
 
         this.styleIdStack.pop()
         this.styleStack.pop()
-    },
-    'load': function(styles){
+    }
+
+    load(styles){
         _.forEach(styles, this.loadStyle, this)
     }
 }

@@ -2,8 +2,8 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var TextProcessor = require("../../src/highlighter/textProcessor.js")
-var LanguageLoader = require("../../src/highlighter/languageLoader.js")
+var TextProcessor = require("../../dist/highlighter/textProcessor.js")
+var LanguageLoader = require("../../dist/highlighter/languageLoader.js")
 
 describe('Highlighter/LanguageLoader', function () {
     describe('#loadLanguage', function () {

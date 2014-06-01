@@ -2,10 +2,6 @@
 
 var _ = require("lodash")
 
-var LanguageLoader = function(targetProcessor) {
-    this.target = targetProcessor
-}
-
 function prepareRegexp(state, name)
 {
     if (typeof state[name] !== 'undefined') {
@@ -36,8 +32,12 @@ function prepareStateRulesMatchers(state)
     }
 }
 
-LanguageLoader.prototype = {
-    'load' : function(name, states) {
+class LanguageLoader {
+    constructor(targetProcessor) {
+        this.target = targetProcessor
+    }
+
+    load(name, states) {
         var targetProcessor = this.target
         _.forEach(states, function(state, id){
             prepareStateRulesMatchers(state)
