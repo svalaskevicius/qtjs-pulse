@@ -2,10 +2,6 @@
 
 var _ = require("lodash")
 
-var RuleMatcher = function(callback) {
-    this.callback = callback
-}
-
 var matchRuleInRange = function(text, matcher, range, callback) {
     var start = range[0]
     var end = range[1]
@@ -58,8 +54,12 @@ var splitRange = function(ranges, splitBy) {
     })
 }
 
-RuleMatcher.prototype = {
-    'processRules' : function(text, rules, start, end, stack) {
+class RuleMatcher {
+    constructor(callback) {
+        this.callback = callback
+    }
+
+    processRules(text, rules, start, end, stack) {
         var ranges = [[start, end]]
         var callback = this.callback
         _.forEach(rules, function(rule){
@@ -74,6 +74,7 @@ RuleMatcher.prototype = {
         applyDefaultCallbackToRanges(ranges, callback, stack)
     }
 }
+
 
 module.exports = RuleMatcher
 

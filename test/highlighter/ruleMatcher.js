@@ -2,7 +2,7 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var RuleMatcher = require("../../src/highlighter/ruleMatcher.js")
+var RuleMatcher = require("../../dist/highlighter/ruleMatcher.js")
 
 describe('Highlighter/RuleMatcher', function () {
     describe('#processRules()', function () {
