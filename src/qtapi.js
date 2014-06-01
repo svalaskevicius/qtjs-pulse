@@ -75,6 +75,19 @@ var invoke = function(qobject, signature, args)
     }
 }
 
+qt.extend = function(classToExtend, methods) {
+    var newClass = cpgf.cloneClass(eval("qt." + classToExtend.name + "Wrapper"));
+    for (var method in methods) {
+        if (newClass[method]) {
+            newClass[method] = methods[method];
+
+        } else {
+            newClass.prototype[method] = methods[method]
+        }
+    }
+    return newClass
+};
+
 qt.buildQmlComponent = function(name, def) {
     var builder = new qt.DynamicMetaObjectBuilder()
     builder.setClassName(name)

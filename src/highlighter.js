@@ -27,49 +27,50 @@ var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter
 var stateStackToIdMap = new StateStackToIdMap()
 
 
-var Highlighter = cpgf.cloneClass(qt.QSyntaxHighlighterWrapper);
-Highlighter.highlightBlock = function (text) {
-    textFormatter.target = this
-    var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
-    if (!stack) {
-        stack = ['default']
-    }
-    stack = textProcessor.processLine(text.toLatin1().constData(), stack)
-    this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
-}
-
-var buildClass = function() {
-    var builder = new qt.DynamicMetaObjectBuilder()
-    builder.setClassName("PulseEditorSyntaxHighlighter")
-    builder.setInit(function () {
-        this.connect(this, '2textareaChanged()', '1textareaChanged()')
-        keepQtObjectUntilItsFreed(this)
-    })
-
-    builder.addProperty("textarea", "QObject*")
-
-
-    builder.addSlot('textareaChanged()', function () {
-        var textArea = qt.objectFromVariant(this.property("textarea"));
-        if (textArea) {
-            var textDocument = cpgf.cast(
-                qt.objectFromVariant(textArea.property("textDocument")),
-                qt.QQuickTextDocument
-            );
-
-            if (textDocument) {
-                var highlighter = new Highlighter(textDocument.textDocument());
-                keepQtObjectUntilItsFreed(highlighter)
-            }
+var Highlighter = qt.extend(qt.QSyntaxHighlighter, {
+    highlightBlock: function (text) {
+        textFormatter.target = this
+        var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
+        if (!stack) {
+            stack = ['default']
         }
-    })
-    return qt.dynamicQObjectManager().finalizeBuild(builder)
+        stack = textProcessor.processLine(text.toLatin1().constData(), stack)
+        this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
+    }
+});
+
+var buildHighligterComponent = function() {
+    return qt.buildQmlComponent("Highlighter", {
+        init: function () {
+            this.connect(this, '2textareaChanged()', '1textareaChanged()')
+            keepQtObjectUntilItsFreed(this)
+        },
+        properties: {
+            textarea: "QObject*",
+        },
+        slots: {
+            'textareaChanged()': function () {
+                var textArea = qt.objectFromVariant(this.property("textarea"));
+                if (textArea) {
+                    var textDocument = cpgf.cast(
+                        qt.objectFromVariant(textArea.property("textDocument")),
+                        qt.QQuickTextDocument
+                    );
+
+                    if (textDocument) {
+                        var highlighter = new Highlighter(textDocument.textDocument());
+                        keepQtObjectUntilItsFreed(highlighter)
+                    }
+                }
+            },
+        }
+    });
 }
 
 module.exports = {
     register : function () {
         qt.qmlRegisterDynamicType(
-            buildClass(),
+            buildHighligterComponent(),
             "PulseEditor",
             1, 0,
             "Highlighter"
