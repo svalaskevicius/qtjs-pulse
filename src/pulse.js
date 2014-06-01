@@ -1,5 +1,7 @@
 "use strict";
 
+require('./traceur-runtime');
+
 cpgf.import("cpgf", "builtin.core");
 
 var Highlighter = require("./highlighter.js"),

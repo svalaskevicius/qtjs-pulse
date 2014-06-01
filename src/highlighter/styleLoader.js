@@ -13,6 +13,7 @@ function convertColorToBrush(colorDefinition) {
 }
 
 function createCharFormat(style) {
+    /* jshint maxcomplexity: 10 */
     var format = new qt.QTextCharFormat();
     if (typeof style.color !== "undefined") {
         format.setForeground(convertColorToBrush(style.color));

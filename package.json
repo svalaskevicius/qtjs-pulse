@@ -14,7 +14,8 @@
         "sinon": "*",
         "gulp": "*",
         "gulp-traceur": "*",
-        "gulp-mocha": "*"
+        "gulp-mocha": "*",
+        "gulp-jshint": "*"
     },
     "main": "pulse"
 }
