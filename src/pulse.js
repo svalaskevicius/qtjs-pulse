@@ -50,7 +50,7 @@ var installPeriodicGc = function () {
     process.argv.slice(2).forEach(function(val, index, array) {
         if (val === '--debug-gc') {
             installPeriodicGc()
-        } else {
+        } else if (!/^--/.test(val)) {
             qtapi.emit(mainComponent, 'openEditor(QString)', [val])
         }
     });
