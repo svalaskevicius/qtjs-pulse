@@ -2,6 +2,9 @@
 
 var _ = require("lodash")
 
+import {Inject} from 'di';
+import {TextFormatter} from './textFormatter';
+
 var matchRuleInRange = function(text, matcher, range, callback) {
     var start = range[0]
     var end = range[1]
@@ -17,14 +20,14 @@ var matchRuleInRange = function(text, matcher, range, callback) {
     }
 }
 
-var applyDefaultCallbackToRanges = function(ranges, callback, stack)
+var applyDefaultCallbackToRanges = function(ranges, formatter, stack)
 {
     for (var r = ranges.length-1; r >= 0; r--) {
         var rStart = ranges[r][0]
         var rEnd = ranges[r][1]
         var rLength = rEnd-rStart
         if (rLength) {
-            callback("", rStart, rLength, stack)
+            formatter.format("", rStart, rLength, stack)
         }
     }
 }
@@ -54,27 +57,25 @@ var splitRange = function(ranges, splitBy) {
     })
 }
 
-class RuleMatcher {
-    constructor(callback) {
-        this.callback = callback
+@Inject(TextFormatter)
+export class RuleMatcher {
+    constructor(formatter) {
+        this.formatter = formatter
     }
 
     processRules(text, rules, start, end, stack) {
         var ranges = [[start, end]]
-        var callback = this.callback
+        var formatter = this.formatter
         _.forEach(rules, function(rule){
             var applyRule = function(start, end){
-                callback(rule.id, start, end-start, stack)
+                formatter.format(rule.id, start, end-start, stack)
                 splitRange(ranges, [start, end])
             }
             for (var r = ranges.length-1; r >= 0; r--) {
                 matchRuleInRange(text, rule.matcher, ranges[r], applyRule)
             }
         })
-        applyDefaultCallbackToRanges(ranges, callback, stack)
+        applyDefaultCallbackToRanges(ranges, formatter, stack)
     }
 }
-
-
-module.exports = RuleMatcher
 

@@ -1,35 +1,28 @@
 "use strict";
 
+import {Injector} from 'di';
+import {TextFormatter} from './highlighter/textFormatter';
+import {TextProcessor} from './highlighter/textProcessor';
+import {LanguageLoader} from './highlighter/languageLoader';
+import {StyleLoader} from './highlighter/styleLoader';
+import {StateStackToIdMap} from './highlighter/stateToIdMap';
+
 cpgf.import("cpgf", "builtin.core")
 
-var RuleMatcher = require("./highlighter/ruleMatcher.js")
-var TextProcessor = require("./highlighter/textProcessor.js")
-var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
-var TextFormatter = require("./highlighter/textFormatter.js")
-var LanguageLoader = require("./highlighter/languageLoader.js")
-var StyleLoader = require("./highlighter/styleLoader.js")
 var qtapi = require("./qtapi.js")
 
-var textFormatter = new TextFormatter()
-var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter()))
+var injector = new Injector();
+var textFormatter = injector.get(TextFormatter)
+var textProcessor = injector.get(TextProcessor)
 
-;(function(){
-    var loader = new LanguageLoader(textProcessor)
-    loader.load('php', require('./highlighter/languages/php.json'))
-})()
+injector.get(LanguageLoader).load('php', require('./highlighter/languages/php.json'))
+injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
 
-;(function(){
-    var loader = new StyleLoader(textFormatter)
-    loader.load(require('./highlighter/styles/pulse.json'))
-})()
-
-
-var stateStackToIdMap = new StateStackToIdMap()
-
+var stateStackToIdMap = injector.get(StateStackToIdMap)
 
 var Highlighter = qt.extend(qt.QSyntaxHighlighter, {
     highlightBlock: function (text) {
-        textFormatter.target = this
+        textFormatter.setTarget(this)
         var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
         if (!stack) {
             stack = ['default']

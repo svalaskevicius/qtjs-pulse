@@ -3,6 +3,9 @@
 var _ = require("lodash"),
     RgbColor = require('rgbcolor')
 
+import {Inject} from 'di';
+import {TextFormatter} from './textFormatter';
+
 
 function convertColorToBrush(colorDefinition) {
     var color = new RgbColor(colorDefinition);
@@ -33,7 +36,8 @@ function createCharFormat(style) {
     return format
 }
 
-class StyleLoader {
+@Inject(TextFormatter)
+export class StyleLoader {
 
     constructor(textFormatter) {
         this.textFormatter = textFormatter
@@ -72,5 +76,3 @@ class StyleLoader {
         _.forEach(styles, this.loadStyle, this)
     }
 }
-
-module.exports = StyleLoader

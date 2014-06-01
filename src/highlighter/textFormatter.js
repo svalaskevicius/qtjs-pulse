@@ -15,7 +15,7 @@ var prepareFormatId = function(stack, len, id) {
     return formatId
 }
 
-class TextFormatter {
+export class TextFormatter {
     constructor() {
         this.formats = {}
     }
@@ -24,8 +24,8 @@ class TextFormatter {
         this.target = target
     }
 
-    addFormat(ruleId, format) {
-        this.formats[ruleId] = format
+    addFormat(ruleId, fmt) {
+        this.formats[ruleId] = fmt
     }
 
     findExistingFormat(id, stack) {
@@ -43,18 +43,13 @@ class TextFormatter {
         return null
     }
 
-    getFormatter() {
-        var self = this;
-        return function(id, start, length, stack) {
-            if (!self.target) {
-                return
-            }
-            var format = self.findExistingFormat(id, stack)
-            if (format) {
-                self.target.setFormat(start, length, format)
-            }
+    format(id, start, length, stack) {
+        if (!this.target) {
+            throw new Error("target is not set")
+        }
+        var fmt = this.findExistingFormat(id, stack)
+        if (fmt) {
+            this.target.setFormat(start, length, fmt)
         }
     }
 }
-
-module.exports = TextFormatter

@@ -2,6 +2,10 @@
 
 var _ = require("lodash")
 
+import {Inject} from 'di';
+import {TextProcessor} from './textProcessor';
+
+
 function prepareRegexp(state, name)
 {
     if (typeof state[name] !== 'undefined') {
@@ -32,7 +36,8 @@ function prepareStateRulesMatchers(state)
     }
 }
 
-class LanguageLoader {
+@Inject(TextProcessor)
+export class LanguageLoader {
     constructor(targetProcessor) {
         this.target = targetProcessor
     }
@@ -48,5 +53,3 @@ class LanguageLoader {
         })
     }
 }
-
-module.exports = LanguageLoader

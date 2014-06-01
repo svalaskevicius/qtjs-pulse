@@ -1,6 +1,6 @@
 "use strict";
 
-class StateStackToIdMap  {
+export class StateStackToIdMap  {
     constructor() {
         this.itemsByStack = {}
         this.itemsById = []
@@ -24,6 +24,3 @@ class StateStackToIdMap  {
         }
     }
 }
-
-module.exports = StateStackToIdMap
-

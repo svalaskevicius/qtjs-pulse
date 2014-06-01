@@ -18,7 +18,7 @@ var path = {
 
 gulp.task('build_source', function() {
   return gulp.src(path.src)
-  .pipe(traceur())
+  .pipe(traceur({types: true, annotations: true}))
   .pipe(gulp.dest('dist'));
 });
 

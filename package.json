@@ -1,21 +1,25 @@
 {
-    "name": "pulse",
-    "version": "0.0.1",
-    "description": "A flexible editor",
-    "keywords": [],
-    "author": "Sarunas Valaskevicius <rakatan@gmail.com>",
-    "repository": { "type": "git", "url": "git://github.com/svalaskevicius/pulse.git" },
-    "dependencies": {
-        "lodash": "*",
-        "rgbcolor": "*"
-    },
-    "devDependencies": {
-        "should": "*",
-        "sinon": "*",
-        "gulp": "*",
-        "gulp-traceur": "*",
-        "gulp-mocha": "*",
-        "gulp-jshint": "*"
-    },
-    "main": "pulse"
+  "name": "pulse",
+  "version": "0.0.1",
+  "description": "A flexible editor",
+  "keywords": [],
+  "author": "Sarunas Valaskevicius <rakatan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/svalaskevicius/pulse.git"
+  },
+  "dependencies": {
+    "di": "^2.0.0-pre-9",
+    "lodash": "*",
+    "rgbcolor": "*"
+  },
+  "devDependencies": {
+    "should": "*",
+    "sinon": "*",
+    "gulp": "*",
+    "gulp-traceur": "*",
+    "gulp-mocha": "*",
+    "gulp-jshint": "*"
+  },
+  "main": "pulse"
 }

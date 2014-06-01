@@ -2,6 +2,9 @@
 
 var _ = require('lodash')
 
+import {Inject} from 'di';
+import {RuleMatcher} from './ruleMatcher';
+
 var matchState = function(text, state, startPos) {
     if (!state.start) {
         return false
@@ -61,8 +64,8 @@ var isPositionBeforeMatchedState = function(pos, stateMatch) {
     return pos !== false && (!stateMatch.state || pos < stateMatch.start);
 }
 
-
-class TextProcessor {
+@Inject(RuleMatcher)
+export class TextProcessor {
     constructor(ruleProcessor) {
         this.states = []
         this.ruleProcessor = ruleProcessor
@@ -118,5 +121,3 @@ class TextProcessor {
         }
     }
 }
-
-module.exports = TextProcessor
