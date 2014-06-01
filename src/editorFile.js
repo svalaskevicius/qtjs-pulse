@@ -38,31 +38,35 @@ var saveFile = function(editorFile) {
     })
 }
 
-var build = function () {
-    var builder = new qt.DynamicMetaObjectBuilder()
-    builder.setClassName("PulseEditorFile")
-    builder.addProperty("contents", "QString")
-    builder.addProperty("path", "QString")
-    builder.addProperty("error", "QString")
-    builder.addSignal("saved()", new qt.QStringList())
-
-    builder.addSlot('pathChanged()', function () {
-        checkAndLoadFile(this, qtapi.toString(this.property("path")))
+var buildEditorFile = function() {
+    return qt.buildQmlComponent("EditorFile", {
+        init: function () {
+            this.connect(this, '2pathChanged()', '1pathChanged()')
+        },
+        properties: {
+            "contents": "QString",
+            "path": "QString",
+            "error": "QString",
+        },
+        signals: {
+            "saved()": []
+        },
+        slots: {
+            'pathChanged()' : function () {
+                checkAndLoadFile(this, qtapi.toString(this.property("path")))
+            },
+            'save()' : function () {
+                saveFile(this)
+            },
+        }
     })
-    builder.setInit(function () {
-        this.connect(this, '2pathChanged()', '1pathChanged()')
-    })
-    builder.addSlot('save()', function () {
-        saveFile(this)
-    })
-    return qt.dynamicQObjectManager().finalizeBuild(builder)
-};
+}
 
 module.exports = {
-    build : build,
+    build : buildEditorFile,
     register : function () {
         qt.qmlRegisterDynamicType(
-            build(),
+            buildEditorFile(),
             "PulseEditor",
             1, 0,
             "EditorFile"
