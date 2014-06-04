@@ -67,6 +67,19 @@ describe('Highlighter/LanguageLoader', function () {
             it_converts_string_to_regexp("end", "i")
         })
 
+        it('it keeps the input reusable', function () {
+            var target = new TextProcessor()
+            var loader = new LanguageLoader(target)
+            var def = {
+                "rules": { "test": {
+                    "matcher" : "regexp[0-9]/*",
+                    "matcher-flags" : "gi"
+                } }
+            }
+            loader.load('testLang', [def])
+            loader.load('testLang', [def])
+        })
+
     })
 })
 

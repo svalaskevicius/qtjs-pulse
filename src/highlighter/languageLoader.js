@@ -43,13 +43,12 @@ export class LanguageLoader {
     }
 
     load(name, states) {
-        var targetProcessor = this.target
-        _.forEach(states, (state, id) => {
+        _.forEach(_.cloneDeep(states), (state, id) => {
             prepareStateRulesMatchers(state)
             prepareRegexp(state, "start")
             prepareRegexp(state, "end")
             state.id = id
-            targetProcessor.addState(state)
+            this.target.addState(state)
         })
     }
 }
