@@ -11,26 +11,36 @@ cpgf.import("cpgf", "builtin.core")
 
 var qtapi = require("./qtapi.js")
 
-var injector = new Injector();
-var textFormatter = injector.get(TextFormatter)
-var textProcessor = injector.get(TextProcessor)
-
-injector.get(LanguageLoader).load('php', require('./highlighter/languages/php.json'))
-injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
-
-var stateStackToIdMap = injector.get(StateStackToIdMap)
-
 var Highlighter = qt.extend(qt.QSyntaxHighlighter, {
     highlightBlock: function (text) {
-        textFormatter.setTarget(this)
-        var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
+        var stack = this.stateStackToIdMap.retrieveStack(this.previousBlockState())
         if (!stack) {
             stack = ['default']
         }
-        stack = textProcessor.processLine(text.toLatin1().constData(), stack)
-        this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
+        stack = this.textProcessor.processLine(text.toLatin1().constData(), stack)
+        this.setCurrentBlockState(this.stateStackToIdMap.retrieveId(stack));
     }
 });
+
+var phplang = require('./highlighter/languages/php.json');
+
+function createHighlighter(document) {
+    var highlighter = new Highlighter(document);
+
+    var injector = new Injector();
+    var textFormatter = injector.get(TextFormatter)
+    textFormatter.setTarget(highlighter)
+
+    highlighter.stateStackToIdMap = injector.get(StateStackToIdMap)
+    highlighter.textProcessor = injector.get(TextProcessor)
+
+    injector.get(LanguageLoader).load('php', phplang)
+    injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
+
+    keepQtObjectUntilItsFreed(highlighter)
+
+    return highlighter
+}
 
 var buildHighligterComponent = function() {
     return qt.buildQmlComponent("Highlighter", {
@@ -51,8 +61,7 @@ var buildHighligterComponent = function() {
                     );
 
                     if (textDocument) {
-                        var highlighter = new Highlighter(textDocument.textDocument());
-                        keepQtObjectUntilItsFreed(highlighter)
+                        createHighlighter(textDocument.textDocument());
                     }
                 }
             },
