@@ -12,9 +12,7 @@ describe('Highlighter/TextFormatter', function () {
         qtApi = {'setFormat':function(){}}
         qtApiSpy = sinon.spy(qtApi, 'setFormat')
 
-        formatter = new TextFormatter()
-
-        formatter.setTarget(qtApi)
+        formatter = new TextFormatter(qtApi)
     })
 
     it('formats the requested rule', function () {

@@ -1,6 +1,8 @@
 "use strict";
 
 import {Injector} from 'di';
+import {Provide} from 'di';
+import {TextFormatterTarget} from './highlighter/textFormatter';
 import {TextFormatter} from './highlighter/textFormatter';
 import {TextProcessor} from './highlighter/textProcessor';
 import {LanguageLoader} from './highlighter/languageLoader';
@@ -22,19 +24,22 @@ var Highlighter = qt.extend(qt.QSyntaxHighlighter, {
     }
 });
 
-var phplang = require('./highlighter/languages/php.json');
+function getInjectorForHighlighter(highlighter) {
+    @Provide(TextFormatterTarget)
+    function getHighlighter() {
+        return highlighter;
+    }
+    return new Injector([getHighlighter]);
+}
 
 function createHighlighter(document) {
-    var highlighter = new Highlighter(document);
-
-    var injector = new Injector();
-    var textFormatter = injector.get(TextFormatter)
-    textFormatter.setTarget(highlighter)
+    var highlighter = new Highlighter(document)
+    var injector = getInjectorForHighlighter(highlighter)
 
     highlighter.stateStackToIdMap = injector.get(StateStackToIdMap)
     highlighter.textProcessor = injector.get(TextProcessor)
 
-    injector.get(LanguageLoader).load('php', phplang)
+    injector.get(LanguageLoader).load('php', require('./highlighter/languages/php.json'))
     injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
 
     keepQtObjectUntilItsFreed(highlighter)
