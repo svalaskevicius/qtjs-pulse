@@ -20,7 +20,7 @@ var matchState = function(text, state, startPos) {
 var findNextState = function(text, states, startPos) {
     return _.reduce(
         states,
-        function (prev, state) {
+        (prev, state) => {
             var pos = matchState(text, state, startPos)
             if (pos !== null && pos.start < prev.start) {
                 return {state: state, start: pos.start, length: pos.length}
@@ -43,9 +43,7 @@ var findEndOfState = function(text, state, startPos) {
 }
 
 var findState = function(states, stateId) {
-    return _.find(states, function(el){
-        return el.id === stateId
-    })
+    return _.find(states, el => (el.id === stateId))
 }
 
 var getLastState = function(stack, states) {
@@ -57,7 +55,7 @@ var getLastState = function(stack, states) {
 }
 
 var findContainedStates = function(state, states) {
-    return _.map(state.contains, function(id){return findState(states, id)})
+    return _.map(state.contains, id => findState(states, id))
 }
 
 var isPositionBeforeMatchedState = function(pos, stateMatch) {

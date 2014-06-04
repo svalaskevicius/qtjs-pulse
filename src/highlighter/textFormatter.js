@@ -5,7 +5,7 @@ var _ = require("lodash")
 var prepareFormatId = function(stack, len, id) {
     var formatId = _.chain(stack)
                         .take(len)
-                        .filter(function(val){return val !== "default"})
+                        .filter(val => (val !== "default"))
                     .value()
                     .join('/')
     if (formatId) {

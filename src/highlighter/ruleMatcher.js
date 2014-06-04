@@ -45,7 +45,7 @@ function rangeIntersectsAtEnd(x, y) {
 }
 
 var splitRange = function(ranges, splitBy) {
-    ranges.forEach(function(range){
+    ranges.forEach((range) => {
         if (rangeIncludesRange(range, splitBy)) {
             ranges.push([splitBy[1], range[1]])
             range[1] = splitBy[0]
@@ -66,7 +66,7 @@ export class RuleMatcher {
     processRules(text, rules, start, end, stack) {
         var ranges = [[start, end]]
         var formatter = this.formatter
-        _.forEach(rules, function(rule){
+        _.forEach(rules, (rule) => {
             var applyRule = function(start, end){
                 formatter.format(rule.id, start, end-start, stack)
                 splitRange(ranges, [start, end])

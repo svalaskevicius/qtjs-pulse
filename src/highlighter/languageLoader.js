@@ -28,7 +28,7 @@ function prepareRegexp(state, name)
 function prepareStateRulesMatchers(state)
 {
     if (state.rules) {
-        state.rules = _.map(state.rules, function(rule, id){
+        state.rules = _.map(state.rules, (rule, id) => {
             rule.id = id
             prepareRegexp(rule, "matcher")
             return rule
@@ -44,7 +44,7 @@ export class LanguageLoader {
 
     load(name, states) {
         var targetProcessor = this.target
-        _.forEach(states, function(state, id){
+        _.forEach(states, (state, id) => {
             prepareStateRulesMatchers(state)
             prepareRegexp(state, "start")
             prepareRegexp(state, "end")

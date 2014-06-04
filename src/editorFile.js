@@ -7,7 +7,7 @@ cpgf.import("cpgf", "builtin.core")
 
 
 var loadFile = function(editorFile, path) {
-    fs.readFile(path, 'UTF-8', function(err, data) {
+    fs.readFile(path, 'UTF-8', (err, data) => {
         if (err) {
             editorFile.setProperty('error', qtapi.toVariant("Cannot read file: "+err))
             editorFile.setProperty('contents', qtapi.toVariant(""))
@@ -19,7 +19,7 @@ var loadFile = function(editorFile, path) {
 }
 
 var checkAndLoadFile = function(editorFile, path) {
-    fs.exists(path, function(exists) {
+    fs.exists(path, (exists) => {
         if (exists) {
             loadFile(editorFile, path)
         } else {
@@ -29,7 +29,7 @@ var checkAndLoadFile = function(editorFile, path) {
 }
 
 var saveFile = function(editorFile) {
-    fs.writeFile(qtapi.toString(editorFile.property("path")), qtapi.toString(editorFile.property("contents")), function(err) {
+    fs.writeFile(qtapi.toString(editorFile.property("path")), qtapi.toString(editorFile.property("contents")), (err) => {
         if (err) {
             editorFile.setProperty('error', qtapi.toVariant("Cannot write file: "+err))
         } else {

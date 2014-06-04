@@ -4,7 +4,7 @@ var fs = require('fs'),
     should = require('should'), sinon = require('sinon'),
     qtapi = require('../src/qtapi')
 
-var EditorFile = require("../src/editorFile.js")
+var EditorFile = require("../dist/editorFile.js")
 
 var newInstance = function(){return qt.dynamicQObjectManager().construct(EditorFile.build())}
 
