@@ -60,8 +60,8 @@ export class StyleLoader {
         this.styleStack.push(computedStyle)
 
         this.textFormatter.addFormat(
-                 this.styleIdStack.join("/"),
-                 createCharFormat(computedStyle)
+            this.styleIdStack.join("/"),
+            createCharFormat(computedStyle)
         )
 
         if (style.styles) {
@@ -73,6 +73,10 @@ export class StyleLoader {
     }
 
     load(styles){
-        _.forEach(styles, this.loadStyle, this)
+        _.forEach(
+            _.cloneDeep(styles),
+            this.loadStyle,
+            this
+        )
     }
 }
