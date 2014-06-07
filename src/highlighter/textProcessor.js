@@ -14,20 +14,20 @@ var matchState = function(text, state, startPos) {
     if (match !== null) {
         return {start: state.start.lastIndex, length: match[0].length}
     }
-    return null
+    return {start: 0, length: 0}
 }
 
 var findNextState = function(text, states, startPos) {
     return _.reduce(
         states,
         (prev, state) => {
-            var pos = matchState(text, state, startPos)
-            if (pos !== null && pos.start < prev.start) {
-                return {state: state, start: pos.start, length: pos.length}
+            var {start, length} = matchState(text, state, startPos)
+            if (length && start < prev.start) {
+                return {state: state, start: start, length: length}
             }
             return prev
         },
-        {state:undefined, start:text.length + 1}
+        {state:undefined, start:text.length + 1, length: 0}
     )
 }
 

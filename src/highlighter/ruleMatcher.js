@@ -66,8 +66,8 @@ export class RuleMatcher {
     processRules(text, rules, start, end, stack) {
         var ranges = [[start, end]]
         var formatter = this.formatter
-        _.forEach(rules, (rule) => {
-            var applyRule = function(start, end){
+        rules.forEach(rule => {
+            var applyRule = function(start, end) {
                 formatter.format(rule.id, start, end-start, stack)
                 splitRange(ranges, [start, end])
             }
