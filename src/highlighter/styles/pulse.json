@@ -10,8 +10,8 @@
             "property":      { "color": "6a9fb5" },
             "sl_comment":    { "color": "505050", "italic": true },
             "ml_comment":    { "color": "505050", "italic": true },
-            "sq_string":     { "color": "90a959", "background-color": "202020" },
-            "dq_string":     { "color": "90a959", "background-color": "202020" }
+            "sq_string":     { "color": "90a959", "background-color": "1a1a1a" },
+            "dq_string":     { "color": "90a959", "background-color": "1a1a1a" }
         }
     }
 }
