@@ -66,7 +66,12 @@ var buildHighligterComponent = function() {
                     );
 
                     if (textDocument) {
-                        createHighlighter(textDocument.textDocument());
+                        try {
+                            createHighlighter(textDocument.textDocument());
+                        } catch (e) {
+                            console.error(e.stack)
+                            process.exit(1)
+                        }
                     }
                 }
             },
