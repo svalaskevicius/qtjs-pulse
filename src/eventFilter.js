@@ -19,9 +19,7 @@ EventFilter.eventFilter = function(obj, event) {
 
 var evFilter = new EventFilter()
 keepQtObjectUntilItsFreed(evFilter)
-qt.connect(evFilter, 'destroyed(QObject *)', function(_obj) {
-    qt.QCoreApplication.instance().removeEventFilter(_obj)
-})
+qt.connect(evFilter, 'destroyed(QObject *)', _obj => qt.QCoreApplication.instance().removeEventFilter(_obj))
 
 qt.QCoreApplication.instance().installEventFilter(evFilter)
 

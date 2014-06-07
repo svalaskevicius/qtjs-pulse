@@ -1,5 +1,6 @@
-#!/usr/bin/env qtjs
 "use strict";
+
+require('./traceur-runtime');
 
 cpgf.import("cpgf", "builtin.core");
 
@@ -10,12 +11,8 @@ var Highlighter = require("./highlighter.js"),
     eventFilter = require("./eventFilter.js");
 
 var installPeriodicGc = function () {
-    var cleanerId = setInterval(function(){
-        qt.invokeV8Gc()
-    }, 1000)
-    process.on('exit', function(){
-        clearInterval(cleanerId)
-    })
+    var cleanerId = setInterval(qt.invokeV8Gc, 1000)
+    process.on('exit', () => clearInterval(cleanerId))
 };
 
 ;(function () {
@@ -35,7 +32,7 @@ var installPeriodicGc = function () {
 
     var mainComponent = component.create()
 
-    eventFilter.addFilter(function(obj, event){
+    eventFilter.addFilter((obj, event) => {
         if (qt.QEvent.KeyPress === event.type()) {
             var asQKeyEvent = cpgf.cast(event, qt.QKeyEvent)
             if (asQKeyEvent) {
@@ -47,7 +44,7 @@ var installPeriodicGc = function () {
         }
     });
 
-    process.argv.slice(2).forEach(function(val, index, array) {
+    process.argv.slice(2).forEach((val, index, array) => {
         if (val === '--debug-gc') {
             installPeriodicGc()
         } else if (!/^--/.test(val)) {

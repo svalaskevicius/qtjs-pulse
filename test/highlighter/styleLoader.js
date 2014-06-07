@@ -2,7 +2,7 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var StyleLoader = require("../../src/highlighter/styleLoader.js")
+var StyleLoader = require("../../dist/highlighter/styleLoader.js").StyleLoader;
 
 describe('Highlighter/StyleLoader', function () {
 

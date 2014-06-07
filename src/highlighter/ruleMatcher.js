@@ -2,9 +2,8 @@
 
 var _ = require("lodash")
 
-var RuleMatcher = function(callback) {
-    this.callback = callback
-}
+import {Inject} from 'di';
+import {TextFormatter} from './textFormatter';
 
 var matchRuleInRange = function(text, matcher, range, callback) {
     var start = range[0]
@@ -21,14 +20,14 @@ var matchRuleInRange = function(text, matcher, range, callback) {
     }
 }
 
-var applyDefaultCallbackToRanges = function(ranges, callback, stack)
+var applyDefaultCallbackToRanges = function(ranges, formatter, stack)
 {
     for (var r = ranges.length-1; r >= 0; r--) {
         var rStart = ranges[r][0]
         var rEnd = ranges[r][1]
         var rLength = rEnd-rStart
         if (rLength) {
-            callback("", rStart, rLength, stack)
+            formatter.format("", rStart, rLength, stack)
         }
     }
 }
@@ -46,7 +45,7 @@ function rangeIntersectsAtEnd(x, y) {
 }
 
 var splitRange = function(ranges, splitBy) {
-    ranges.forEach(function(range){
+    ranges.forEach((range) => {
         if (rangeIncludesRange(range, splitBy)) {
             ranges.push([splitBy[1], range[1]])
             range[1] = splitBy[0]
@@ -58,22 +57,25 @@ var splitRange = function(ranges, splitBy) {
     })
 }
 
-RuleMatcher.prototype = {
-    'processRules' : function(text, rules, start, end, stack) {
+@Inject(TextFormatter)
+export class RuleMatcher {
+    constructor(formatter) {
+        this.formatter = formatter
+    }
+
+    processRules(text, rules, start, end, stack) {
         var ranges = [[start, end]]
-        var callback = this.callback
-        _.forEach(rules, function(rule){
-            var applyRule = function(start, end){
-                callback(rule.id, start, end-start, stack)
+        var formatter = this.formatter
+        rules.forEach(rule => {
+            var applyRule = function(start, end) {
+                formatter.format(rule.id, start, end-start, stack)
                 splitRange(ranges, [start, end])
             }
             for (var r = ranges.length-1; r >= 0; r--) {
                 matchRuleInRange(text, rule.matcher, ranges[r], applyRule)
             }
         })
-        applyDefaultCallbackToRanges(ranges, callback, stack)
+        applyDefaultCallbackToRanges(ranges, formatter, stack)
     }
 }
-
-module.exports = RuleMatcher
 

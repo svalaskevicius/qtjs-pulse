@@ -3,5 +3,20 @@
     "maxcomplexity": 4,
     "globalstrict": true,
     "asi": true,
-    "globals": {"qt": false, "cpgf": false, "require": false, "module": false, "describe": false, "it": false, "process": false}
+    "esnext": true,
+    "globals": {
+        "qt": false,
+        "cpgf": false,
+        "require": false,
+        "module": false, 
+        "describe": false, 
+        "it": false, 
+        "process": false,
+        "keepQtObjectUntilItsFreed": false,
+        "setInterval": false,
+        "clearInterval": false,
+        "global": false,
+        "__dirname": false,
+        "console": false
+    }
 }

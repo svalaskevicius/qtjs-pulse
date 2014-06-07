@@ -2,8 +2,8 @@
 
 var should = require('should'), sinon = require('sinon')
 
-var TextProcessor = require("../../src/highlighter/textProcessor.js")
-var LanguageLoader = require("../../src/highlighter/languageLoader.js")
+var TextProcessor = require("../../dist/highlighter/textProcessor.js").TextProcessor;
+var LanguageLoader = require("../../dist/highlighter/languageLoader.js").LanguageLoader;
 
 describe('Highlighter/LanguageLoader', function () {
     describe('#loadLanguage', function () {
@@ -65,6 +65,19 @@ describe('Highlighter/LanguageLoader', function () {
 
         it('adds global flag to converted regexps', function () {
             it_converts_string_to_regexp("end", "i")
+        })
+
+        it('it keeps the input reusable', function () {
+            var target = new TextProcessor()
+            var loader = new LanguageLoader(target)
+            var def = {
+                "rules": { "test": {
+                    "matcher" : "regexp[0-9]/*",
+                    "matcher-flags" : "gi"
+                } }
+            }
+            loader.load('testLang', [def])
+            loader.load('testLang', [def])
         })
 
     })

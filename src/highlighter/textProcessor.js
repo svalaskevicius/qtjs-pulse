@@ -2,10 +2,8 @@
 
 var _ = require('lodash')
 
-var TextProcessor = function(ruleProcessor) {
-    this.states = []
-    this.ruleProcessor = ruleProcessor
-}
+import {Inject} from 'di';
+import {RuleMatcher} from './ruleMatcher';
 
 var matchState = function(text, state, startPos) {
     if (!state.start) {
@@ -16,20 +14,20 @@ var matchState = function(text, state, startPos) {
     if (match !== null) {
         return {start: state.start.lastIndex, length: match[0].length}
     }
-    return null
+    return {start: 0, length: 0}
 }
 
 var findNextState = function(text, states, startPos) {
     return _.reduce(
         states,
-        function (prev, state) {
-            var pos = matchState(text, state, startPos)
-            if (pos !== null && pos.start < prev.start) {
-                return {state: state, start: pos.start, length: pos.length}
+        (prev, state) => {
+            var {start, length} = matchState(text, state, startPos)
+            if (length && start < prev.start) {
+                return {state: state, start: start, length: length}
             }
             return prev
         },
-        {state:undefined, start:text.length + 1}
+        {state:undefined, start:text.length + 1, length: 0}
     )
 }
 
@@ -45,9 +43,7 @@ var findEndOfState = function(text, state, startPos) {
 }
 
 var findState = function(states, stateId) {
-    return _.find(states, function(el){
-        return el.id === stateId
-    })
+    return _.find(states, el => (el.id === stateId))
 }
 
 var getLastState = function(stack, states) {
@@ -59,18 +55,25 @@ var getLastState = function(stack, states) {
 }
 
 var findContainedStates = function(state, states) {
-    return _.map(state.contains, function(id){return findState(states, id)})
+    return _.map(state.contains, id => findState(states, id))
 }
 
 var isPositionBeforeMatchedState = function(pos, stateMatch) {
     return pos !== false && (!stateMatch.state || pos < stateMatch.start);
 }
 
-TextProcessor.prototype = {
-    'addState' : function(state) {
+@Inject(RuleMatcher)
+export class TextProcessor {
+    constructor(ruleProcessor) {
+        this.states = []
+        this.ruleProcessor = ruleProcessor
+    }
+
+    addState(state) {
         this.states.push(state)
-    },
-    'processState' : function(text, stateStack, idx) {
+    }
+
+    processState(text, stateStack, idx) {
         var startedIdx = idx,
             savedStateStack = _.clone(stateStack),
             currentState = getLastState(stateStack, this.states),
@@ -94,8 +97,9 @@ TextProcessor.prototype = {
         this.invokeRuleProcessor(text, currentState.rules, startedIdx, idx, savedStateStack)
 
         return idx
-    },
-    'processLine' : function(text, stateStack) {
+    }
+
+    processLine(text, stateStack) {
         var idx = 0,
             len = text.length
 
@@ -104,8 +108,9 @@ TextProcessor.prototype = {
         } while (idx < len);
 
         return stateStack
-    },
-    'invokeRuleProcessor' : function(text, rules, startedIdx, idx, stateStack) {
+    }
+
+    invokeRuleProcessor(text, rules, startedIdx, idx, stateStack) {
         if (this.ruleProcessor) {
             if (rules === undefined) {
                 rules = []
@@ -114,5 +119,3 @@ TextProcessor.prototype = {
         }
     }
 }
-
-module.exports = TextProcessor

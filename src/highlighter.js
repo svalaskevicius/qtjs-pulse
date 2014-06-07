@@ -1,43 +1,51 @@
 "use strict";
 
+import {Injector} from 'di';
+import {Provide} from 'di';
+import {TextFormatterTarget} from './highlighter/textFormatter';
+import {TextFormatter} from './highlighter/textFormatter';
+import {TextProcessor} from './highlighter/textProcessor';
+import {LanguageLoader} from './highlighter/languageLoader';
+import {StyleLoader} from './highlighter/styleLoader';
+import {StateStackToIdMap} from './highlighter/stateToIdMap';
+
 cpgf.import("cpgf", "builtin.core")
 
-var RuleMatcher = require("./highlighter/ruleMatcher.js")
-var TextProcessor = require("./highlighter/textProcessor.js")
-var StateStackToIdMap = require("./highlighter/stateToIdMap.js")
-var TextFormatter = require("./highlighter/textFormatter.js")
-var LanguageLoader = require("./highlighter/languageLoader.js")
-var StyleLoader = require("./highlighter/styleLoader.js")
 var qtapi = require("./qtapi.js")
-
-var textFormatter = new TextFormatter()
-var textProcessor = new TextProcessor(new RuleMatcher(textFormatter.getFormatter()))
-
-;(function(){
-    var loader = new LanguageLoader(textProcessor)
-    loader.load('php', require('./highlighter/languages/php.json'))
-})()
-
-;(function(){
-    var loader = new StyleLoader(textFormatter)
-    loader.load(require('./highlighter/styles/pulse.json'))
-})()
-
-
-var stateStackToIdMap = new StateStackToIdMap()
-
 
 var Highlighter = qt.extend(qt.QSyntaxHighlighter, {
     highlightBlock: function (text) {
-        textFormatter.target = this
-        var stack = stateStackToIdMap.retrieveStack(this.previousBlockState())
+        var stack = this.stateStackToIdMap.retrieveStack(this.previousBlockState())
         if (!stack) {
             stack = ['default']
         }
-        stack = textProcessor.processLine(text.toLatin1().constData(), stack)
-        this.setCurrentBlockState(stateStackToIdMap.retrieveId(stack));
+        stack = this.textProcessor.processLine(text.toLatin1().constData(), stack)
+        this.setCurrentBlockState(this.stateStackToIdMap.retrieveId(stack));
     }
 });
+
+function getInjectorForHighlighter(highlighter) {
+    @Provide(TextFormatterTarget)
+    function getHighlighter() {
+        return highlighter;
+    }
+    return new Injector([getHighlighter]);
+}
+
+function createHighlighter(document) {
+    var highlighter = new Highlighter(document)
+    var injector = getInjectorForHighlighter(highlighter)
+
+    highlighter.stateStackToIdMap = injector.get(StateStackToIdMap)
+    highlighter.textProcessor = injector.get(TextProcessor)
+
+    injector.get(LanguageLoader).load('php', require('./highlighter/languages/php.json'))
+    injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
+
+    keepQtObjectUntilItsFreed(highlighter)
+
+    return highlighter
+}
 
 var buildHighligterComponent = function() {
     return qt.buildQmlComponent("Highlighter", {
@@ -58,8 +66,12 @@ var buildHighligterComponent = function() {
                     );
 
                     if (textDocument) {
-                        var highlighter = new Highlighter(textDocument.textDocument());
-                        keepQtObjectUntilItsFreed(highlighter)
+                        try {
+                            createHighlighter(textDocument.textDocument());
+                        } catch (e) {
+                            console.error(e.stack)
+                            process.exit(1)
+                        }
                     }
                 }
             },

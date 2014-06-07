@@ -26,9 +26,9 @@ var toVariant = function(obj)
     return new qt.QVariant(obj)
 }
 
-
 var emit = function(qobject, signature, args)
 {
+    /* jshint maxcomplexity: 100 */
     if (args === null || typeof args === 'undefined') {
         args = []
     }
@@ -53,6 +53,7 @@ var emit = function(qobject, signature, args)
 
 var invoke = function(qobject, signature, args)
 {
+    /* jshint maxcomplexity: 100 */
     if (args === null || typeof args === 'undefined') {
         args = []
     }
@@ -76,7 +77,8 @@ var invoke = function(qobject, signature, args)
 }
 
 qt.extend = function(classToExtend, methods) {
-    var newClass = cpgf.cloneClass(eval("qt." + classToExtend.name + "Wrapper"));
+    var className = classToExtend.name + "Wrapper";
+    var newClass = cpgf.cloneClass(qt[className]);
     for (var method in methods) {
         if (newClass[method]) {
             newClass[method] = methods[method];
@@ -89,6 +91,7 @@ qt.extend = function(classToExtend, methods) {
 };
 
 qt.buildQmlComponent = function(name, def) {
+    /* jshint maxcomplexity: 10 */
     var builder = new qt.DynamicMetaObjectBuilder()
     builder.setClassName(name)
     if (def.parent) {

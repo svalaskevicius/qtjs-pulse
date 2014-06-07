@@ -2,14 +2,12 @@
 
 var _ = require("lodash")
 
-var TextFormatter = function() {
-    this.formats = {}
-}
+import {Inject} from 'di';
 
 var prepareFormatId = function(stack, len, id) {
     var formatId = _.chain(stack)
                         .take(len)
-                        .filter(function(val){return val !== "default"})
+                        .filter(val => (val !== "default"))
                     .value()
                     .join('/')
     if (formatId) {
@@ -19,14 +17,22 @@ var prepareFormatId = function(stack, len, id) {
     return formatId
 }
 
-TextFormatter.prototype = {
-    'setTarget' : function(target) {
+export class TextFormatterTarget {
+    setFormat(start, length, format) {}
+}
+
+@Inject(TextFormatterTarget)
+export class TextFormatter {
+    constructor(target) {
         this.target = target
-    },
-    'addFormat' : function(ruleId, format) {
-        this.formats[ruleId] = format
-    },
-    'findExistingFormat' : function(id, stack) {
+        this.formats = {}
+    }
+
+    addFormat(ruleId, fmt) {
+        this.formats[ruleId] = fmt
+    }
+
+    findExistingFormat(id, stack) {
         var len = stack.length;
         if (!id && stack.length) {
             id = stack[--len]
@@ -39,19 +45,15 @@ TextFormatter.prototype = {
             len--
         }
         return null
-    },
-    'getFormatter' : function() {
-        var self = this;
-        return function(id, start, length, stack) {
-            if (!self.target) {
-                return
-            }
-            var format = self.findExistingFormat(id, stack)
-            if (format) {
-                self.target.setFormat(start, length, format)
-            }
+    }
+
+    format(id, start, length, stack) {
+        if (!this.target) {
+            throw new Error("target is not set")
+        }
+        var fmt = this.findExistingFormat(id, stack)
+        if (fmt) {
+            this.target.setFormat(start, length, fmt)
         }
     }
 }
-
-module.exports = TextFormatter

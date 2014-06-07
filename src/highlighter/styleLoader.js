@@ -3,6 +3,9 @@
 var _ = require("lodash"),
     RgbColor = require('rgbcolor')
 
+import {Inject} from 'di';
+import {TextFormatter} from './textFormatter';
+
 
 function convertColorToBrush(colorDefinition) {
     var color = new RgbColor(colorDefinition);
@@ -13,6 +16,7 @@ function convertColorToBrush(colorDefinition) {
 }
 
 function createCharFormat(style) {
+    /* jshint maxcomplexity: 10 */
     var format = new qt.QTextCharFormat();
     if (typeof style.color !== "undefined") {
         format.setForeground(convertColorToBrush(style.color));
@@ -32,29 +36,32 @@ function createCharFormat(style) {
     return format
 }
 
-var StyleLoader = function(textFormatter) {
-    this.textFormatter = textFormatter
-    this.styleIdStack = []
-    this.styleStack = []
-}
+@Inject(TextFormatter)
+export class StyleLoader {
 
-StyleLoader.prototype = {
-    'createSubstyle': function(style) {
+    constructor(textFormatter) {
+        this.textFormatter = textFormatter
+        this.styleIdStack = []
+        this.styleStack = []
+    }
+
+    createSubstyle(style) {
         if (this.styleStack.length) {
             return _.merge(_.last(this.styleStack), style)
         } else {
             return style
         }
-    },
-    'loadStyle': function(style, id) {
+    }
+
+    loadStyle(style, id) {
         var computedStyle = this.createSubstyle(style)
 
         this.styleIdStack.push(id)
         this.styleStack.push(computedStyle)
 
         this.textFormatter.addFormat(
-                 this.styleIdStack.join("/"),
-                 createCharFormat(computedStyle)
+            this.styleIdStack.join("/"),
+            createCharFormat(computedStyle)
         )
 
         if (style.styles) {
@@ -63,10 +70,13 @@ StyleLoader.prototype = {
 
         this.styleIdStack.pop()
         this.styleStack.pop()
-    },
-    'load': function(styles){
-        _.forEach(styles, this.loadStyle, this)
+    }
+
+    load(styles){
+        _.forEach(
+            _.cloneDeep(styles),
+            this.loadStyle,
+            this
+        )
     }
 }
-
-module.exports = StyleLoader
