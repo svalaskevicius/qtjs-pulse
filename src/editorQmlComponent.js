@@ -7,7 +7,11 @@ cpgf.import("cpgf", "builtin.core")
 
 
 var buildEditorQmlComponent = function() {
+    var EditorUIClass = qt.extend(qt.QQuickItem, {
+
+    })
     return qt.buildQmlComponent("EditorUI", {
+        parent: EditorUIClass
     })
 }
 

@@ -6,10 +6,15 @@ var fs = require('fs'),
 
 var EditorQmlComponent = require("../dist/editorQmlComponent.js")
 
-var newInstance = function(){return qt.dynamicQObjectManager().construct(EditorQmlComponent.build())}
+var newInstance = function() {
+	return qt.dynamicQObjectManager().construct(EditorQmlComponent.build())
+}
 
 describe('EditorQmlComponent', function () {
     it('is initialisable', function () {
-        newInstance().should.not.be.null;
+        var inst = newInstance()
+        inst.should.not.be.null
+        inst.metaObject().superClass().className().should.equal('QQuickItem')
     })
+
 })
