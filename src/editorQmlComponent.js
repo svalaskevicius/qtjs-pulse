@@ -28,6 +28,16 @@ class GlyphNodeFactory {
 
 class TextLayouter {
     layoutText(text) {
+        var textLayout = new qt.QTextLayout(text);
+        textLayout.beginLayout();
+        while (true) {
+            var line = textLayout.createLine();
+            if (!line.isValid()) {
+                break;
+            }
+        }
+        textLayout.endLayout();
+        return textLayout.glyphRuns();
     }
 }
 
@@ -38,7 +48,12 @@ class TextRenderer {
         this.textLayouter = textLayouter
     }
     renderText(text, parentNode) {
-        this.textLayouter.layoutText()
+        var glyphList = this.textLayouter.layoutText(text)
+        if (!glyphList.empty()) {
+            parentNode.appendChildNode(
+                this.glyphNodeFactory.create()
+            )
+        }
     }
 }
 
@@ -68,7 +83,10 @@ var buildEditorQmlComponent = function() {
         },
         updatePaintNode: function(node, data) {
             node = new qt.QSGNode();
-            this.services().get(TextRenderer).renderText("", node)
+            this.services().get(TextRenderer).renderText(
+                qtapi.toString(this.property("text")),
+                node
+            )
             return node;
         }
     })

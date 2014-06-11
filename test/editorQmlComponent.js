@@ -73,4 +73,35 @@ describe('EditorQmlComponent', function () {
         textLayouterSpy.called.should.be.true;
         glyphNodeFactorySpy.called.should.be.false;
     })
+
+
+    it('renders the set text', function () {
+        var glyphNodeFactorySpy, textLayouterSpy
+
+        installEditorProxies([
+            [EditorQmlComponent.GlyphNodeFactory, function (service) {
+                glyphNodeFactorySpy = sinon.spy(service, "create");
+                return service
+            }],
+            [EditorQmlComponent.TextLayouter, function (service) {
+                textLayouterSpy = sinon.spy(service, "layoutText");
+                return service
+            }]
+        ])
+
+        editor.setProperty('text', qtapi.toVariant('text to edit'));
+        var node = editor.updatePaintNode(null, null)
+        node.should.be.an.instanceOf(qt.QSGNode)
+
+        textLayouterSpy.called.should.be.true;
+        glyphNodeFactorySpy.called.should.be.true;
+
+        var textNode = cpgf.cast(node.firstChild(), qt.QSGGlyphNode)
+        textNode.should.be.an.instanceOf(qt.QSGGlyphNode)
+
+        var glyphIndexes = textLayouterSpy.getCall(0).returnValue.front().glyphIndexes()
+        glyphIndexes.size().should.equal(12)
+        glyphIndexes.at(0).should.not.equal(glyphIndexes.at(1))
+        glyphIndexes.at(0).should.equal(glyphIndexes.at(11))
+    })
 })
