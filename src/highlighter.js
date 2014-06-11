@@ -42,6 +42,8 @@ function createHighlighter(document) {
     injector.get(LanguageLoader).load('php', require('./highlighter/languages/php.json'))
     injector.get(StyleLoader).load(require('./highlighter/styles/pulse.json'))
 
+    keepQtObjectUntilItsFreed(highlighter)
+
     return highlighter
 }
 
