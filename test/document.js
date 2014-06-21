@@ -1,18 +1,10 @@
 
 var Document = require("../dist/document.js").Document,
-    FormattedText = require("../dist/document.js").FormattedText,
-    Highlighter = require("../dist/document.js").Highlighter,
+    FormattedText = require("../dist/formattedText.js").FormattedText,
+    Highlighter = require("../dist/highlighter.js").Highlighter,
     di = require('di'),
     sinon = require('sinon')
 
-describe('FormattedText', function () {
-    it('retrieves set values', function () {
-        var formats = {}
-        var formattedText = new FormattedText("text", formats)
-        formattedText.text.should.equal("text")
-        formattedText.formats.should.equal(formats)
-    })
-})
 
 describe('Document', function () {
     it('can set text', function () {

@@ -7,10 +7,9 @@ var TextProcessor = require("../../dist/highlighter/textProcessor.js").TextProce
 
 describe('Highlighter/TextProcessor', function () {
     describe('#processLine()', function () {
-        it('throws error when there are no rules', function () {
-            (function() {
-                (new TextProcessor()).processLine("my text line", [])
-            }).should.throwError(/Processing stack is empty/)
+        it('returns the starting state stack when there are no rules', function () {
+            var stack = {};
+            (new TextProcessor()).processLine("my text line", stack).should.equal(stack)
         })
 
         it('changes state when a rule is triggered', function () {

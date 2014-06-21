@@ -1,36 +1,17 @@
 
 import {p} from './private'
 import {Inject} from 'di'
+import {Highlighter} from './highlighter'
+import {LanguageLoader} from './highlighter/languageLoader';
+import {StyleLoader} from './highlighter/styleLoader';
 var _ = require('lodash')
 
-export class FormattedText {
-    constructor(text, formats) {
-        p(this, {text, formats})
-    }
-
-    get text() {
-        return p(this).text
-    }
-    get formats() {
-        return p(this).formats
-    }
-}
-
-export class Highlighter {
-    /**
-     * @param String text
-     * @param Integer previousBlockState
-     * @return { formattedText: FormattedText, blockState: Integer }
-     */
-    highlightText(text, previousBlockState) {
-        return {formattedText: new FormattedText(text, []), blockState: -1}
-    }
-}
-
-@Inject(Highlighter)
+@Inject(Highlighter, LanguageLoader, StyleLoader)
 export class Document {
-    constructor(highlighter) {
+    constructor(highlighter, languageLoader, styleLoader) {
         p(this, {highlighter})
+        languageLoader.load('php', require('./highlighter/languages/php.json'))
+        styleLoader.load(require('./highlighter/styles/pulse.json'))
     }
 
     get blocks() {

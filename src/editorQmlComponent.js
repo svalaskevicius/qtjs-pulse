@@ -33,7 +33,9 @@ class GlyphNodeFactory {
 
 class TextLayouter {
     layoutText(text) {
-        var textLayout = new qt.QTextLayout(text);
+        var textLayout = new qt.QTextLayout(text.text);
+        textLayout.setAdditionalFormats(text.formats)
+
         textLayout.beginLayout();
         while (true) {
             var line = textLayout.createLine();
@@ -90,7 +92,7 @@ var buildEditorQmlComponent = function() {
             }
             node = new qt.QSGNode();
             this.services().get(TextRenderer).renderText(
-                p(this).document.blocks[0].text,
+                p(this).document.blocks[0],
                 node
             )
             return node;

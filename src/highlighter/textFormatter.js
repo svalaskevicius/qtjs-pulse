@@ -3,6 +3,7 @@
 var _ = require("lodash")
 
 import {Inject} from 'di';
+import {TextFormatterTarget} from './textFormatterTarget';
 
 var prepareFormatId = function(stack, len, id) {
     var formatId = _.chain(stack)
@@ -15,10 +16,6 @@ var prepareFormatId = function(stack, len, id) {
     }
     formatId += id
     return formatId
-}
-
-export class TextFormatterTarget {
-    setFormat(start, length, format) {}
 }
 
 @Inject(TextFormatterTarget)
