@@ -74,34 +74,44 @@ describe('EditorQmlComponent', function () {
         glyphNodeFactorySpy.called.should.be.false;
     })
 
+    describe('TextRenderer', function () {
 
-    it('renders the set text', function () {
-        var glyphNodeFactorySpy, textLayouterSpy
+        it('it appends all rendered text lines', function() {
 
-        installEditorProxies([
-            [EditorQmlComponent.GlyphNodeFactory, function (service) {
-                glyphNodeFactorySpy = sinon.spy(service, "create");
-                return service
-            }],
-            [EditorQmlComponent.TextLayouter, function (service) {
-                textLayouterSpy = sinon.spy(service, "layoutText");
-                return service
-            }]
-        ])
+            var glyphRun1 = 1, glyphRun2 = 2, glyphNode1 = 3, glyphNode2 = 4
 
-        editor.setProperty('text', qtapi.toVariant('text to edit'));
-        var node = editor.updatePaintNode(null, null)
-        node.should.be.an.instanceOf(qt.QSGNode)
+            var glyphList = {size:function(){}, at: function(){}}
+            var atStub = sinon.stub(glyphList, "at")
+            atStub.withArgs(0).returns(glyphRun1)
+            atStub.withArgs(1).returns(glyphRun2)
+            sinon.stub(glyphList, "size").returns(2)
 
-        textLayouterSpy.called.should.be.true;
-        glyphNodeFactorySpy.called.should.be.true;
+            var glyphNodeFactory = function () {
+                var createFnc = sinon.stub()
+                createFnc.withArgs(sinon.match.any, glyphRun1).returns(glyphNode1)
+                createFnc.withArgs(sinon.match.any, glyphRun2).returns(glyphNode2)
+                return { create: createFnc };
+            }
+            di.annotate(glyphNodeFactory, new di.Provide(EditorQmlComponent.GlyphNodeFactory))
 
-        var textNode = cpgf.cast(node.firstChild(), qt.QSGGlyphNode)
-        textNode.should.be.an.instanceOf(qt.QSGGlyphNode)
+            var textLayouter = function () {
+                var layoutTextFnc = sinon.stub()
+                layoutTextFnc.returns(glyphList)
+                return { layoutText: layoutTextFnc };
+            }
+            di.annotate(textLayouter, new di.Provide(EditorQmlComponent.TextLayouter))
 
-        var glyphIndexes = textLayouterSpy.getCall(0).returnValue.front().glyphIndexes()
-        glyphIndexes.size().should.equal(12)
-        glyphIndexes.at(0).should.not.equal(glyphIndexes.at(1))
-        glyphIndexes.at(0).should.equal(glyphIndexes.at(11))
+            var injector = new di.Injector([glyphNodeFactory, textLayouter]);
+
+            var renderer = injector.get(EditorQmlComponent.TextRenderer)
+
+            var node = {appendChildNode:function(){ }}
+            var appendChildNodeSpy = sinon.spy(node, "appendChildNode")
+
+            renderer.renderText("test text", node)
+
+            appendChildNodeSpy.calledWith(glyphNode1).should.be.true
+            appendChildNodeSpy.calledWith(glyphNode2).should.be.true
+        })
     })
 })

@@ -49,9 +49,10 @@ class TextRenderer {
     }
     renderText(text, parentNode) {
         var glyphList = this.textLayouter.layoutText(text)
-        if (!glyphList.empty()) {
+        var cnt = glyphList.size()
+        for(var i = 0; i < cnt ; i++) {
             parentNode.appendChildNode(
-                this.glyphNodeFactory.create()
+                this.glyphNodeFactory.create(new qt.QPointF(10, 10), glyphList.at(i))
             )
         }
     }
@@ -82,6 +83,9 @@ var buildEditorQmlComponent = function() {
             this.injector = injector
         },
         updatePaintNode: function(node, data) {
+            if (node) {
+                return node;
+            }
             node = new qt.QSGNode();
             this.services().get(TextRenderer).renderText(
                 qtapi.toString(this.property("text")),
@@ -92,7 +96,14 @@ var buildEditorQmlComponent = function() {
     })
 
     return qt.buildQmlComponent("EditorUI", {
-        parent: EditorUIClass
+        parent: EditorUIClass,
+        init: function () {
+            this.setFlag(qt.QQuickItem.Flag.ItemHasContents)
+            //keepQtObjectUntilItsFreed(this)
+        },
+        properties: {
+            text: "QString",
+        }
     })
 }
 
@@ -108,4 +119,5 @@ module.exports = {
     },
     GlyphNodeFactory : GlyphNodeFactory,
     TextLayouter : TextLayouter,
+    TextRenderer: TextRenderer
 }
