@@ -1,8 +1,10 @@
 "use strict";
 
-import {Injector} from 'di';
-import {Provide} from 'di';
-import {Inject} from 'di';
+import {Injector} from 'di'
+import {Provide} from 'di'
+import {Inject} from 'di'
+import {p} from './private'
+import {Document} from './document'
 
 var fs = require('fs'),
     qtapi = require('../src/qtapi')
@@ -77,13 +79,10 @@ var buildEditorQmlComponent = function() {
             return new Injector([getEditorApi, getEditorPrivateApi]);
         },
         services: function() {
-            if (!this.injector) {
-                this.injector = this.createNewDIContainer()
-            }
-            return this.injector
+            return p(this).injector
         },
         setServices: function(injector) {
-            this.injector = injector
+            p(this).injector = injector
         },
         updatePaintNode: function(node, data) {
             if (node) {
@@ -91,7 +90,7 @@ var buildEditorQmlComponent = function() {
             }
             node = new qt.QSGNode();
             this.services().get(TextRenderer).renderText(
-                qtapi.toString(this.property("text")),
+                p(this).document.blocks[0].text,
                 node
             )
             return node;
@@ -101,11 +100,23 @@ var buildEditorQmlComponent = function() {
     return qt.buildQmlComponent("EditorUI", {
         parent: EditorUIClass,
         init: function () {
+            this.connect(this, '2textChanged()', '1textChanged()')
             this.setFlag(qt.QQuickItem.Flag.ItemHasContents)
-            //keepQtObjectUntilItsFreed(this)
+
+            var injector = this.createNewDIContainer(),
+                document = injector.get(Document)
+
+            p(this, {injector, document})
+
+            keepQtObjectUntilItsFreed(this)
         },
         properties: {
             text: "QString",
+        },
+        slots: {
+            'textChanged()': function () {
+                p(this).document.text = qtapi.toString(this.property("text"))
+            }
         }
     })
 }
@@ -122,5 +133,5 @@ module.exports = {
     },
     GlyphNodeFactory : GlyphNodeFactory,
     TextLayouter : TextLayouter,
-    TextRenderer: TextRenderer
+    TextRenderer: TextRenderer,
 }

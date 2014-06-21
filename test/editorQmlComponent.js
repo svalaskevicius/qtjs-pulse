@@ -17,6 +17,7 @@ var newInstance = function() {
     );
 }
 
+
 describe('EditorQmlComponent', function () {
 
     var editor;
