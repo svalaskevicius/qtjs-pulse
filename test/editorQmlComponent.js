@@ -57,8 +57,9 @@ describe('EditorQmlComponent', function () {
 
         installEditorProxies([
             [EditorQmlComponent.GlyphNodeFactory, function (service) {
-                glyphNodeFactorySpy = sinon.spy(service, "create");
-                return service
+                var factory = {create:function(){}}
+                glyphNodeFactorySpy = sinon.spy(factory, "create");
+                return factory
             }],
             [EditorQmlComponent.TextLayouter, function (service) {
                 textLayouterSpy = sinon.spy(service, "layoutText");
