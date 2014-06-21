@@ -5,7 +5,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
 
 import PulseEditor 1.0
-
+/*
 Item {
     id: editor
 
@@ -88,8 +88,35 @@ Item {
         id: file
     }
 
+
     onSave: {
         file.contents = textarea.text
         file.save()
     }
+}
+*/
+
+EditorUI {
+    id: editor
+
+    text: "asdasdasd <?php // lala \nlaal lala lala lala asdasdasd lala laal lala lala lala"
+
+
+//            textColor: "#f4bf75"
+//            selectionColor: "#b0b0b0"
+//            selectedTextColor: "#151515"
+//            backgroundColor: "#151515"
+//            font.family: "Ubuntu Mono"
+//            font.pointSize: 12
+//            transientScrollBars: true
+
+//    signal activated()
+//    signal save()
+
+    anchors.fill: parent
+//    property alias path: file.path
+
+//    EditorFile {
+//        id: file
+//    }
 }
