@@ -17,11 +17,14 @@ class GlyphNodeFactory {
     constructor(editorPrivate) {
         this.editorPrivate = editorPrivate
     }
-    create() {
+    create(position, glyphRun) {
         var glyphNode = this.editorPrivate.sceneGraphContext().createGlyphNode(
             this.editorPrivate.sceneGraphRenderContext(),
             true
         );
+        glyphNode.setGlyphs(position, glyphRun);
+        glyphNode.update();
+
         return glyphNode
     }
 }
