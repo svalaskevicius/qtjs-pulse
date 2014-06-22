@@ -88,6 +88,16 @@ describe('EditorQmlComponent', function () {
                 [{from:-1, to:-1, format:null}]
             )
         })
+        it('returns -1:-1 range on full spanning input', function(){
+            makeFormatRanges([{start:0, length: 10, format:1}], 10).should.eql(
+                [{from:-1, to:-1, format:1}]
+            )
+        })
+        it('ignores extra input ranges', function(){
+            makeFormatRanges([{start:0, length: 10, format:1}, {start:10, length: 10, format:2}], 10).should.eql(
+                [{from:-1, to:-1, format:1}]
+            )
+        })
         it('splits to two when format starts the ranges', function(){
             makeFormatRanges([{start:0, length: 3, format:1}], 10).should.eql(
                 [{from:-1, to:2, format:1}, {from:3,to:-1, format:null}]

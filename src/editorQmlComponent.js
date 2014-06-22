@@ -43,29 +43,33 @@ function qListToArray(qList) {
     return ret
 }
 
-function makeFormatRanges(formatRanges, length) {
-    var unfilledRanges = _.map( _.sortBy( formatRanges, 'start' ),
-        (r) => {
-            return {from: r.start, to: r.start+r.length-1, format: r.format}
-        })
+function makeFormatRanges(formatRanges, textLength) {
+    var unfilledRanges = _.filter( _.map( _.sortBy( formatRanges, 'start' ),
+        (r) => { return {from: r.start, to: r.start+r.length-1, format: r.format} }),
+        filteredRange => filteredRange.from < textLength )
 
     var retrieveLastRange = ranges =>
         ranges.length ? _.last(ranges) : {from:-1, to:-1, format:null}
 
     var adjustStartOfARange = from => from === 0 ? -1 : from
+    var adjustEndOfARange = to => (to >= textLength -1) ? -1 : to
+
+    var createPaddingRange = (lastRangeTo, nextRangeFrom) => {
+        var from = adjustStartOfARange(lastRangeTo + 1)
+        var to = adjustEndOfARange(nextRangeFrom - 1)
+        var format = null
+        return {from, to, format}
+    }
 
     var ranges = _.reduce( unfilledRanges,
         (ranges, r) => {
             var {from, to, format} = retrieveLastRange(ranges)
             if (to < r.from - 1) {
-                from = adjustStartOfARange(to + 1)
-                to = r.from - 1
-                format = null
-                ranges.push({from, to, format})
+                ranges.push(createPaddingRange(to, r.from))
             }
 
             from = adjustStartOfARange(r.from)
-            to = r.to
+            to = adjustEndOfARange(r.to)
             format = r.format
             ranges.push({from, to, format})
 
@@ -75,15 +79,9 @@ function makeFormatRanges(formatRanges, length) {
     )
 
     var {from, to, format} = retrieveLastRange(ranges)
-    if (to >= length - 1) {
-        to = -1
-        ranges.pop()
-    } else {
-        from = adjustStartOfARange(to + 1)
-        to = -1
-        format = null
+    if (to !== -1 || (from === -1 && format === null)) {
+        ranges.push(createPaddingRange(to, textLength))
     }
-    ranges.push({from, to, format})
     return ranges
 }
 
