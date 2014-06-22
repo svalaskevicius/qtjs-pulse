@@ -10,8 +10,10 @@ var EditorQmlComponent = require("../dist/editorQmlComponent.js"),
     TextLayouter = EditorQmlComponent.TextLayouter,
     TextRenderer = EditorQmlComponent.TextRenderer,
     GlyphNodeFactory = EditorQmlComponent.GlyphNodeFactory,
+    DocumentRenderer = EditorQmlComponent.DocumentRenderer,
     makeFormatRanges = EditorQmlComponent.makeFormatRanges,
-    FormattedText = require("../dist/formattedText.js").FormattedText
+    FormattedText = require("../dist/formattedText.js").FormattedText,
+    Document = require("../dist/document.js").Document
 
 
 cpgf.import("cpgf", "builtin.core")
@@ -181,13 +183,38 @@ describe('EditorQmlComponent', function () {
 
             var renderer = injector.get(TextRenderer)
 
+            var glyphNodes = renderer.renderText("test text")
+            glyphNodes[0].should.equal(glyphNode1)
+            glyphNodes[1].should.equal(glyphNode2)
+        })
+    })
+
+    describe('DocumentRenderer', function () {
+        it('it appends all rendered text lines', function() {
+            var glyphNode1 = 1, glyphNode2 = 2, glyphNode3 = 3
+            var doc = (new di.Injector).get(Document)
+            doc.text = "line1 text\nline2"
+
+            var textRendererProvider = function () {
+                var renderText = sinon.stub()
+                renderText.withArgs(doc.blocks[0]).returns([glyphNode1])
+                renderText.withArgs(doc.blocks[1]).returns([glyphNode2, glyphNode3])
+                return { renderText: renderText };
+            }
+            di.annotate(textRendererProvider, new di.Provide(TextRenderer))
+
+            var injector = new di.Injector([textRendererProvider]);
+
+            var renderer = injector.get(DocumentRenderer)
+
             var node = {appendChildNode:function(){ }}
             var appendChildNodeSpy = sinon.spy(node, "appendChildNode")
 
-            renderer.renderText("test text", node)
+            renderer.renderDocument(doc, node)
 
             appendChildNodeSpy.calledWith(glyphNode1).should.be.true
             appendChildNodeSpy.calledWith(glyphNode2).should.be.true
+            appendChildNodeSpy.calledWith(glyphNode3).should.be.true
         })
     })
 })

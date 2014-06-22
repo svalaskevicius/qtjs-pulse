@@ -113,8 +113,9 @@ class TextRenderer {
         this.glyphNodeFactory = glyphNodeFactory
         this.textLayouter = textLayouter
     }
-    renderText(text, parentNode) {
+    renderText(text) {
         var lineLayouts = this.textLayouter.layoutText(text)
+        var glyphNodes = []
         lineLayouts.forEach(line => {
             var cnt = line.glyphRuns.size()
             for(var i = 0; i < cnt ; i++) {
@@ -122,9 +123,24 @@ class TextRenderer {
                 if (line.format) {
                     glyphNode.setColor(line.format.foreground().color())
                 }
-                parentNode.appendChildNode(glyphNode)
+                glyphNodes.push(glyphNode)
             }
         })
+        return glyphNodes
+    }
+}
+
+@Inject(TextRenderer)
+class DocumentRenderer {
+    constructor(textRenderer) {
+        this.textRenderer = textRenderer
+    }
+    renderDocument(doc, node) {
+        _.forEach( doc.blocks,
+            block => _.forEach( this.textRenderer.renderText(block),
+                glyphNode => node.appendChildNode(glyphNode)
+            )
+        )
     }
 }
 
@@ -150,14 +166,10 @@ var buildEditorQmlComponent = function() {
             p(this).injector = injector
         },
         updatePaintNode: function(node, data) {
-            if (node) {
-                return node;
-            }
             node = new qt.QSGNode();
-            this.services().get(TextRenderer).renderText(
-                p(this).document.blocks[0],
-                node
-            )
+
+            this.services().get(DocumentRenderer).renderDocument(p(this).document, node)
+
             return node;
         }
     })
@@ -199,5 +211,6 @@ module.exports = {
     GlyphNodeFactory : GlyphNodeFactory,
     TextLayouter : TextLayouter,
     TextRenderer: TextRenderer,
+    DocumentRenderer: DocumentRenderer,
     makeFormatRanges: makeFormatRanges
 }
