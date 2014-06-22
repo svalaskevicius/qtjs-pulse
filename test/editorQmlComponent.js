@@ -25,6 +25,22 @@ var newInstance = function() {
     );
 }
 
+var createGlyphNodeStub = function() {
+    return {
+        id: Math.random(),
+        boundingRect : function(){
+            return new qt.QRectF(0, 0, 10, 12)
+        },
+        setColor : function(){},
+        update : function(){}
+    }
+}
+var createGlyphRunStub = function() {
+    return {
+        id: Math.random(),
+    }
+}
+
 
 describe('EditorQmlComponent', function () {
 
@@ -87,42 +103,37 @@ describe('EditorQmlComponent', function () {
     describe('makeFormatRanges', function() {
         it('returns -1:-1 range on empty input', function(){
             makeFormatRanges([], 10).should.eql(
-                [{from:-1, to:-1, format:null}]
+                [{start:0, length:10, format:null}]
             )
         })
         it('returns -1:-1 range on full spanning input', function(){
             makeFormatRanges([{start:0, length: 10, format:1}], 10).should.eql(
-                [{from:-1, to:-1, format:1}]
-            )
-        })
-        it('ignores extra input ranges', function(){
-            makeFormatRanges([{start:0, length: 10, format:1}, {start:10, length: 10, format:2}], 10).should.eql(
-                [{from:-1, to:-1, format:1}]
+                [{start:0, length:10, format:1}]
             )
         })
         it('splits to two when format starts the ranges', function(){
             makeFormatRanges([{start:0, length: 3, format:1}], 10).should.eql(
-                [{from:-1, to:2, format:1}, {from:3,to:-1, format:null}]
+                [{start:0, length:3, format:1}, {start:3, length:7, format:null}]
             )
         })
         it('splits to two when format ends the ranges', function(){
             makeFormatRanges([{start:3, length: 3, format:1}], 6).should.eql(
-                [{from:-1, to:2, format:null}, {from:3,to:-1, format:1}]
+                [{start:0, length:3, format:null}, {start:3, length:3, format:1}]
             )
         })
         it('splits to three when the range is in the middle', function(){
             makeFormatRanges([{start:3, length: 3, format:1}], 10).should.eql(
-                [{from:-1, to:2, format:null}, {from:3,to:5, format:1}, {from:6,to:-1, format:null}]
+                [{start:0, length:3, format:null}, {start:3, length:3, format:1}, {start:6, length:4, format:null}]
             )
         })
         it('splits to two when the range dont leave space', function(){
             makeFormatRanges([{start:0, length: 3, format:1}, {start:3, length:3, format:2}], 6).should.eql(
-                [{from:-1, to:2, format:1}, {from:3,to:-1, format:2}]
+                [{start:0, length:3, format:1}, {start:3, length:3, format:2}]
             )
         })
         it('accepts unsorted ranges ', function(){
             makeFormatRanges([{start:3, length: 3, format:1}, {start:1, length:1, format:2}], 60).should.eql(
-                [{from:-1, to:0, format:null}, {from:1, to:1, format:2}, {from:2,to:2, format:null}, {from:3,to:5, format:1}, {from:6,to:-1, format:null}]
+                [{start:0, length:1, format:null}, {start:1, length:1, format:2}, {start:2, length:1, format:null}, {start:3, length:3, format:1}, {start:6, length:54, format:null}]
             )
         })
     })
@@ -153,9 +164,12 @@ describe('EditorQmlComponent', function () {
 
     describe('TextRenderer', function () {
 
-        it('it appends all rendered text lines', function() {
+        it('appends all rendered text lines', function() {
 
-            var glyphRun1 = 1, glyphRun2 = 2, glyphNode1 = {id:3, setColor : function(){}}, glyphNode2 = {id:4, setColor : function(){}}
+            var glyphRun1 = createGlyphRunStub(),
+                glyphRun2 = createGlyphRunStub(),
+                glyphNode1 = createGlyphNodeStub(),
+                glyphNode2 = createGlyphNodeStub()
             var textFormat = new qt.QTextCharFormat()
 
             var glyphList = {size:function(){}, at: function(){}}
@@ -183,15 +197,51 @@ describe('EditorQmlComponent', function () {
 
             var renderer = injector.get(TextRenderer)
 
-            var glyphNodes = renderer.renderText("test text")
+            var glyphNodes = renderer.renderText("test text", 0)
             glyphNodes[0].should.equal(glyphNode1)
             glyphNodes[1].should.equal(glyphNode2)
+        })
+
+        it('sets the glyphNode position', function() {
+
+            var glyphRun1 = 1, glyphRun2 = 2, glyphNode1 = createGlyphNodeStub(), glyphNode2 = createGlyphNodeStub()
+            var textFormat = new qt.QTextCharFormat()
+
+            var glyphList = {size:function(){}, at: function(){}}
+            var atStub = sinon.stub(glyphList, "at")
+            atStub.withArgs(0).returns(glyphRun1)
+            atStub.withArgs(1).returns(glyphRun2)
+            sinon.stub(glyphList, "size").returns(2)
+
+            var glyphNodeFactoryStub = sinon.stub()
+            glyphNodeFactoryStub.withArgs(sinon.match.any, glyphRun1).returns(glyphNode1)
+            glyphNodeFactoryStub.withArgs(sinon.match.any, glyphRun2).returns(glyphNode2)
+            var glyphNodeFactory = function () {
+                return { create: glyphNodeFactoryStub };
+            }
+            di.annotate(glyphNodeFactory, new di.Provide(GlyphNodeFactory))
+
+            var textLayouter = function () {
+                var layoutTextFnc = sinon.stub()
+                layoutTextFnc.returns([{glyphRuns:glyphList, format:textFormat}])
+                return { layoutText: layoutTextFnc };
+            }
+            di.annotate(textLayouter, new di.Provide(TextLayouter))
+
+            var injector = new di.Injector([glyphNodeFactory, textLayouter]);
+
+            var renderer = injector.get(TextRenderer)
+
+            var glyphNodes = renderer.renderText("test text", 42)
+            glyphNodeFactoryStub.getCall(0).args[0].y().should.equal(42)
         })
     })
 
     describe('DocumentRenderer', function () {
-        it('it appends all rendered text lines', function() {
-            var glyphNode1 = 1, glyphNode2 = 2, glyphNode3 = 3
+        it('appends all rendered text lines', function() {
+            var glyphNode1 = createGlyphNodeStub(),
+                glyphNode2 = createGlyphNodeStub(),
+                glyphNode3 = createGlyphNodeStub()
             var doc = (new di.Injector).get(Document)
             doc.text = "line1 text\nline2"
 
@@ -215,6 +265,32 @@ describe('EditorQmlComponent', function () {
             appendChildNodeSpy.calledWith(glyphNode1).should.be.true
             appendChildNodeSpy.calledWith(glyphNode2).should.be.true
             appendChildNodeSpy.calledWith(glyphNode3).should.be.true
+        })
+
+        it('passes through the line positions', function() {
+            var glyphNode1 = createGlyphNodeStub(), glyphNode2 = createGlyphNodeStub()
+
+            var doc = (new di.Injector).get(Document)
+            doc.text = "line1 text\nline2"
+
+            var renderTextMock = sinon.stub()
+            renderTextMock.onFirstCall().returns([glyphNode1])
+            renderTextMock.onSecondCall().returns([glyphNode2])
+            var textRendererProvider = function () {
+                return { renderText: renderTextMock };
+            }
+            di.annotate(textRendererProvider, new di.Provide(TextRenderer))
+
+            var injector = new di.Injector([textRendererProvider]);
+
+            var renderer = injector.get(DocumentRenderer)
+
+            var node = {appendChildNode:function(){ }}
+
+            renderer.renderDocument(doc, node)
+
+            renderTextMock.getCall(0).args[1].should.equal(0)
+            renderTextMock.getCall(1).args[1].should.equal(12)
         })
     })
 })

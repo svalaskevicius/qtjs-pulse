@@ -26,7 +26,6 @@ class GlyphNodeFactory {
             true
         );
         glyphNode.setGlyphs(position, glyphRun);
-        glyphNode.update();
 
         return glyphNode
     }
@@ -44,43 +43,35 @@ function qListToArray(qList) {
 }
 
 function makeFormatRanges(formatRanges, textLength) {
-    var unfilledRanges = _.filter( _.map( _.sortBy( formatRanges, 'start' ),
-        (r) => { return {from: r.start, to: r.start+r.length-1, format: r.format} }),
-        filteredRange => filteredRange.from < textLength )
+    var unfilledRanges = _.sortBy( formatRanges, 'start' )
 
     var retrieveLastRange = ranges =>
-        ranges.length ? _.last(ranges) : {from:-1, to:-1, format:null}
+        ranges.length ? _.last(ranges) : {start:0, length:0, format:null}
 
-    var adjustStartOfARange = from => from === 0 ? -1 : from
-    var adjustEndOfARange = to => (to >= textLength -1) ? -1 : to
-
-    var createPaddingRange = (lastRangeTo, nextRangeFrom) => {
-        var from = adjustStartOfARange(lastRangeTo + 1)
-        var to = adjustEndOfARange(nextRangeFrom - 1)
+    var createPaddingRange = (previousStart, previousLength, nextStart) => {
+        var start = previousStart + previousLength
+        var length = nextStart - start
         var format = null
-        return {from, to, format}
+        return {start, length, format}
     }
 
     var ranges = _.reduce( unfilledRanges,
         (ranges, r) => {
-            var {from, to, format} = retrieveLastRange(ranges)
-            if (to < r.from - 1) {
-                ranges.push(createPaddingRange(to, r.from))
+            var {start, length, format} = retrieveLastRange(ranges)
+            if (start + length < r.start) {
+                ranges.push(createPaddingRange(start, length, r.start))
             }
 
-            from = adjustStartOfARange(r.from)
-            to = adjustEndOfARange(r.to)
-            format = r.format
-            ranges.push({from, to, format})
+            ranges.push(r)
 
             return ranges
         },
         []
     )
 
-    var {from, to, format} = retrieveLastRange(ranges)
-    if (to !== -1 || (from === -1 && format === null)) {
-        ranges.push(createPaddingRange(to, textLength))
+    var {start, length, format} = retrieveLastRange(ranges)
+    if (length === 0 || (format !== null && start+length < textLength)) {
+        ranges.push(createPaddingRange(start, length, textLength))
     }
     return ranges
 }
@@ -101,7 +92,7 @@ class TextLayouter {
 
         var ranges = makeFormatRanges(qListToArray(text.formats), text.text.length)
         return _.map(ranges, range => { return {
-            glyphRuns: textLayout.glyphRuns(range.from, range.to),
+            glyphRuns: textLayout.glyphRuns(range.start, range.length),
             format: range.format
         } })
     }
@@ -113,16 +104,17 @@ class TextRenderer {
         this.glyphNodeFactory = glyphNodeFactory
         this.textLayouter = textLayouter
     }
-    renderText(text) {
+    renderText(text, baseLinePos) {
         var lineLayouts = this.textLayouter.layoutText(text)
         var glyphNodes = []
         lineLayouts.forEach(line => {
             var cnt = line.glyphRuns.size()
             for(var i = 0; i < cnt ; i++) {
-                var glyphNode = this.glyphNodeFactory.create(new qt.QPointF(10, 10), line.glyphRuns.at(i))
+                var glyphNode = this.glyphNodeFactory.create(new qt.QPointF(10, baseLinePos), line.glyphRuns.at(i))
                 if (line.format) {
                     glyphNode.setColor(line.format.foreground().color())
                 }
+                glyphNode.update();
                 glyphNodes.push(glyphNode)
             }
         })
@@ -136,11 +128,17 @@ class DocumentRenderer {
         this.textRenderer = textRenderer
     }
     renderDocument(doc, node) {
-        _.forEach( doc.blocks,
-            block => _.forEach( this.textRenderer.renderText(block),
-                glyphNode => node.appendChildNode(glyphNode)
-            )
-        )
+        var linePosition = 0
+        _.forEach( doc.blocks, block => {
+            _.forEach( this.textRenderer.renderText(block, linePosition), glyphNode => {
+                node.appendChildNode(glyphNode)
+                var glyphBottom = glyphNode.boundingRect().bottom()
+                if (glyphBottom > linePosition) {
+                    linePosition = glyphBottom
+                }
+            })
+            linePosition += 20
+        })
     }
 }
 
@@ -193,6 +191,7 @@ var buildEditorQmlComponent = function() {
         slots: {
             'textChanged()': function () {
                 p(this).document.text = qtapi.toString(this.property("text"))
+                this.update()
             }
         }
     })
