@@ -168,6 +168,8 @@ var buildEditorQmlComponent = function() {
 
             this.services().get(DocumentRenderer).renderDocument(p(this).document, node)
 
+            this.setWidth(1000)
+            this.setHeight(5000)
             return node;
         }
     })

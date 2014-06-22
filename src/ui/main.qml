@@ -23,10 +23,13 @@ ApplicationWindow {
 
     property var editorComponent : null
     onOpenEditor: {
-        var editor = editorComponent.createObject(appWindow)
+        var editor = editorComponent.createObject(appWindow, {path: path})
         if (editor === null) {
             throw new Error("cannot create editor object")
         }
+        editor.activated.connect(function() {
+            activeEditor = editor
+        })
         appWindow.editors.push(editor)
     }
 
