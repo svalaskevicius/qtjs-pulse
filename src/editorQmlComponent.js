@@ -7,7 +7,8 @@ import {p} from './private'
 import {Document} from './document'
 
 var fs = require('fs'),
-    qtapi = require('../src/qtapi')
+    qtapi = require('../src/qtapi'),
+    _ = require('lodash')
 
 cpgf.import("cpgf", "builtin.core")
 
@@ -31,6 +32,61 @@ class GlyphNodeFactory {
     }
 }
 
+function qListToArray(qList) {
+    var ret = []
+    for (var it = qList.cbegin(), end = qList.cend();
+        !it._opEqual(end);
+        it._opInc()
+    ) {
+        ret.push(it._opDerefer())
+    }
+    return ret
+}
+
+function makeFormatRanges(formatRanges, length) {
+    var unfilledRanges = _.map( _.sortBy( formatRanges, 'start' ),
+        (r) => {
+            return {from: r.start, to: r.start+r.length-1, format: r.format}
+        })
+
+    var retrieveLastRange = ranges =>
+        ranges.length ? _.last(ranges) : {from:-1, to:-1, format:null}
+
+    var adjustStartOfARange = from => from === 0 ? -1 : from
+
+    var ranges = _.reduce( unfilledRanges,
+        (ranges, r) => {
+            var {from, to, format} = retrieveLastRange(ranges)
+            if (to < r.from - 1) {
+                from = adjustStartOfARange(to + 1)
+                to = r.from - 1
+                format = null
+                ranges.push({from, to, format})
+            }
+
+            from = adjustStartOfARange(r.from)
+            to = r.to
+            format = r.format
+            ranges.push({from, to, format})
+
+            return ranges
+        },
+        []
+    )
+
+    var {from, to, format} = retrieveLastRange(ranges)
+    if (to >= length - 1) {
+        to = -1
+        ranges.pop()
+    } else {
+        from = adjustStartOfARange(to + 1)
+        to = -1
+        format = null
+    }
+    ranges.push({from, to, format})
+    return ranges
+}
+
 class TextLayouter {
     layoutText(text) {
         var textLayout = new qt.QTextLayout(text.text);
@@ -44,7 +100,12 @@ class TextLayouter {
             }
         }
         textLayout.endLayout();
-        return textLayout.glyphRuns();
+
+        var ranges = makeFormatRanges(qListToArray(text.formats), text.text.length)
+        return _.map(ranges, range => { return {
+            glyphRuns: textLayout.glyphRuns(range.from, range.to),
+            format: range.format
+        } })
     }
 }
 
@@ -55,13 +116,17 @@ class TextRenderer {
         this.textLayouter = textLayouter
     }
     renderText(text, parentNode) {
-        var glyphList = this.textLayouter.layoutText(text)
-        var cnt = glyphList.size()
-        for(var i = 0; i < cnt ; i++) {
-            parentNode.appendChildNode(
-                this.glyphNodeFactory.create(new qt.QPointF(10, 10), glyphList.at(i))
-            )
-        }
+        var lineLayouts = this.textLayouter.layoutText(text)
+        lineLayouts.forEach(line => {
+            var cnt = line.glyphRuns.size()
+            for(var i = 0; i < cnt ; i++) {
+                var glyphNode = this.glyphNodeFactory.create(new qt.QPointF(10, 10), line.glyphRuns.at(i))
+                if (line.format) {
+                    glyphNode.setColor(line.format.foreground().color())
+                }
+                parentNode.appendChildNode(glyphNode)
+            }
+        })
     }
 }
 
@@ -136,4 +201,5 @@ module.exports = {
     GlyphNodeFactory : GlyphNodeFactory,
     TextLayouter : TextLayouter,
     TextRenderer: TextRenderer,
+    makeFormatRanges: makeFormatRanges
 }
