@@ -41,6 +41,24 @@ var createGlyphRunStub = function() {
     }
 }
 
+var createTextRendererProvider = function(methods) {
+    var textRendererProvider = function () { return methods }
+    di.annotate(textRendererProvider, new di.Provide(TextRenderer))
+    return textRendererProvider
+}
+
+
+var stubQListFromArray = function(data) {
+    var size = data.length
+    var list = {size:function(){}, at: function(){}}
+    sinon.stub(list, "size").returns(size)
+    var atStub = sinon.stub(list, "at")
+    for (var i=0; i < size; i++) {
+        atStub.withArgs(i).returns(data[i])
+    }
+    return list
+}
+
 
 describe('EditorQmlComponent', function () {
 
@@ -141,7 +159,9 @@ describe('EditorQmlComponent', function () {
     describe('TextLayouter', function () {
         it('lays out all text given there are no formats', function() {
             var layouter = editor.services().get(TextLayouter)
-            var lineLayout = layouter.layoutText(new FormattedText("test text", new qt.QList_QTextLayout_FormatRange()))
+            var lineLayout = layouter.layoutText(
+                new FormattedText("test text", new qt.QList_QTextLayout_FormatRange()),
+                new qt.QFont)
             lineLayout[0].glyphRuns.should.be.instanceOf(qt.QList_QGlyphRun)
             lineLayout[0].glyphRuns.size().should.equal(1)
         })
@@ -154,7 +174,9 @@ describe('EditorQmlComponent', function () {
             formats.append(textFormatRange)
 
             var layouter = editor.services().get(TextLayouter)
-            var lineLayout = layouter.layoutText(new FormattedText("test text", formats))
+            var lineLayout = layouter.layoutText(
+                new FormattedText("test text", formats),
+                new qt.QFont)
             lineLayout.length.should.equal(3)
             ;(lineLayout[0].format === null).should.be.true
             lineLayout[1].format._opEqual(textFormat).should.be.true
@@ -171,12 +193,7 @@ describe('EditorQmlComponent', function () {
                 glyphNode1 = createGlyphNodeStub(),
                 glyphNode2 = createGlyphNodeStub()
             var textFormat = new qt.QTextCharFormat()
-
-            var glyphList = {size:function(){}, at: function(){}}
-            var atStub = sinon.stub(glyphList, "at")
-            atStub.withArgs(0).returns(glyphRun1)
-            atStub.withArgs(1).returns(glyphRun2)
-            sinon.stub(glyphList, "size").returns(2)
+            var glyphList = stubQListFromArray([glyphRun1, glyphRun2])
 
             var glyphNodeFactory = function () {
                 var createFnc = sinon.stub()
@@ -186,16 +203,14 @@ describe('EditorQmlComponent', function () {
             }
             di.annotate(glyphNodeFactory, new di.Provide(GlyphNodeFactory))
 
-            var textLayouter = function () {
-                var layoutTextFnc = sinon.stub()
-                layoutTextFnc.returns([{glyphRuns:glyphList, format:textFormat}])
-                return { layoutText: layoutTextFnc };
-            }
+            var textLayouterStub = sinon.stub()
+            textLayouterStub.returns([{glyphRuns:glyphList, format:textFormat}])
+            var textLayouter = function () { return { layoutText: textLayouterStub } }
             di.annotate(textLayouter, new di.Provide(TextLayouter))
 
-            var injector = new di.Injector([glyphNodeFactory, textLayouter]);
-
-            var renderer = injector.get(TextRenderer)
+            var renderer = (new di.Injector([
+                                glyphNodeFactory, textLayouter
+                            ])).get(TextRenderer)
 
             var glyphNodes = renderer.renderText("test text", 0)
             glyphNodes[0].should.equal(glyphNode1)
@@ -203,15 +218,9 @@ describe('EditorQmlComponent', function () {
         })
 
         it('sets the glyphNode position', function() {
-
             var glyphRun1 = 1, glyphRun2 = 2, glyphNode1 = createGlyphNodeStub(), glyphNode2 = createGlyphNodeStub()
             var textFormat = new qt.QTextCharFormat()
-
-            var glyphList = {size:function(){}, at: function(){}}
-            var atStub = sinon.stub(glyphList, "at")
-            atStub.withArgs(0).returns(glyphRun1)
-            atStub.withArgs(1).returns(glyphRun2)
-            sinon.stub(glyphList, "size").returns(2)
+            var glyphList = stubQListFromArray([glyphRun1, glyphRun2])
 
             var glyphNodeFactoryStub = sinon.stub()
             glyphNodeFactoryStub.withArgs(sinon.match.any, glyphRun1).returns(glyphNode1)
@@ -221,19 +230,40 @@ describe('EditorQmlComponent', function () {
             }
             di.annotate(glyphNodeFactory, new di.Provide(GlyphNodeFactory))
 
-            var textLayouter = function () {
-                var layoutTextFnc = sinon.stub()
-                layoutTextFnc.returns([{glyphRuns:glyphList, format:textFormat}])
-                return { layoutText: layoutTextFnc };
-            }
+            var textLayouterStub = sinon.stub()
+            textLayouterStub.returns([{glyphRuns:glyphList, format:textFormat}])
+            var textLayouter = function () { return { layoutText: textLayouterStub } }
             di.annotate(textLayouter, new di.Provide(TextLayouter))
 
-            var injector = new di.Injector([glyphNodeFactory, textLayouter]);
-
-            var renderer = injector.get(TextRenderer)
+            var renderer = (new di.Injector([
+                                glyphNodeFactory, textLayouter
+                            ])).get(TextRenderer)
 
             var glyphNodes = renderer.renderText("test text", 42)
             glyphNodeFactoryStub.getCall(0).args[0].y().should.equal(42)
+        })
+
+        it('passes through the default font to layouter', function() {
+            var glyphRun1 = 1, glyphNode1 = createGlyphNodeStub()
+            var textFormat = new qt.QTextCharFormat()
+            var glyphList = stubQListFromArray([glyphRun1])
+
+            var glyphNodeFactoryStub = sinon.stub()
+            glyphNodeFactoryStub.withArgs(sinon.match.any, glyphRun1).returns(glyphNode1)
+            var glyphNodeFactory = function () { return { create: glyphNodeFactoryStub } }
+            di.annotate(glyphNodeFactory, new di.Provide(GlyphNodeFactory))
+
+            var textLayouterStub = sinon.stub()
+            textLayouterStub.returns([{glyphRuns:glyphList, format:textFormat}])
+            var textLayouter = function () { return { layoutText: textLayouterStub } }
+            di.annotate(textLayouter, new di.Provide(TextLayouter))
+
+            var renderer = (new di.Injector([
+                                glyphNodeFactory, textLayouter
+                            ])).get(TextRenderer)
+
+            var glyphNodes = renderer.renderText("test text", 42, 'default font')
+            textLayouterStub.getCall(0).args[1].should.equal('default font')
         })
     })
 
@@ -242,20 +272,17 @@ describe('EditorQmlComponent', function () {
             var glyphNode1 = createGlyphNodeStub(),
                 glyphNode2 = createGlyphNodeStub(),
                 glyphNode3 = createGlyphNodeStub()
+
             var doc = (new di.Injector).get(Document)
             doc.text = "line1 text\nline2"
 
-            var textRendererProvider = function () {
-                var renderText = sinon.stub()
-                renderText.withArgs(doc.blocks[0]).returns([glyphNode1])
-                renderText.withArgs(doc.blocks[1]).returns([glyphNode2, glyphNode3])
-                return { renderText: renderText };
-            }
-            di.annotate(textRendererProvider, new di.Provide(TextRenderer))
+            var renderTextStub = sinon.stub()
+            renderTextStub.withArgs(doc.blocks[0]).returns([glyphNode1])
+            renderTextStub.withArgs(doc.blocks[1]).returns([glyphNode2, glyphNode3])
 
-            var injector = new di.Injector([textRendererProvider]);
-
-            var renderer = injector.get(DocumentRenderer)
+            var renderer = (new di.Injector([
+                                createTextRendererProvider({ renderText: renderTextStub })
+                            ])).get(DocumentRenderer)
 
             var node = {appendChildNode:function(){ }}
             var appendChildNodeSpy = sinon.spy(node, "appendChildNode")
@@ -268,29 +295,47 @@ describe('EditorQmlComponent', function () {
         })
 
         it('passes through the line positions', function() {
-            var glyphNode1 = createGlyphNodeStub(), glyphNode2 = createGlyphNodeStub()
+            var glyphNode1 = createGlyphNodeStub(),
+                glyphNode2 = createGlyphNodeStub()
 
             var doc = (new di.Injector).get(Document)
             doc.text = "line1 text\nline2"
+            var fontMetrics = new qt.QFontMetrics(doc.defaultFont)
 
-            var renderTextMock = sinon.stub()
-            renderTextMock.onFirstCall().returns([glyphNode1])
-            renderTextMock.onSecondCall().returns([glyphNode2])
-            var textRendererProvider = function () {
-                return { renderText: renderTextMock };
-            }
-            di.annotate(textRendererProvider, new di.Provide(TextRenderer))
+            var renderTextStub = sinon.stub()
+            renderTextStub.onFirstCall().returns([glyphNode1])
+            renderTextStub.onSecondCall().returns([glyphNode2])
 
-            var injector = new di.Injector([textRendererProvider]);
-
-            var renderer = injector.get(DocumentRenderer)
+            var renderer = (new di.Injector([
+                                createTextRendererProvider({ renderText: renderTextStub })
+                            ])).get(DocumentRenderer)
 
             var node = {appendChildNode:function(){ }}
 
             renderer.renderDocument(doc, node)
 
-            renderTextMock.getCall(0).args[1].should.equal(0)
-            renderTextMock.getCall(1).args[1].should.equal(12)
+            renderTextStub.getCall(0).args[1].should.equal(fontMetrics.leading() + fontMetrics.ascent())
+            renderTextStub.getCall(1).args[1].should.equal(fontMetrics.leading() + fontMetrics.ascent() + fontMetrics.lineSpacing())
+        })
+
+        it('passes through the default font', function() {
+            var glyphNode1 = createGlyphNodeStub()
+
+            var doc = (new di.Injector).get(Document)
+            doc.text = "line1 text"
+
+            var renderTextStub = sinon.stub()
+            renderTextStub.onFirstCall().returns([glyphNode1])
+
+            var renderer = (new di.Injector([
+                                createTextRendererProvider({ renderText: renderTextStub })
+                            ])).get(DocumentRenderer)
+
+            var node = {appendChildNode:function(){ }}
+
+            renderer.renderDocument(doc, node)
+
+            renderTextStub.getCall(0).args[2].should.equal(doc.defaultFont)
         })
     })
 })

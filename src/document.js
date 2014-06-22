@@ -28,4 +28,16 @@ export class Document {
         ))
         p(this).blocks = _.pluck(blockInfo, 'formattedText')
     }
+
+    set defaultFont(font) {
+        p(this).defaultFont = font
+    }
+
+    get defaultFont() {
+        var font = p(this).defaultFont
+        if (!font) {
+            font = p(this).defaultFont = new qt.QFont
+        }
+        return font
+    }
 }

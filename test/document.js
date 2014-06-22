@@ -30,5 +30,16 @@ describe('Document', function () {
         doc.blocks[0].should.eql("fmt1")
         doc.blocks[1].should.eql("fmt2")
     })
+
+    it('can set default font', function(){
+        var doc = (new di.Injector).get(Document)
+        doc.defaultFont = 'docfont'
+        doc.defaultFont.should.eql("docfont")
+    })
+
+    it('provides default font', function(){
+        var doc = (new di.Injector).get(Document)
+        doc.defaultFont.should.be.instanceOf(qt.QFont)
+    })
 })
 

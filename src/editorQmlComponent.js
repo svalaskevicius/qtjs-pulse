@@ -77,8 +77,9 @@ function makeFormatRanges(formatRanges, textLength) {
 }
 
 class TextLayouter {
-    layoutText(text) {
+    layoutText(text, defaultFont) {
         var textLayout = new qt.QTextLayout(text.text);
+        textLayout.setFont(defaultFont)
         textLayout.setAdditionalFormats(text.formats)
 
         textLayout.beginLayout();
@@ -104,8 +105,8 @@ class TextRenderer {
         this.glyphNodeFactory = glyphNodeFactory
         this.textLayouter = textLayouter
     }
-    renderText(text, baseLinePos) {
-        var lineLayouts = this.textLayouter.layoutText(text)
+    renderText(text, baseLinePos, defaultFont) {
+        var lineLayouts = this.textLayouter.layoutText(text, defaultFont)
         var glyphNodes = []
         lineLayouts.forEach(line => {
             var cnt = line.glyphRuns.size()
@@ -128,16 +129,15 @@ class DocumentRenderer {
         this.textRenderer = textRenderer
     }
     renderDocument(doc, node) {
-        var linePosition = 0
+        var font = doc.defaultFont
+        var fontMetrics = new qt.QFontMetrics(font)
+        var linePosition = fontMetrics.leading() + fontMetrics.ascent()
+        var lineSpacing = fontMetrics.lineSpacing()
         _.forEach( doc.blocks, block => {
-            _.forEach( this.textRenderer.renderText(block, linePosition), glyphNode => {
+            _.forEach( this.textRenderer.renderText(block, linePosition, font), glyphNode => {
                 node.appendChildNode(glyphNode)
-                var glyphBottom = glyphNode.boundingRect().bottom()
-                if (glyphBottom > linePosition) {
-                    linePosition = glyphBottom
-                }
             })
-            linePosition += 20
+            linePosition += lineSpacing
         })
     }
 }
@@ -176,6 +176,7 @@ var buildEditorQmlComponent = function() {
         parent: EditorUIClass,
         init: function () {
             this.connect(this, '2textChanged()', '1textChanged()')
+            this.connect(this, '2fontChanged()', '1fontChanged()')
             this.setFlag(qt.QQuickItem.Flag.ItemHasContents)
 
             var injector = this.createNewDIContainer(),
@@ -187,10 +188,15 @@ var buildEditorQmlComponent = function() {
         },
         properties: {
             text: "QString",
+            font: "QFont",
         },
         slots: {
             'textChanged()': function () {
                 p(this).document.text = qtapi.toString(this.property("text"))
+                this.update()
+            },
+            'fontChanged()': function () {
+                p(this).document.defaultFont = qt.fontFromVariant(this.property("font"))
                 this.update()
             }
         }
