@@ -164,8 +164,11 @@ var buildEditorQmlComponent = function() {
             p(this).injector = injector
         },
         updatePaintNode: function(node, data) {
-            node = new qt.QSGNode();
-
+            if (node) {
+                node.removeAllChildNodes()
+            } else {
+                node = new qt.QSGNode();
+            }
             this.services().get(DocumentRenderer).renderDocument(p(this).document, node)
 
             this.setWidth(1000)
