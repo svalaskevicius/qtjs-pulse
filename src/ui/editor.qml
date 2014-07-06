@@ -6,9 +6,10 @@ import QtQuick.Controls.Styles 1.1
 
 import PulseEditor 1.0
 
-Item {
+FocusScope {
     id: editor
 
+    focus: true
     signal activated()
     signal save()
 
@@ -22,13 +23,23 @@ Item {
             transientScrollBars: true
         }
 
-        EditorUI {
+        focus: true
+
+        contentItem: EditorUI {
             id: editorUi
 
             text: file.contents
 
             font.family: "Ubuntu Mono"
-            font.pointSize: 12
+            font.pointSize: focus ? 12 : 8
+
+            focus: true
+            Keys.enabled: true
+            Keys.onPressed: {
+                font.pointSize = 8;
+                console.log('Key was pressed');
+                event.accepted = true;
+            }
         }
     }
 
