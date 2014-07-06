@@ -4,8 +4,8 @@ require('./traceur-runtime');
 
 cpgf.import("cpgf", "builtin.core");
 
-var Highlighter = require("./highlighter.js"),
-    EditorFile = require("./editorFile.js"),
+var EditorFile = require("./editorFile.js"),
+    EditorQmlComponent = require("./editorQmlComponent.js"),
     qtapi = require("./qtapi.js"),
     path = require("path"),
     eventFilter = require("./eventFilter.js");
@@ -16,8 +16,8 @@ var installPeriodicGc = function () {
 };
 
 ;(function () {
-    Highlighter.register()
     EditorFile.register()
+    EditorQmlComponent.register()
 
     global.qmlEngine = new qt.QQmlEngine()
     var component = new qt.QQmlComponent(

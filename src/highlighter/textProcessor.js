@@ -100,6 +100,10 @@ export class TextProcessor {
     }
 
     processLine(text, stateStack) {
+        if (!this.states.length) {
+            return stateStack
+        }
+
         var idx = 0,
             len = text.length
 

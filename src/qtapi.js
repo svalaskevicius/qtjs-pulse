@@ -82,7 +82,6 @@ qt.extend = function(classToExtend, methods) {
     for (var method in methods) {
         if (newClass[method]) {
             newClass[method] = methods[method];
-
         } else {
             newClass.prototype[method] = methods[method]
         }
